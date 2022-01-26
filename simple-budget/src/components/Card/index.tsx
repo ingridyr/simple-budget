@@ -36,14 +36,14 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
             as={AiFillEdit}
             fontSize="30px"
             cursor="pointer"
-            onClickCapture={() => console.log("algo")}
+            onClickCapture={() => {}}
           />
           <Icon
             color="#595959"
             as={ImBin2}
             fontSize="30px"
             cursor="pointer"
-            onClickCapture={() => console.log("algo")}
+            onClickCapture={() => {}}
           />
         </HStack>
       </HStack>
@@ -78,7 +78,7 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
             >
               R$ {maximo}
             </Heading>
-            <Text fontSize="24px" color="white">
+            <Text fontSize="24px" color="#6C757D">
               / R$ {minimo}
             </Text>
           </HStack>
@@ -88,9 +88,17 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
             bg="white"
             fontSize="24px"
             color="black.500"
-            padding="15px 10px"
+            padding="20px 10px"
+            border="3px solid"
+            borderColor="white"
             fontFamily="body.Roboto"
             fontWeight="medium"
+            _hover={{
+              border: "3px solid",
+              borderColor: "green.500",
+              color: "white",
+              bg: "#6C757D",
+            }}
           >
             Add expense
           </Button>
@@ -100,9 +108,17 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
             bg="white"
             fontSize="24px"
             color="black.500"
-            padding="15px 10px"
+            padding="20px 10px"
+            border="3px solid"
+            borderColor="white"
             fontFamily="body.Roboto"
             fontWeight="medium"
+            _hover={{
+              border: "3px solid",
+              borderColor: "green.500",
+              color: "white",
+              bg: "#6C757D",
+            }}
           >
             View Expense
           </Button>
