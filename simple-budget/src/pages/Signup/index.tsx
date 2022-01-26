@@ -69,7 +69,7 @@ export const Signup = () => {
         display="flex"
         flexDirection={["column", "column", "row", "row"]}
         width="100%"
-        height="70vh"
+        height="60vh"
         mb="32"
       >
         <Flex
@@ -92,15 +92,16 @@ export const Signup = () => {
             src={SignupImage}
             alt="Signup Image"
             maxWidth="350px"
-            ml="220px"
+            ml={["220px", "50px"]}
             display={["none", "none", "flex", "flex"]}
           />
         </Flex>
         <Flex
           width={["100%", "100%", "40%", "40%"]}
+          marginTop={["100px", "50px", "0px"]}
           alignItems="center"
           justifyContent="center"
-          height="80vh"
+          height="60vh"
         >
           <FormControl
             maxWidth="440px"
