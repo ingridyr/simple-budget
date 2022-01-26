@@ -100,7 +100,7 @@ export const Login = () => {
                 <InputLeftElement
                   mt="2.5"
                   children={
-                    <FaUser size={18} color={theme.colors.purple["500"]} />
+                    <FaEnvelope size={18} color={theme.colors.purple["500"]} />
                   }
                 />
                 <Input
