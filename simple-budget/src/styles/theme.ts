@@ -21,7 +21,10 @@ export const theme = extendTheme({
 
   fonts: {
     heading: "PT Sans",
-    body: "PT Sans",
+    body: {
+      PTsands: "PT Sans",
+      Roboto: "Roboto",
+    },
   },
 
   fontSizes: {
