@@ -31,8 +31,20 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
           Category
         </Heading>
         <HStack pr="30px" spacing="5">
-          <Icon color="#595959" as={AiFillEdit} fontSize="30px" />
-          <Icon color="#595959" as={ImBin2} fontSize="30px" />
+          <Icon
+            color="#595959"
+            as={AiFillEdit}
+            fontSize="30px"
+            cursor="pointer"
+            onClickCapture={() => console.log("algo")}
+          />
+          <Icon
+            color="#595959"
+            as={ImBin2}
+            fontSize="30px"
+            cursor="pointer"
+            onClickCapture={() => console.log("algo")}
+          />
         </HStack>
       </HStack>
       <Flex w="100%" h="200px" justifyContent="space-around" mt="20px">
