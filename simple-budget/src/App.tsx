@@ -1,4 +1,3 @@
-import { Heading } from "@chakra-ui/react";
 import { Routes } from "./routes";
 
 function App() {
