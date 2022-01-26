@@ -16,7 +16,7 @@ import {
   useDisclosure,
   Center,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -57,13 +57,15 @@ export const ModalAddExpense = () => {
         </Button>
       </Center>
 
-      <Modal isOpen={isOpen} onClose={onClose} size="md">
+      <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
           bg="black.500"
-          border="3px solid"
+          border="1px solid"
           borderColor="green.500"
+          pb="25px"
           borderRadius="10px"
+          boxShadow="1px 0px 62px 0px rgb(0,245,155)"
           as="form"
           onSubmit={handleSubmit(setDespesa)}
         >
@@ -119,7 +121,15 @@ export const ModalAddExpense = () => {
               w="80%"
               color="black.500"
               type="submit"
+              border="3px solid"
+              borderColor="white"
               onClickCapture={() => {}}
+              _hover={{
+                bg: "gray.600",
+                border: "3px solid",
+                borderColor: "purple.500",
+                color: "white",
+              }}
             >
               Add expenssive
             </Button>
