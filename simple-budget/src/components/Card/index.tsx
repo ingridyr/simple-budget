@@ -16,9 +16,15 @@ interface CardProps {
   maximo: number;
   minimo: number;
   porcentagem: number;
+  onOpen: () => void;
 }
 
-export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
+export const CardBudget = ({
+  maximo,
+  minimo,
+  porcentagem,
+  onOpen,
+}: CardProps) => {
   return (
     <Box w="500px" h="300px" bg="#141416 90%" m="6">
       <HStack
@@ -83,7 +89,7 @@ export const CardBudget = ({ maximo, minimo, porcentagem }: CardProps) => {
             </Text>
           </HStack>
           <Button
-            onClick={() => {}}
+            onClick={onOpen}
             w="230px"
             bg="white"
             fontSize="24px"
