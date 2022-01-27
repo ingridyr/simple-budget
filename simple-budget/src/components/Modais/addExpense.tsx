@@ -31,8 +31,17 @@ interface ModalData {
   total: number;
 }
 
-export const ModalAddExpense = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+interface ModalAddExpenseProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
+
+export const ModalAddExpense = ({
+  isOpen,
+  onClose,
+  onOpen,
+}: ModalAddExpenseProps) => {
   const [despesa, setDespesa] = useState<ModalData>({} as ModalData);
 
   const {
@@ -45,18 +54,6 @@ export const ModalAddExpense = () => {
 
   return (
     <>
-      <Center w="70px" h="70px">
-        <Button
-          onClick={onOpen}
-          bg="white"
-          color="purple.500"
-          borderRadius="50%"
-          fontSize="40px"
-        >
-          +
-        </Button>
-      </Center>
-
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
