@@ -4,14 +4,9 @@ import {
   Image,
   Text,
   FormControl,
-  FormLabel,
   Button,
-  Input,
   Heading,
-  InputGroup,
-  InputLeftElement,
 } from "@chakra-ui/react";
-import { theme } from "../../styles/theme";
 
 import { useHistory } from "react-router-dom";
 
@@ -25,6 +20,8 @@ import Logo from "../../assets/Logo.png";
 import { useAuth } from "../../providers/AuthContext/index";
 
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+
+import {InputForm} from "../../components/Input/index"
 
 interface DataProps {
   name: string;
@@ -115,103 +112,10 @@ export const Signup = () => {
                 Cadastre-se <b>agora</b>, é de graça!
               </Heading>
 
-              <FormLabel htmlFor="name" fontSize="18px" mb="1">
-                Nome
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaEnvelope size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  type="text"
-                  border="2px solid"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("name")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.name?.message}
-                </Text>
-              </InputGroup>
-
-              <FormLabel htmlFor="email" fontSize="18px" mb="1">
-                Email
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaUser size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  border="2px solid"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("email")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.email?.message}
-                </Text>
-              </InputGroup>
-
-              <FormLabel htmlFor="password" fontSize="18px" mb="1">
-                Senha
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaLock size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  type="password"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("password")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.password?.message}
-                </Text>
-              </InputGroup>
-
-              <FormLabel htmlFor="confirm_password" fontSize="18px" mb="1">
-                Confirmar senha
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaLock size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  type="password"
-                  border="2px"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("confirm_password")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.confirm_password?.message}
-                </Text>
-              </InputGroup>
+              <InputForm name="name" label="Nome" register={register} error={errors.name} icon={FaUser}/>
+              <InputForm name="email" label="Email" register={register} error={errors.email} icon={FaEnvelope}/>
+              <InputForm name="password" label="Senha" type="password" register={register} error={errors.password} icon={FaLock}/>
+              <InputForm name="confirm_password" label="Confirmar Senha" type="password" register={register} error={errors.confirm_password} icon={FaLock}/>
 
               <Button
                 width="100%"

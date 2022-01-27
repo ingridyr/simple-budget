@@ -3,14 +3,9 @@ import {
   Image,
   Text,
   FormControl,
-  FormLabel,
   Button,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Heading,
 } from "@chakra-ui/react";
-import { theme } from "../../styles/theme";
 
 import { useHistory } from "react-router-dom";
 
@@ -24,6 +19,8 @@ import Logo from "../../assets/Logo.png";
 import { useAuth } from "../../providers/AuthContext/index";
 
 import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+
+import {InputForm} from "../../components/Input/index"
 
 interface LoginProps {
   email: string;
@@ -93,55 +90,9 @@ export const Login = () => {
                 Faça o <b>login</b>
               </Heading>
 
-              <FormLabel htmlFor="name" fontSize="18px">
-                Email
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaEnvelope size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  border="2px solid"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("email")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.email?.message}
-                </Text>
-              </InputGroup>
-
-              <FormLabel htmlFor="password" fontSize="18px">
-                Senha
-              </FormLabel>
-              <InputGroup flexDirection="column">
-                <InputLeftElement
-                  mt="2.5"
-                  children={
-                    <FaLock size={18} color={theme.colors.purple["500"]} />
-                  }
-                />
-                <Input
-                  border="2px solid"
-                  type="password"
-                  borderColor="purple.500"
-                  background="black.500"
-                  color="white"
-                  {...register("password")}
-                  height="60px"
-                  fontSize="lg"
-                />
-                <Text marginBottom="12px" color="red" fontSize="md">
-                  {errors.password?.message}
-                </Text>
-              </InputGroup>
-
+              <InputForm name="email" label="Email" register={register} error={errors.email} icon={FaEnvelope}/>
+              <InputForm name="password" label="Password" type="password" register={register} error={errors.password} icon={FaLock}/>
+              
               <Button
                 width="100%"
                 height="60px"
