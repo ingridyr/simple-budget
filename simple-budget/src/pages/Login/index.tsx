@@ -30,7 +30,7 @@ interface LoginProps {
 export const Login = () => {
   const history = useHistory();
 
-  const { login } = useAuth();
+  const { signin } = useAuth();
 
   const schema = yup.object().shape({
     email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -46,7 +46,7 @@ export const Login = () => {
   });
 
   const sendData = (data: LoginProps) => {
-    login(data);
+    signin(data);
   };
 
   return (

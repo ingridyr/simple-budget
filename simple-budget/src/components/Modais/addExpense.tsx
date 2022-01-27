@@ -62,7 +62,7 @@ export const ModalAddExpense = ({
           borderColor="green.500"
           pb="25px"
           borderRadius="10px"
-          boxShadow="1px 0px 62px 0px rgb(0,245,155)"
+          boxShadow="0px 1px 7px 2px #00F59B"
           as="form"
           onSubmit={handleSubmit(setDespesa)}
         >
@@ -119,7 +119,6 @@ export const ModalAddExpense = ({
               color="black.500"
               type="submit"
               border="3px solid"
-              borderColor="white"
               onClickCapture={() => {}}
               _hover={{
                 bg: "gray.600",
@@ -128,7 +127,7 @@ export const ModalAddExpense = ({
                 color: "white",
               }}
             >
-              Add expenssive
+              Add expense
             </Button>
           </ModalFooter>
         </ModalContent>

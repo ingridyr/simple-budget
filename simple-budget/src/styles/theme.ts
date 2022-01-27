@@ -3,6 +3,7 @@ import { extendTheme, theme as ChakraTheme } from "@chakra-ui/react";
 export const theme = extendTheme({
   colors: {
     black: {
+      300: "#141416",
       500: "#0B0B0B",
     },
     green: {
@@ -13,6 +14,11 @@ export const theme = extendTheme({
     },
     white: {
       0: "#FFFFFF",
+    },
+    gray: {
+      100: "#6C757D",
+      300: "#595959",
+      350: "#3C3D38",
     },
     gradient: {
       0: "linear-gradient(180deg, hsla(265, 90%, 51%, 1) 0%, hsla(0, 0%, 4%, 1) 100%)",

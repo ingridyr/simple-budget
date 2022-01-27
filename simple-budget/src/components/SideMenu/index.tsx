@@ -4,10 +4,11 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import { AiOutlineHome } from "react-icons/ai";
 
 export const SideMenu = ({ isSelected }: any) => {
+
   return (
     <Flex
       flexDirection="column"
-      minWidth="85px"
+      width="75px"
       bgColor="purple.500"
       h="200vh"
       justifyContent="flex-start"
@@ -15,6 +16,8 @@ export const SideMenu = ({ isSelected }: any) => {
       gap="30px"
       boxSizing="border-box"
       overflow='hidden'
+      position='fixed'
+      left='0'
     >
       <Image src={logo} alt="logo" p="5px 5px" w="90px" h="90px" marginTop="10px"/>
       <BsPlusCircleFill size={50} color="white.0" />

@@ -33,7 +33,7 @@ interface DataProps {
 export const Signup = () => {
   const history = useHistory();
 
-  const { createRegister } = useAuth();
+  const { signup } = useAuth();
 
   const schema = yup.object().shape({
     name: yup.string().required("Campo obrigatório"),
@@ -54,7 +54,7 @@ export const Signup = () => {
   });
 
   const sendData = (data: DataProps) => {
-    createRegister(data);
+    signup(data);
   };
 
   return (

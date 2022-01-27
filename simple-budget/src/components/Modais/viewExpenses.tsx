@@ -8,9 +8,12 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { AiFillEdit } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
+import { useAuth } from "../../providers/AuthContext";
+import { useExpenses } from "../../providers/ExpensesContext";
 
 interface ModalErrorProps {
   isOpen: boolean;
@@ -18,6 +21,23 @@ interface ModalErrorProps {
 }
 
 export const ModalViewExpenses = ({ isOpen, onClose }: ModalErrorProps) => {
+  const { expenses, deleteExpense } = useExpenses();
+  const { accessToken } = useAuth();
+
+  //adc depois duas props recebendo name e category do budget para substituir la em baixo
+
+  const toast = useToast();
+
+  const handleDelete = (item: any, accessToken: any) => {
+    toast({
+      title: "Até mais!",
+      duration: 9000,
+      isClosable: true,
+      position: "top",
+    });
+    deleteExpense(item, accessToken);
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -26,14 +46,14 @@ export const ModalViewExpenses = ({ isOpen, onClose }: ModalErrorProps) => {
           <ModalHeader>
             <Flex alignItems="center" justifyContent="space-between">
               <Heading>Name</Heading>
-              <Text color="#595959">Category</Text>
+              <Text color="gray.300">Category</Text>
             </Flex>
           </ModalHeader>
           <ModalBody>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((_) => (
+            {expenses.map((item) => (
               <>
                 <Flex
-                  bgColor="#141416"
+                  bgColor="black.300"
                   borderRadius="5px"
                   gap="10px"
                   m="20px 0"
@@ -42,7 +62,7 @@ export const ModalViewExpenses = ({ isOpen, onClose }: ModalErrorProps) => {
                 >
                   <Flex flexDirection="column">
                     <Heading color="white.0" size="md">
-                      Expense #1
+                      {item.name}
                     </Heading>
                     <Text
                       fontSize="sm"
@@ -50,14 +70,21 @@ export const ModalViewExpenses = ({ isOpen, onClose }: ModalErrorProps) => {
                       marginLeft="5px"
                       p="10px"
                     >
-                      Description
+                      {item.description}
                     </Text>
                   </Flex>
                   <Box display="block">
-                    <Text fontFamily="other" color="green.500">R$ 300,00</Text>
+                    <Text fontFamily="other" color="green.500">
+                      {item.amount}
+                    </Text>
                     <Flex m="10px" alignItems="center" gap="10px">
-                      <AiFillEdit color="#595959" size={25} cursor="pointer" />
-                      <FaTrash color="#595959" size={18} cursor="pointer" />
+                      <AiFillEdit color="gray.300" size={25} cursor="pointer" />
+                      <FaTrash
+                        color="gray.300"
+                        size={18}
+                        cursor="pointer"
+                        onClick={() => handleDelete(item.id, accessToken)}
+                      />
                     </Flex>
                   </Box>
                 </Flex>
