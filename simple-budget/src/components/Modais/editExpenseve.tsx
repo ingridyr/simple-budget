@@ -11,9 +11,6 @@ import {
   FormLabel,
   FormErrorMessage,
   Input as ChakraInput,
-  InputProps as ChakraInputProps,
-  useDisclosure,
-  Center,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,9 +26,17 @@ interface ModalData {
   titulo: string;
   total: number;
 }
+interface ModalEditExpenseProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}
 
-export const ModalEditExpense = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export const ModalEditExpense = ({
+  isOpen,
+  onClose,
+  onOpen,
+}: ModalEditExpenseProps) => {
   const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
 
   const {
@@ -42,21 +47,8 @@ export const ModalEditExpense = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log(expenseve);
   return (
     <>
-      <Center w="70px" h="70px">
-        <Button
-          onClick={onOpen}
-          bg="white"
-          color="purple.500"
-          borderRadius="50%"
-          fontSize="40px"
-        >
-          +
-        </Button>
-      </Center>
-
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
