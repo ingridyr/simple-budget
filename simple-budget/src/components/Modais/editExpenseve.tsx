@@ -18,26 +18,39 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object().shape({
-  titulo: yup.string().required("Titulo obrigatorio"),
+  title: yup.string().required("titulo obrigatorio"),
   total: yup.number().required("valor a ser inserido"),
 });
 
 interface ModalData {
-  titulo: string;
+  title: string;
   total: number;
 }
 interface ModalEditExpenseProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  objeto: ModalData;
 }
 
 export const ModalEditExpense = ({
   isOpen,
   onClose,
   onOpen,
+  objeto,
 }: ModalEditExpenseProps) => {
   const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
+  const [inputs, setInputs] = useState<ModalData>({
+    title: objeto.title,
+    total: objeto.total,
+  } as ModalData);
+
+  //aqui recebe a função do provider para efetuar a troca:
+  const trocaProvider = (data: ModalData) => {
+    setExpenseve(data);
+    //logica do provider
+    //...
+  };
 
   const {
     formState: { errors },
@@ -59,7 +72,7 @@ export const ModalEditExpense = ({
           borderRadius="10px"
           boxShadow="1px 0px 62px 0px rgb(0,245,155)"
           as="form"
-          onSubmit={handleSubmit(setExpenseve)}
+          onSubmit={handleSubmit(trocaProvider)}
         >
           <ModalHeader pb={4}></ModalHeader>
           <ModalCloseButton color="purple.500" fontSize="16px" />
@@ -74,17 +87,22 @@ export const ModalEditExpense = ({
               display="flex"
               flexDir="column"
               justifyContent="center"
+              color="white"
             >
-              <FormLabel fontSize="20px">Titulo</FormLabel>
+              <FormLabel fontSize="20px">title</FormLabel>
               <ChakraInput
                 bg="white"
                 p="28px 16px"
                 color="black.500"
-                placeholder="Titulo"
+                placeholder="title"
                 type="text"
-                {...register("titulo")}
+                value={inputs.title}
+                onChangeCapture={(e) =>
+                  setInputs({ ...inputs, title: e.currentTarget.value })
+                }
+                {...register("title")}
               />
-              <FormErrorMessage>{errors.titulo?.message}</FormErrorMessage>
+              <p>{errors.title?.message}</p>
             </FormControl>
 
             <FormControl
@@ -100,9 +118,13 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Total"
                 type="number"
+                value={inputs.total}
+                onChangeCapture={(e) =>
+                  setInputs({ ...inputs, total: Number(e.currentTarget.value) })
+                }
                 {...register("total")}
               />
-              <FormErrorMessage>{errors.total?.message}</FormErrorMessage>
+              <p>{errors.total?.message}</p>
             </FormControl>
           </ModalBody>
 
