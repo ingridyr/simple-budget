@@ -1,5 +1,6 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { SideMenu } from "../../components/SideMenu";
+import { CardBudget } from "../../components/Card/index";
 
 export const Dashboard = () => {
   return (
@@ -20,12 +21,15 @@ export const Dashboard = () => {
           m="10px"
         >
           {[1, 2, 3, 4, 5, 6, 7, 8].map((_) => (
-            <Box
+            <>
+              {/* <Box
               border="2px solid white"
               w="500px"
               h="250px"
               borderRadius="10px"
-            />
+            /> */}
+              <CardBudget maximo={1300} minimo={800} porcentagem={80} />
+            </>
           ))}
         </Flex>
       </Flex>
