@@ -106,4 +106,89 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 };
 
+// export const useAuth = () => useContext(AuthContext);
+
+//     const toast = useToast()
+
+//     const [data, setData] = useState<AuthState>(() => {
+//         const accessToken = localStorage.getItem("@SimpleBudget:accessToken")
+//         const user = localStorage.getItem("@SimpleBudget:user")
+
+//         if(accessToken && user) {
+//             return {
+//                 accessToken, user: JSON.parse(user)
+//             }
+//         }
+
+//         return {} as AuthState
+//     })
+
+//     const createRegister = (data: RegisterProps) => {
+//         const newData = {
+//             name: data.name,
+//             email: data.email,
+//             password: data.password
+//         }
+
+//         api.post("/signup/", newData)
+//         .then((response) => {
+//             toast({
+//                 title: "Cadastro Realizado!",
+//                 description: "Cadastro Realizado2",
+//                 status: "success",
+//                 duration: 5000,
+//                 isClosable: true
+//             })
+//             history.push("/login")
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//             toast({
+//                 title: "Falha no Cadastro!",
+//                 description: "Este Email pode já existir.",
+//                 status: "error",
+//                 duration: 5000,
+//                 isClosable: true
+//             })
+//         })
+//     }
+
+//     const login = (data: LoginProps) => {
+//         api.post("/login", data)
+//         .then((response) => {
+//             const accessToken = response.data.accessToken
+//             const user = response.data.user
+
+//             localStorage.setItem("@SimpleBudget:accessToken", accessToken)
+//             localStorage.setItem("@SimpleBudget:user", JSON.stringify(user))
+
+//             toast({
+//                 title: "Login Realizado!",
+//                 status: "success",
+//                 duration: 5000,
+//                 isClosable: true
+//             })
+
+//             setData({accessToken, user})
+//             history.push("/dashboard")
+//         })
+//         .catch((err) => {
+//             console.log(err)
+//             toast({
+//                 title: "Falha no Login!",
+//                 description: "Verifique os Campos Novamente.",
+//                 status: "error",
+//                 duration: 5000,
+//                 isClosable: true
+//             })
+//         })
+//     }
+
+//     return (
+//         <AuthContext.Provider value={{createRegister, login, accessToken: data.accessToken, user: data.user}}>
+//             {children}
+//         </AuthContext.Provider>
+//     )
+// }
+
 export const useAuth = () => useContext(AuthContext);
