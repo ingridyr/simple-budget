@@ -1,5 +1,6 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 // import { Home } from "../pages/Home/index";
+import { Home } from "../pages/Home";
 import { Signup } from "../pages/Signup/index";
 import { Login } from "../pages/Login/index";
 import { Dashboard } from "../pages/Dashboard/index";
@@ -10,7 +11,7 @@ export const Routes = () => {
 
   return (
     <Switch>
-      {/* <Route exact path="/" component={Home} /> */}
+      <Route exact path="/" component={Home} />
       <Route path="/signup" component={Signup}>
         {!!accessToken && <Redirect to="/dashboard" />}
       </Route>
