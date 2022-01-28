@@ -6,6 +6,11 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
+import {
+  MotionFlex,
+  animationFlex,
+  itemAnimation,
+} from "../../styles/animation";
 
 import { useHistory } from "react-router-dom";
 
@@ -18,9 +23,9 @@ import Logo from "../../assets/Logo.png";
 
 import { useAuth } from "../../providers/AuthContext/index";
 
-import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 
-import {InputForm} from "../../components/Input/index"
+import { InputForm } from "../../components/Input/index";
 
 interface LoginProps {
   email: string;
@@ -70,13 +75,20 @@ export const Login = () => {
             width={["300px", "400px", "600px"]}
             mt="8"
             mb="8"
+            // mr="16"
           />
         </Flex>
-        <Flex
+        <MotionFlex
           width={["100%", "100%", "40%", "40%"]}
           height="80vh"
           alignItems="center"
           justifyContent="center"
+          // framer-motion props
+          initial="hidden"
+          animate="visible"
+          variants={animationFlex}
+          // variants={itemAnimation}
+          ml={["0", "16"]}
         >
           <FormControl
             maxWidth="440px"
@@ -90,9 +102,22 @@ export const Login = () => {
                 Faça o <b>login</b>
               </Heading>
 
-              <InputForm name="email" label="Email" register={register} error={errors.email} icon={FaEnvelope}/>
-              <InputForm name="password" label="Password" type="password" register={register} error={errors.password} icon={FaLock}/>
-              
+              <InputForm
+                name="email"
+                label="Email"
+                register={register}
+                error={errors.email}
+                icon={FaEnvelope}
+              />
+              <InputForm
+                name="password"
+                label="Password"
+                type="password"
+                register={register}
+                error={errors.password}
+                icon={FaLock}
+              />
+
               <Button
                 width="100%"
                 height="60px"
@@ -122,7 +147,7 @@ export const Login = () => {
               </Button>
             </form>
           </FormControl>
-        </Flex>
+        </MotionFlex>
       </Flex>
     </>
   );
