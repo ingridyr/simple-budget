@@ -43,7 +43,7 @@ export const Home = () => {
           <Text fontSize="3xl" mt="8" align="center" fontWeight="bold">
             ...starting now
           </Text>
-          <Flex mt="8" w="100%" justifyContent="space-around">
+          <Flex mt="8" mb="8" w="100%" justifyContent="space-around">
             <Button
               isLoading={loading}
               h="60px"
