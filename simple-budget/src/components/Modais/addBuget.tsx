@@ -7,9 +7,11 @@ import {
   ModalBody,
   ModalCloseButton,
   Button,
+  Box,
   FormControl,
   FormLabel,
   FormErrorMessage,
+  useDisclosure,
   Input as ChakraInput,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -34,14 +36,20 @@ interface ModalEditExpenseProps {
   onOpen: () => void;
   onClose: () => void;
 }
-
-export const ModalAddBuget = ({
+/**
+{
   isOpen,
   onClose,
   onOpen,
-}: ModalEditExpenseProps) => {
+  categorys
+}: ModalEditExpenseProps
+ */
+export const ModalAddBuget = () => {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const [category, setCategory] = useState("");
   //aqui recebe a função do provider para efetuar a troca:
   const trocaProvider = (data: ModalData) => {
+    console.log(data);
     //logica do provider
     //...
   };
@@ -56,6 +64,7 @@ export const ModalAddBuget = ({
 
   return (
     <>
+      <Button onClick={onOpen}>Open Modal</Button>
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
@@ -68,7 +77,29 @@ export const ModalAddBuget = ({
           as="form"
           onSubmit={handleSubmit(trocaProvider)}
         >
-          <ModalHeader pb={4}></ModalHeader>
+          <ModalHeader color="white" pb={4}>
+            <Box
+              bg="black.500"
+              as="select"
+              name="categorias"
+              _focusVisible={{
+                outlineColor: "black.500",
+              }}
+            >
+              <Box as="option" value="">
+                Category
+              </Box>
+              {[1, 2, 3, 4, 5].map((num) => (
+                <Box
+                  as="option"
+                  value={num}
+                  onClick={() => console.log("escolha option")}
+                >
+                  second Box
+                </Box>
+              ))}
+            </Box>
+          </ModalHeader>
           <ModalCloseButton color="purple.500" fontSize="16px" />
           <ModalBody
             pb={3.5}
