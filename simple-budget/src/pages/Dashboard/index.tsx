@@ -1,19 +1,24 @@
-import { Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
+import { Flex, Heading, Text } from "@chakra-ui/react";
 import { SideMenu } from "../../components/SideMenu";
 import { CardBudget } from "../../components/Card/index";
-import { ModalAddExpense } from "../../components/Modais/addExpense";
 import { useBudgets } from "../../providers/BudgetsContext";
+import { useEffect } from "react";
+import { useAuth } from "../../providers/AuthContext";
 
 export const Dashboard = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { budgets } = useBudgets();
+  const { listBudgets, budgets } = useBudgets();
+  const { user, accessToken } = useAuth();
+  const userId = user.id;
+
+  useEffect(() => {
+    listBudgets(userId, accessToken);
+  }, []);
 
   return (
     <>
-      <ModalAddExpense isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <Flex justifyContent="center" alignItems="flex-start">
-        <SideMenu isSelected={true} onOpen={onOpen}/>
+        <SideMenu isSelected={true}/>
         <Flex
           flexDirection="column"
           justifyContent="center"
@@ -39,21 +44,20 @@ export const Dashboard = () => {
                 alignContent="flex-start"
                 m="10px"
               >
-                {budgets.map((_) => (
-                  <>
-                    <CardBudget
-                      maxValue={3000}
-                      minimo={800}
-                      percentage={80}
-                      categories={"Category"}
-                      //maxValue={item.max_value}
-                      //minimo={800}
-                      //percentage={80}
-                      //categories={item.categories}
-                      onOpen={onOpen}
-                    />
-                  </>
-                ))}
+                {budgets.map((item) => {
+                  return (
+                    <>
+                      <CardBudget
+                        budgetId={item.id}
+                        budgetName={item.name}
+                        totalSpend={800}
+                        percentage={80}
+                        categories={item.name}
+                        maxValue={item.max_value}
+                      />
+                    </>
+                  );
+                })}
               </Flex>
             </>
           ) : (

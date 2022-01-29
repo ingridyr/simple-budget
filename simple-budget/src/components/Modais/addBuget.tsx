@@ -9,7 +9,6 @@ import {
   Button,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input as ChakraInput,
   useToast,
 } from "@chakra-ui/react";
@@ -26,7 +25,7 @@ interface ModalData {
   userId: any;
 }
 
-interface ModalAddExpenseProps {
+interface ModalAddBudgetProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -39,7 +38,7 @@ const schema = yup.object().shape({
     .min(1, "minimum value greater than or equal to 1"),
 });
 
-export const ModalAddBuget = ({ isOpen, onClose }: ModalAddExpenseProps) => {
+export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
@@ -58,6 +57,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddExpenseProps) => {
       title: "Budget created successfully!",
       duration: 9000,
       isClosable: true,
+      status: "success",
       position: "top",
     });
 

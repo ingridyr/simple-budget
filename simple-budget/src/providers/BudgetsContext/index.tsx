@@ -17,12 +17,12 @@ interface Budget {
   name: string;
   max_value: number;
   categories: string[];
-  userId: any;
+  userId: number;
 }
 
 interface BudgetsContextData {
   budgets: Budget[];
-  listBudgets: (userId: string, accessToken: string) => Promise<void>;
+  listBudgets: (userId: number, accessToken: string) => Promise<void>;
   createBudget: (
     dataCreate: Omit<Budget, "id">,
     accessToken: string
@@ -53,7 +53,7 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
   const [errMessage, setErrMessage] = useState<string>("");
 
   const listBudgets = useCallback(
-    async (userId: string, accessToken: string) => {
+    async (userId: number, accessToken: string) => {
       try {
         const res = await api.get(`/budgets?userId=${userId}`, {
           headers: {
@@ -69,6 +69,7 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
     []
   );
 
+
   const createBudget = useCallback(
     async (dataCreate: Omit<Budget, "id">, accessToken: string) => {
       api
@@ -78,8 +79,8 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
           },
         })
         .then((response: AxiosResponse<Budget>) => {
-          console.log(response)
           setBudgets((oldBudgets) => [...oldBudgets, response.data]);
+          console.log(response);
         })
         .catch((err) => console.log(err));
     },
