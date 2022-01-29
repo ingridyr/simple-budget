@@ -6,9 +6,17 @@ import {
   FormControl,
   Button,
   Heading,
+  Link,
 } from "@chakra-ui/react";
 
+import {
+  MotionFlex,
+  animationFlex,
+  itemAnimation,
+} from "../../styles/animation";
+
 import { useHistory } from "react-router-dom";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -21,7 +29,7 @@ import { useAuth } from "../../providers/AuthContext/index";
 
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
-import {InputForm} from "../../components/Input/index"
+import { InputForm } from "../../components/Input/index";
 
 interface DataProps {
   name: string;
@@ -36,13 +44,13 @@ export const Signup = () => {
   const { signup } = useAuth();
 
   const schema = yup.object().shape({
-    name: yup.string().required("Campo obrigatório"),
-    email: yup.string().required("Campo obrigatório").email("Email inválido"),
-    password: yup.string().required("Campo obrigatório"),
+    name: yup.string().required("Mandatory field"),
+    email: yup.string().required("Mandatory field").email("Invalid email"),
+    password: yup.string().required("Mandatory field"),
     confirm_password: yup
       .string()
-      .required("Campo obrigatório")
-      .oneOf([yup.ref("password")], "Senhas diferentes"),
+      .required("Mandatory field")
+      .oneOf([yup.ref("password")], "Passwords didn't match"),
   });
 
   const {
@@ -78,27 +86,31 @@ export const Signup = () => {
           <Text
             width="70%"
             textAlign="right"
-            fontSize="4xl"
+            fontSize="3xl"
             marginBottom="30px"
             display={["none", "none", "flex", "flex"]}
           >
-            uma maneira simples e fácil de fazer amizade com sua vida financeira
-            :)
+            an easy and simple way to befriend with your financial life
           </Text>
           <Image
             src={SignupImage}
             alt="Signup Image"
             maxWidth="350px"
-            ml={["220px", "50px"]}
+            mt="6"
+            ml={["220px", "0px"]}
             display={["none", "none", "flex", "flex"]}
           />
         </Flex>
-        <Flex
-          width={["100%", "100%", "40%", "40%"]}
+        <MotionFlex
+          width={["100%", "100%", "50%", "40%"]}
           marginTop={["100px", "50px", "0px"]}
           alignItems="center"
           justifyContent="center"
           height="60vh"
+          // framer-motion props
+          initial="hidden"
+          animate="visible"
+          variants={animationFlex}
         >
           <FormControl
             maxWidth="440px"
@@ -106,16 +118,64 @@ export const Signup = () => {
             padding="20px"
             color="black.500"
             borderRadius="5px"
+            mr="4"
+            ml="4"
           >
             <form onSubmit={handleSubmit(sendData)}>
-              <Heading fontSize="24px" fontWeight="normal" mb="6">
-                Cadastre-se <b>agora</b>, é de graça!
-              </Heading>
+              <Flex justifyContent="space-between" alignItems="center" mb="6">
+                <Heading
+                  fontSize={["24px", "24px", "20px", "24px"]}
+                  fontWeight="bold"
+                >
+                  Sign up
+                </Heading>
+                <Flex flexDirection={["column", "row"]}>
+                  <Text color="gray.350" mr={["0", "2"]}>
+                    Already have an account?{" "}
+                  </Text>
+                  <Link
+                    color="purple.500"
+                    fontWeight="bold"
+                    _hover={{ color: "purple.700" }}
+                    as={ReactRouterLink}
+                    to="/login"
+                    textAlign="right"
+                  >
+                    Login now
+                  </Link>
+                </Flex>
+              </Flex>
 
-              <InputForm name="name" label="Nome" register={register} error={errors.name} icon={FaUser}/>
-              <InputForm name="email" label="Email" register={register} error={errors.email} icon={FaEnvelope}/>
-              <InputForm name="password" label="Senha" type="password" register={register} error={errors.password} icon={FaLock}/>
-              <InputForm name="confirm_password" label="Confirmar Senha" type="password" register={register} error={errors.confirm_password} icon={FaLock}/>
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                error={errors.name}
+                icon={FaUser}
+              />
+              <InputForm
+                name="email"
+                label="Email"
+                register={register}
+                error={errors.email}
+                icon={FaEnvelope}
+              />
+              <InputForm
+                name="password"
+                label="Password"
+                type="password"
+                register={register}
+                error={errors.password}
+                icon={FaLock}
+              />
+              <InputForm
+                name="confirm_password"
+                label="Confirm password"
+                type="password"
+                register={register}
+                error={errors.confirm_password}
+                icon={FaLock}
+              />
 
               <Button
                 width="100%"
@@ -126,26 +186,13 @@ export const Signup = () => {
                 fontWeight="normal"
                 fontSize="lg"
                 mt="6"
+                _hover={{ transform: "scale(1.02)" }}
               >
-                CADASTRAR
-              </Button>
-              <Text textAlign="right" mt="4" mb="2">
-                Já possuí uma conta?
-              </Text>
-              <Button
-                width="100%"
-                height="60px"
-                background="gradient.0"
-                color="white"
-                fontWeight="normal"
-                fontSize="lg"
-                onClick={() => history.push("/login")}
-              >
-                FAZER LOGIN
+                SIGN UP
               </Button>
             </form>
           </FormControl>
-        </Flex>
+        </MotionFlex>
       </Flex>
     </>
   );

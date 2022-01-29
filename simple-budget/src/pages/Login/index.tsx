@@ -6,6 +6,7 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
+
 import {
   MotionFlex,
   animationFlex,
@@ -38,8 +39,8 @@ export const Login = () => {
   const { signin } = useAuth();
 
   const schema = yup.object().shape({
-    email: yup.string().required("Campo obrigatório").email("Email inválido"),
-    password: yup.string().required("Campo obrigatório"),
+    email: yup.string().required("Mandatory field").email("Invalid email"),
+    password: yup.string().required("Mandatory field"),
   });
 
   const {
@@ -96,10 +97,13 @@ export const Login = () => {
             padding="20px"
             color="black.500"
             borderRadius="5px"
+            mr="4"
+            ml="4"
+            mb="4"
           >
             <form onSubmit={handleSubmit(sendData)}>
-              <Heading fontSize="24px" fontWeight="normal" mb="6">
-                Faça o <b>login</b>
+              <Heading fontSize="24px" fontWeight="bold" mb="6">
+                Login
               </Heading>
 
               <InputForm
@@ -127,12 +131,12 @@ export const Login = () => {
                 fontSize="lg"
                 type="submit"
                 mt="6"
-                // _hover={{ bg: "" }}
+                _hover={{ transform: "scale(1.02)" }}
               >
-                ENTRAR
+                LOGIN
               </Button>
               <Text textAlign="right" mt="4" mb="2">
-                Não possuí uma conta?
+                Don't have an account yet?
               </Text>
               <Button
                 width="100%"
@@ -141,9 +145,10 @@ export const Login = () => {
                 color="white"
                 fontWeight="normal"
                 fontSize="lg"
+                _hover={{ transform: "scale(1.02)" }}
                 onClick={() => history.push("/signup")}
               >
-                CADASTRAR
+                SIGN UP
               </Button>
             </form>
           </FormControl>

@@ -35,7 +35,7 @@ const schema = yup.object().shape({
   max_value: yup
     .number()
     .required("Field required")
-    .min(1, "minimum value greater than or equal to 1"),
+    .min(1, "Minimum value greater than or equal to 1"),
 });
 
 export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
@@ -161,7 +161,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 color: "white",
               }}
             >
-              Add Budget
+              Add budget
             </Button>
           </ModalFooter>
         </ModalContent>
