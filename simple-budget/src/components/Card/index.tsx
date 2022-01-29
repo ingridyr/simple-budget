@@ -19,20 +19,20 @@ import { useExpenses } from "../../providers/ExpensesContext";
 
 interface CardProps {
   budgetName: string;
+  budgetCategories: string[]
   budgetId: string;
   maxValue: number;
   totalSpend: number;
   percentage: number;
-  categories: any;
 }
 
 export const CardBudget = ({
   budgetId,
   budgetName,
+  budgetCategories,
   maxValue,
   totalSpend,
   percentage,
-  categories,
 }: CardProps) => {
   const {
     isOpen: isModalViewExpensesOpen,
@@ -61,12 +61,15 @@ export const CardBudget = ({
     listExpenses(budgetId, accessToken);
   };
 
+  console.log(budgetCategories)
+
   return (
     <>
       <ModalAddExpense
         isOpen={isModalAddExpenseOpen}
         onClose={onModalAddExpenseClose}
         budgetId={budgetId}
+        budgetCategories={budgetCategories}
       />
       <ModalViewExpenses
         isOpen={isModalViewExpensesOpen}
@@ -82,7 +85,7 @@ export const CardBudget = ({
           paddingTop="12px"
         >
           <Heading pl="30px" fontWeight="medium">
-            {categories}
+            {budgetName}
           </Heading>
           <HStack pr="30px" spacing="5">
             <Icon

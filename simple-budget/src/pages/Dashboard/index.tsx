@@ -50,9 +50,9 @@ export const Dashboard = () => {
                       <CardBudget
                         budgetId={item.id}
                         budgetName={item.name}
+                        budgetCategories={item.categories}
                         totalSpend={800}
                         percentage={80}
-                        categories={item.name}
                         maxValue={item.max_value}
                       />
                     </>

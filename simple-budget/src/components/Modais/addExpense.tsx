@@ -35,12 +35,14 @@ interface ModalData {
 }
 
 interface ModalAddExpenseProps {
+  budgetCategories: string[];
   budgetId: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 export const ModalAddExpense = ({
+  budgetCategories,
   budgetId,
   isOpen,
   onClose,
@@ -66,7 +68,6 @@ export const ModalAddExpense = ({
       type: type,
       budgetId: budgetId,
     };
-    //console.log(newData);
     createExpense(newData, accessToken);
   };
 
@@ -92,7 +93,7 @@ export const ModalAddExpense = ({
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalCloseButton color="purple.500" fontSize="16px" m="8px"/>
+          <ModalCloseButton color="purple.500" fontSize="16px" m="8px" />
           <ModalBody
             pb={3.5}
             w="90%"
@@ -120,21 +121,11 @@ export const ModalAddExpense = ({
                 <Box as="option" disabled selected value="">
                   Choose the category
                 </Box>
-                <Box as="option" value="food">
-                  Food
-                </Box>
-                <Box as="option" value="enterteinment">
-                  Enterteinment
-                </Box>
-                <Box as="option" value="transport">
-                  Transport
-                </Box>
-                <Box as="option" value="home">
-                  Home
-                </Box>
-                <Box as="option" value="others">
-                  Others
-                </Box>
+                {budgetCategories.map((item) => (
+                  <Box as="option" value={item}>
+                    {item}
+                  </Box>
+                ))}
               </Box>
               <FormLabel marginTop="10px" fontSize="18px">
                 Name
