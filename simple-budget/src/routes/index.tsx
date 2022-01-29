@@ -11,7 +11,6 @@ export const Routes = () => {
   return (
     <Switch>
       <Route exact path="/" component={Home} />
-      {!!accessToken && <Redirect to="/dashboard" />}
       <Route path="/signup" component={Signup}>
         {!!accessToken && <Redirect to="/dashboard" />}
       </Route>
