@@ -97,10 +97,13 @@ export const Login = () => {
             padding="20px"
             color="black.500"
             borderRadius="5px"
+            mr="4"
+            ml="4"
+            mb="4"
           >
             <form onSubmit={handleSubmit(sendData)}>
-              <Heading fontSize="24px" fontWeight="normal" mb="6">
-                Faça o <b>login</b>
+              <Heading fontSize="24px" fontWeight="bold" mb="6">
+                Login
               </Heading>
 
               <InputForm
@@ -130,10 +133,10 @@ export const Login = () => {
                 mt="6"
                 _hover={{ transform: "scale(1.02)" }}
               >
-                ENTRAR
+                LOGIN
               </Button>
               <Text textAlign="right" mt="4" mb="2">
-                Não possuí uma conta?
+                Don't have an account yet?
               </Text>
               <Button
                 width="100%"
@@ -145,7 +148,7 @@ export const Login = () => {
                 _hover={{ transform: "scale(1.02)" }}
                 onClick={() => history.push("/signup")}
               >
-                CADASTRAR
+                SIGN UP
               </Button>
             </form>
           </FormControl>

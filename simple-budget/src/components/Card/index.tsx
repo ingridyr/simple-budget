@@ -155,7 +155,7 @@ export const CardBudget = ({
                 bg: "gray.100",
               }}
             >
-              View Expenses
+              View expenses
             </Button>
           </VStack>
         </Flex>
