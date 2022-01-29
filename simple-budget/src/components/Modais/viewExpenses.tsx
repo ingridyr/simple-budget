@@ -30,7 +30,7 @@ export const ModalViewExpenses = ({ isOpen, onClose }: ModalViewExpensesProps) =
 
   const handleDelete = (item: any, accessToken: any) => {
     toast({
-      title: "Até mais!",
+      title: "Bye bye!",
       duration: 9000,
       isClosable: true,
       position: "top",

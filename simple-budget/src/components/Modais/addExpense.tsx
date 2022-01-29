@@ -80,7 +80,7 @@ export const ModalAddExpense = ({
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Titulo</FormLabel>
+              <FormLabel fontSize="20px">Title</FormLabel>
               <ChakraInput
                 bg="white"
                 p="28px 16px"

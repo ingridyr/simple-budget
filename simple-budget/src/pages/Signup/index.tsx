@@ -6,6 +6,7 @@ import {
   FormControl,
   Button,
   Heading,
+  Link,
 } from "@chakra-ui/react";
 
 import {
@@ -15,6 +16,7 @@ import {
 } from "../../styles/animation";
 
 import { useHistory } from "react-router-dom";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -84,23 +86,23 @@ export const Signup = () => {
           <Text
             width="70%"
             textAlign="right"
-            fontSize="4xl"
+            fontSize="3xl"
             marginBottom="30px"
             display={["none", "none", "flex", "flex"]}
           >
-            uma maneira simples e fácil de fazer amizade com sua vida financeira
-            :)
+            an easy and simple way to befriend with your financial life
           </Text>
           <Image
             src={SignupImage}
             alt="Signup Image"
             maxWidth="350px"
-            ml={["220px", "50px"]}
+            mt="6"
+            ml={["220px", "0px"]}
             display={["none", "none", "flex", "flex"]}
           />
         </Flex>
         <MotionFlex
-          width={["100%", "100%", "40%", "40%"]}
+          width={["100%", "100%", "50%", "40%"]}
           marginTop={["100px", "50px", "0px"]}
           alignItems="center"
           justifyContent="center"
@@ -116,15 +118,37 @@ export const Signup = () => {
             padding="20px"
             color="black.500"
             borderRadius="5px"
+            mr="4"
+            ml="4"
           >
             <form onSubmit={handleSubmit(sendData)}>
-              <Heading fontSize="24px" fontWeight="normal" mb="6">
-                Cadastre-se <b>agora</b>, é de graça!
-              </Heading>
+              <Flex justifyContent="space-between" alignItems="center" mb="6">
+                <Heading
+                  fontSize={["24px", "24px", "20px", "24px"]}
+                  fontWeight="bold"
+                >
+                  Sign up
+                </Heading>
+                <Flex flexDirection={["column", "row"]}>
+                  <Text color="gray.350" mr={["0", "2"]}>
+                    Already have an account?{" "}
+                  </Text>
+                  <Link
+                    color="purple.500"
+                    fontWeight="bold"
+                    _hover={{ color: "purple.700" }}
+                    as={ReactRouterLink}
+                    to="/login"
+                    textAlign="right"
+                  >
+                    Login now
+                  </Link>
+                </Flex>
+              </Flex>
 
               <InputForm
                 name="name"
-                label="Nome"
+                label="Name"
                 register={register}
                 error={errors.name}
                 icon={FaUser}
@@ -138,7 +162,7 @@ export const Signup = () => {
               />
               <InputForm
                 name="password"
-                label="Senha"
+                label="Password"
                 type="password"
                 register={register}
                 error={errors.password}
@@ -146,7 +170,7 @@ export const Signup = () => {
               />
               <InputForm
                 name="confirm_password"
-                label="Confirmar Senha"
+                label="Confirm password"
                 type="password"
                 register={register}
                 error={errors.confirm_password}
@@ -164,22 +188,7 @@ export const Signup = () => {
                 mt="6"
                 _hover={{ transform: "scale(1.02)" }}
               >
-                CADASTRAR
-              </Button>
-              <Text textAlign="right" mt="4" mb="2">
-                Já possuí uma conta?
-              </Text>
-              <Button
-                width="100%"
-                height="60px"
-                background="gradient.0"
-                color="white"
-                fontWeight="normal"
-                fontSize="lg"
-                _hover={{ transform: "scale(1.02)" }}
-                onClick={() => history.push("/login")}
-              >
-                FAZER LOGIN
+                SIGN UP
               </Button>
             </form>
           </FormControl>
