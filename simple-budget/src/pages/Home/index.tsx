@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import {
   MotionFlex,
   animationFlex,
@@ -19,7 +19,7 @@ export const Home = () => {
   };
 
   return (
-    <>
+    <Box height="100vh">
       <Image src={Logo} alt="Logo" pt="15px" pl="15px" />
       <MotionFlex
         justifyContent="center"
@@ -75,6 +75,6 @@ export const Home = () => {
           </Flex>
         </Flex>
       </MotionFlex>
-    </>
+    </Box>
   );
 };
