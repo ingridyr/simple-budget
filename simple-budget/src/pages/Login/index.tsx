@@ -6,6 +6,7 @@ import {
   Button,
   Heading,
 } from "@chakra-ui/react";
+
 import {
   MotionFlex,
   animationFlex,
@@ -127,7 +128,7 @@ export const Login = () => {
                 fontSize="lg"
                 type="submit"
                 mt="6"
-                // _hover={{ bg: "" }}
+                _hover={{ transform: "scale(1.02)" }}
               >
                 ENTRAR
               </Button>
@@ -141,6 +142,7 @@ export const Login = () => {
                 color="white"
                 fontWeight="normal"
                 fontSize="lg"
+                _hover={{ transform: "scale(1.02)" }}
                 onClick={() => history.push("/signup")}
               >
                 CADASTRAR
