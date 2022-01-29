@@ -8,6 +8,12 @@ import {
   Heading,
 } from "@chakra-ui/react";
 
+import {
+  MotionFlex,
+  animationFlex,
+  itemAnimation,
+} from "../../styles/animation";
+
 import { useHistory } from "react-router-dom";
 
 import * as yup from "yup";
@@ -21,7 +27,7 @@ import { useAuth } from "../../providers/AuthContext/index";
 
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 
-import {InputForm} from "../../components/Input/index"
+import { InputForm } from "../../components/Input/index";
 
 interface DataProps {
   name: string;
@@ -93,12 +99,16 @@ export const Signup = () => {
             display={["none", "none", "flex", "flex"]}
           />
         </Flex>
-        <Flex
+        <MotionFlex
           width={["100%", "100%", "40%", "40%"]}
           marginTop={["100px", "50px", "0px"]}
           alignItems="center"
           justifyContent="center"
           height="60vh"
+          // framer-motion props
+          initial="hidden"
+          animate="visible"
+          variants={animationFlex}
         >
           <FormControl
             maxWidth="440px"
@@ -112,10 +122,36 @@ export const Signup = () => {
                 Cadastre-se <b>agora</b>, é de graça!
               </Heading>
 
-              <InputForm name="name" label="Nome" register={register} error={errors.name} icon={FaUser}/>
-              <InputForm name="email" label="Email" register={register} error={errors.email} icon={FaEnvelope}/>
-              <InputForm name="password" label="Senha" type="password" register={register} error={errors.password} icon={FaLock}/>
-              <InputForm name="confirm_password" label="Confirmar Senha" type="password" register={register} error={errors.confirm_password} icon={FaLock}/>
+              <InputForm
+                name="name"
+                label="Nome"
+                register={register}
+                error={errors.name}
+                icon={FaUser}
+              />
+              <InputForm
+                name="email"
+                label="Email"
+                register={register}
+                error={errors.email}
+                icon={FaEnvelope}
+              />
+              <InputForm
+                name="password"
+                label="Senha"
+                type="password"
+                register={register}
+                error={errors.password}
+                icon={FaLock}
+              />
+              <InputForm
+                name="confirm_password"
+                label="Confirmar Senha"
+                type="password"
+                register={register}
+                error={errors.confirm_password}
+                icon={FaLock}
+              />
 
               <Button
                 width="100%"
@@ -126,6 +162,7 @@ export const Signup = () => {
                 fontWeight="normal"
                 fontSize="lg"
                 mt="6"
+                _hover={{ transform: "scale(1.02)" }}
               >
                 CADASTRAR
               </Button>
@@ -139,13 +176,14 @@ export const Signup = () => {
                 color="white"
                 fontWeight="normal"
                 fontSize="lg"
+                _hover={{ transform: "scale(1.02)" }}
                 onClick={() => history.push("/login")}
               >
                 FAZER LOGIN
               </Button>
             </form>
           </FormControl>
-        </Flex>
+        </MotionFlex>
       </Flex>
     </>
   );
