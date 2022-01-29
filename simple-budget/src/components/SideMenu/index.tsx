@@ -6,10 +6,10 @@ import { ModalAddBuget } from "../Modais/addBuget";
 
 interface SideMenuProps {
   isSelected: any;
-  onOpen: () => void;
 }
 
 export const SideMenu = ({ isSelected }: SideMenuProps) => {
+
   const {
     isOpen: isModalAddBudgetOpen,
     onOpen: onModalAddBudgetOpen,

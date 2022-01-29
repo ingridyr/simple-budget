@@ -13,21 +13,26 @@ import { AiFillEdit } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { ModalViewExpenses } from "../Modais/viewExpenses";
+import { ModalAddExpense } from "../../components/Modais/addExpense";
+import { useAuth } from "../../providers/AuthContext";
+import { useExpenses } from "../../providers/ExpensesContext";
 
 interface CardProps {
+  budgetName: string;
+  budgetCategories: string[]
+  budgetId: string;
   maxValue: number;
-  minimo: number;
+  totalSpend: number;
   percentage: number;
-  categories: any;
-  onOpen: () => void;
 }
 
 export const CardBudget = ({
+  budgetId,
+  budgetName,
+  budgetCategories,
   maxValue,
-  minimo,
+  totalSpend,
   percentage,
-  categories,
-  onOpen,
 }: CardProps) => {
   const {
     isOpen: isModalViewExpensesOpen,
@@ -35,11 +40,42 @@ export const CardBudget = ({
     onClose: onModalViewExpensesClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isModalAddExpenseOpen,
+    onOpen: onModalAddExpenseOpen,
+    onClose: onModalAddExpenseClose,
+  } = useDisclosure();
+
+  //ler o maxValue do budget
+  //ler e reduzir todos os valores amount das expenses do budget
+  //calcular a porcentagem do total de amounts pelo maxValue do budget
+
+  //chamar o modal addExpense
+  //passar o budgetId para ele
+
+  const { accessToken } = useAuth();
+  const { listExpenses } = useExpenses();
+
+  const handleClick = () => {
+    onModalViewExpensesOpen();
+    listExpenses(budgetId, accessToken);
+  };
+
+  console.log(budgetCategories)
+
   return (
     <>
+      <ModalAddExpense
+        isOpen={isModalAddExpenseOpen}
+        onClose={onModalAddExpenseClose}
+        budgetId={budgetId}
+        budgetCategories={budgetCategories}
+      />
       <ModalViewExpenses
         isOpen={isModalViewExpensesOpen}
         onClose={onModalViewExpensesClose}
+        budgetId={budgetId}
+        budgetName={budgetName}
       />
       <Box w="500px" h="300px" bg="black.300" m="6" borderRadius="10px" p="5px">
         <HStack
@@ -49,7 +85,7 @@ export const CardBudget = ({
           paddingTop="12px"
         >
           <Heading pl="30px" fontWeight="medium">
-            {categories}
+            {budgetName}
           </Heading>
           <HStack pr="30px" spacing="5">
             <Icon
@@ -110,11 +146,11 @@ export const CardBudget = ({
                 R$ {maxValue}
               </Heading>
               <Text fontSize="24px" color="gray.100">
-                / R$ {minimo}
+                / R$ {totalSpend}
               </Text>
             </HStack>
             <Button
-              onClick={onOpen}
+              onClick={() => onModalAddExpenseOpen()}
               w="230px"
               h="60px"
               bg="white"
@@ -136,7 +172,7 @@ export const CardBudget = ({
               Add expense
             </Button>
             <Button
-              onClick={() => onModalViewExpensesOpen()}
+              onClick={handleClick}
               w="230px"
               h="60px"
               bg="white"

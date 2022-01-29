@@ -2,47 +2,74 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Input as ChakraInput,
   InputProps as ChakraInputProps,
-  InputGroup,
-  useDisclosure,
-  Center,
+  Box,
+  useToast,
 } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useExpenses } from "../../providers/ExpensesContext";
+import { useAuth } from "../../providers/AuthContext";
 
 const schema = yup.object().shape({
-  titulo: yup.string().required("Titulo obrigatorio"),
-  total: yup.number().required("valor a ser inserido"),
+  name: yup.string().required("Field required"),
+  description: yup.string().required("Field required"),
+  amount: yup.number().required("Field required"),
+  type: yup.string().required("Choose a category"),
 });
 
 interface ModalData {
-  titulo: string;
-  total: number;
+  name: string;
+  description: string;
+  amount: number;
+  type: string;
+  userId: string;
 }
 
 interface ModalAddExpenseProps {
+  budgetCategories: string[];
+  budgetId: string;
   isOpen: boolean;
-  onOpen: () => void;
   onClose: () => void;
 }
 
 export const ModalAddExpense = ({
+  budgetCategories,
+  budgetId,
   isOpen,
   onClose,
-  onOpen,
 }: ModalAddExpenseProps) => {
-  const [despesa, setDespesa] = useState<ModalData>({} as ModalData);
+  const { createExpense } = useExpenses();
+  const { accessToken } = useAuth();
+
+  const toast = useToast();
+
+  const onSubmitFunction = ({ name, description, amount, type }: ModalData) => {
+    toast({
+      title: "Expense created successfully!",
+      duration: 9000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+    });
+
+    const newData = {
+      name: name,
+      description: description,
+      amount: amount,
+      type: type,
+      budgetId: budgetId,
+    };
+    createExpense(newData, accessToken);
+  };
 
   const {
     formState: { errors },
@@ -64,10 +91,9 @@ export const ModalAddExpense = ({
           borderRadius="10px"
           boxShadow="0px 1px 7px 2px #00F59B"
           as="form"
-          onSubmit={handleSubmit(setDespesa)}
+          onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalHeader pb={4}></ModalHeader>
-          <ModalCloseButton color="purple.500" fontSize="16px" />
+          <ModalCloseButton color="purple.500" fontSize="16px" m="8px" />
           <ModalBody
             pb={3.5}
             w="90%"
@@ -79,35 +105,65 @@ export const ModalAddExpense = ({
               display="flex"
               flexDir="column"
               justifyContent="center"
+              color="white"
             >
-              <FormLabel fontSize="20px">Title</FormLabel>
+              <Box
+                bg="black.500"
+                as="select"
+                _focusVisible={{
+                  outlineColor: "black.500",
+                }}
+                w="70%"
+                fontSize="20px"
+                marginTop="10px"
+                {...register("type")}
+              >
+                <Box as="option" disabled selected value="">
+                  Choose the category
+                </Box>
+                {budgetCategories.map((item) => (
+                  <Box as="option" value={item}>
+                    {item}
+                  </Box>
+                ))}
+              </Box>
+              <FormLabel marginTop="10px" fontSize="18px">
+                Name
+              </FormLabel>
               <ChakraInput
                 bg="white"
-                p="28px 16px"
+                p="23px"
                 color="black.500"
-                placeholder="Titulo"
+                placeholder="Ex: Cardiologist"
                 type="text"
-                {...register("titulo")}
+                {...register("name")}
               />
-              <FormErrorMessage>{errors.titulo?.message}</FormErrorMessage>
-            </FormControl>
 
-            <FormControl
-              mt={4}
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-            >
-              <FormLabel fontSize="20px">Total</FormLabel>
+              <FormLabel marginTop="10px" fontSize="18px">
+                Description
+              </FormLabel>
               <ChakraInput
                 bg="white"
-                p="28px 16px"
+                p="23px"
                 color="black.500"
-                placeholder="Total"
-                type="number"
-                {...register("total")}
+                outline="none"
+                type="text"
+                placeholder="Ex: Medical check - Dr.Strauss"
+                {...register("description")}
               />
-              <FormErrorMessage>{errors.total?.message}</FormErrorMessage>
+
+              <FormLabel marginTop="10px" fontSize="18px">
+                Amount
+              </FormLabel>
+              <ChakraInput
+                bg="white"
+                p="23px"
+                color="black.500"
+                outline="none"
+                type="number"
+                placeholder="Ex: 300.00"
+                {...register("amount")}
+              />
             </FormControl>
           </ModalBody>
 
@@ -119,6 +175,7 @@ export const ModalAddExpense = ({
               color="black.500"
               type="submit"
               border="3px solid"
+              borderRadius="10px"
               onClickCapture={() => {}}
               _hover={{
                 bg: "gray.600",
