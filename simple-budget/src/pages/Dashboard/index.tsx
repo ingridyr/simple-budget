@@ -13,7 +13,7 @@ export const Dashboard = () => {
     <>
       <ModalAddExpense isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
       <Flex justifyContent="center" alignItems="flex-start">
-        <SideMenu isSelected={true} />
+        <SideMenu isSelected={true} onOpen={onOpen}/>
         <Flex
           flexDirection="column"
           justifyContent="center"

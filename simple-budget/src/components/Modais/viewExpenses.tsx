@@ -15,12 +15,12 @@ import { FaTrash } from "react-icons/fa";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
 
-interface ModalErrorProps {
+interface ModalViewExpensesProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export const ModalViewExpenses = ({ isOpen, onClose }: ModalErrorProps) => {
+export const ModalViewExpenses = ({ isOpen, onClose }: ModalViewExpensesProps) => {
   const { expenses, deleteExpense } = useExpenses();
   const { accessToken } = useAuth();
 
