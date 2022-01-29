@@ -17,7 +17,7 @@ interface Budget {
   name: string;
   max_value: number;
   categories: string[];
-  userId: string;
+  userId: any;
 }
 
 interface BudgetsContextData {
@@ -78,6 +78,7 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
           },
         })
         .then((response: AxiosResponse<Budget>) => {
+          console.log(response)
           setBudgets((oldBudgets) => [...oldBudgets, response.data]);
         })
         .catch((err) => console.log(err));

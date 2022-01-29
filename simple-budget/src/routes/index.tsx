@@ -1,9 +1,8 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-// import { Home } from "../pages/Home/index";
-import { Home } from "../pages/Home";
-import { Signup } from "../pages/Signup/index";
-import { Login } from "../pages/Login/index";
-import { Dashboard } from "../pages/Dashboard/index";
+import { Home } from "../pages/Home/index";
+import { Signup } from "../pages/Signup";
+import { Login } from "../pages/Login";
+import { Dashboard } from "../pages/Dashboard";
 import { useAuth } from "../providers/AuthContext";
 
 export const Routes = () => {
