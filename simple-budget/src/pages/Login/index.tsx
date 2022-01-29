@@ -39,8 +39,8 @@ export const Login = () => {
   const { signin } = useAuth();
 
   const schema = yup.object().shape({
-    email: yup.string().required("Campo obrigatório").email("Email inválido"),
-    password: yup.string().required("Campo obrigatório"),
+    email: yup.string().required("Mandatory field").email("Invalid email"),
+    password: yup.string().required("Mandatory field"),
   });
 
   const {

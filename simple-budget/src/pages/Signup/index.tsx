@@ -44,13 +44,13 @@ export const Signup = () => {
   const { signup } = useAuth();
 
   const schema = yup.object().shape({
-    name: yup.string().required("Campo obrigatório"),
-    email: yup.string().required("Campo obrigatório").email("Email inválido"),
-    password: yup.string().required("Campo obrigatório"),
+    name: yup.string().required("Mandatory field"),
+    email: yup.string().required("Mandatory field").email("Invalid email"),
+    password: yup.string().required("Mandatory field"),
     confirm_password: yup
       .string()
-      .required("Campo obrigatório")
-      .oneOf([yup.ref("password")], "Senhas diferentes"),
+      .required("Mandatory field")
+      .oneOf([yup.ref("password")], "Passwords didn't match"),
   });
 
   const {
