@@ -34,6 +34,8 @@ interface ExpensesContextData {
     dataUpdate: Omit<Expense, "id" | "budgetId">
   ) => Promise<void>;
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
+  listAllExpenses: (accessToken: string) => Promise<void>;
+  allExpenses: Expense[];
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -51,7 +53,22 @@ const useExpenses = () => {
 
 const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [errMessage, setErrMessage] = useState<string>("");
+  const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
+  //const [errMessage, setErrMessage] = useState<string>("");
+
+  const listAllExpenses = useCallback(async (accessToken: string) => {
+    try {
+      const res = await api.get("/expenses", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      setAllExpenses(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   const listExpenses = useCallback(
     async (budgetId: string, accessToken: string) => {
@@ -152,6 +169,8 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         createExpense,
         updateExpense,
         deleteExpense,
+        listAllExpenses,
+        allExpenses,
       }}
     >
       {children}

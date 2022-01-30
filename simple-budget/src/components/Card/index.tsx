@@ -8,6 +8,7 @@ import {
   Icon,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { AiFillEdit } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
@@ -16,14 +17,14 @@ import { ModalViewExpenses } from "../Modais/viewExpenses";
 import { ModalAddExpense } from "../../components/Modais/addExpense";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
+import { useEffect } from "react";
+import { useBudgets } from "../../providers/BudgetsContext";
 
 interface CardProps {
   budgetName: string;
-  budgetCategories: string[]
+  budgetCategories: string[];
   budgetId: string;
   maxValue: number;
-  totalSpend: number;
-  percentage: number;
 }
 
 export const CardBudget = ({
@@ -31,8 +32,6 @@ export const CardBudget = ({
   budgetName,
   budgetCategories,
   maxValue,
-  totalSpend,
-  percentage,
 }: CardProps) => {
   const {
     isOpen: isModalViewExpensesOpen,
@@ -46,22 +45,35 @@ export const CardBudget = ({
     onClose: onModalAddExpenseClose,
   } = useDisclosure();
 
-  //ler o maxValue do budget
-  //ler e reduzir todos os valores amount das expenses do budget
-  //calcular a porcentagem do total de amounts pelo maxValue do budget
-
-  //chamar o modal addExpense
-  //passar o budgetId para ele
-
+  const { listAllExpenses, allExpenses, listExpenses, expenses } = useExpenses();
   const { accessToken } = useAuth();
-  const { listExpenses } = useExpenses();
+  const { deleteBudget } = useBudgets();
 
   const handleClick = () => {
     onModalViewExpensesOpen();
     listExpenses(budgetId, accessToken);
   };
 
-  console.log(budgetCategories)
+  const filteredExpenses = allExpenses.filter((item) => item.budgetId === budgetId)
+  const totalExpend = filteredExpenses.reduce((acc, { amount }) => acc + amount, 0);
+  const percentage = totalExpend * 100 / maxValue
+
+  useEffect(() => {
+    listAllExpenses(accessToken);
+  }, [expenses])
+
+  const toast = useToast();
+
+  const handleDelete = (item: any, accessToken: string) => {
+    toast({
+      title: "Budget deleted successfully",
+      duration: 9000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+    });
+    deleteBudget(item, accessToken);
+  };
 
   return (
     <>
@@ -100,7 +112,7 @@ export const CardBudget = ({
               as={FaTrash}
               fontSize="25px"
               cursor="pointer"
-              onClickCapture={() => {}}
+              onClickCapture={() => {handleDelete(budgetId, accessToken)}}
             />
           </HStack>
         </HStack>
@@ -108,7 +120,7 @@ export const CardBudget = ({
           <Flex w="220px" h="100%" justifyContent="center" alignItems="center">
             <CircularProgress
               size="165px"
-              value={percentage}
+              value={Number(percentage.toFixed(1))}
               color="green.500"
               trackColor="purple.500"
               thickness="10px"
@@ -125,7 +137,7 @@ export const CardBudget = ({
                 h="75%"
                 w="75%"
               >
-                40%
+                {percentage.toFixed(1)}%
               </CircularProgressLabel>
             </CircularProgress>
           </Flex>
@@ -146,7 +158,7 @@ export const CardBudget = ({
                 R$ {maxValue}
               </Heading>
               <Text fontSize="24px" color="gray.100">
-                / R$ {totalSpend}
+                / R$ {totalExpend}
               </Text>
             </HStack>
             <Button
