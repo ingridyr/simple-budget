@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { useAuth } from "../../providers/AuthContext";
 
 export const Dashboard = () => {
-
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
   const userId = user.id;
@@ -18,7 +17,7 @@ export const Dashboard = () => {
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">
-        <SideMenu isSelected={true}/>
+        <SideMenu isSelected={true} />
         <Flex
           flexDirection="column"
           justifyContent="center"
@@ -45,14 +44,13 @@ export const Dashboard = () => {
                 m="10px"
               >
                 {budgets.map((item) => {
+                  //listExpenses(item.id, accessToken);
                   return (
                     <>
                       <CardBudget
                         budgetId={item.id}
                         budgetName={item.name}
                         budgetCategories={item.categories}
-                        totalSpend={800}
-                        percentage={80}
                         maxValue={item.max_value}
                       />
                     </>

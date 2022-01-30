@@ -32,11 +32,9 @@ export const ModalViewExpenses = ({
   const { expenses, deleteExpense } = useExpenses();
   const { accessToken } = useAuth();
 
-  //adc depois duas props recebendo name e category do budget para substituir la em baixo
-
   const toast = useToast();
 
-  const handleDelete = (item: any, accessToken: any) => {
+  const handleDelete = (item: any, accessToken: string) => {
     toast({
       title: "Expense deleted successfully",
       duration: 9000,
