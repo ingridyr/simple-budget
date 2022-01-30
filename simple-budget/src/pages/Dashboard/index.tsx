@@ -1,9 +1,18 @@
-import { Flex, Heading, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { SideMenu } from "../../components/SideMenu";
+import { BsPlusCircleFill } from "react-icons/bs";
 import { CardBudget } from "../../components/Card/index";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { useEffect } from "react";
 import { useAuth } from "../../providers/AuthContext";
+import EmptyPark from "../../assets/DashboardImage1.svg";
+import WhitePapers from "../../assets/DashboardImage2.svg";
+import BlankBoard from "../../assets/DashboardImage3.svg";
+import {
+  MotionFlex,
+  animationFlex,
+  itemAnimation,
+} from "../../styles/animation";
 
 export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
@@ -59,17 +68,36 @@ export const Dashboard = () => {
               </Flex>
             </>
           ) : (
-            <Flex alignItems="center" h="100vh">
+            <MotionFlex
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+              h="100vh"
+              pl="75px"
+              // framer-motion props
+              initial="hidden"
+              animate="visible"
+              variants={animationFlex}
+              // variants={itemAnimation}
+            >
               <Text
-                fontSize="xl"
-                p="20px"
-                border="2px solid"
-                borderRadius="10px"
-                borderColor="green.500"
+                fontSize="3xl"
+                color="green.500"
+                // p="20px"
               >
-                You don't have any budgets. Add some!
+                You don't have any registered budget.
               </Text>
-            </Flex>
+              <Flex alignItems="center" justifyContent="center" ml="auto">
+                <Text mr={2} fontSize="lg" color="purple.400">
+                  click on the button
+                </Text>
+                <BsPlusCircleFill />
+                <Text ml={2} fontSize="lg" color="purple.400">
+                  to start
+                </Text>
+              </Flex>
+              <Image src={BlankBoard} w="300px" mt="4" />
+            </MotionFlex>
           )}
         </Flex>
       </Flex>

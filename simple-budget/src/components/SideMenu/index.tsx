@@ -17,7 +17,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
     onClose: onModalAddBudgetClose,
   } = useDisclosure();
 
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   return (
     <>
@@ -79,7 +79,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
           </>
         )}
         <Box position="fixed" bottom="28px" cursor="pointer">
-          <IoExitOutline size={40} onClick={() => logout()}/>
+          <IoExitOutline size={40} onClick={() => logout()} />
         </Box>
       </Flex>
     </>
