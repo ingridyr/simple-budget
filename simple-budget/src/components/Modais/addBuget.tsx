@@ -1,4 +1,5 @@
 import {
+  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -6,17 +7,19 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   FormControl,
-  FormLabel,
   Input as ChakraInput,
   useToast,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
+import { InputForm } from "../Input";
+import { IoArrowForwardCircleOutline } from "react-icons/io5";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 interface ModalData {
   name: string;
@@ -52,10 +55,10 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
 
   const toast = useToast();
 
-  const onSubmitFunction = ({name, max_value}: ModalData) => {
+  const onSubmitFunction = ({ name, max_value }: ModalData) => {
     toast({
       title: "Budget created successfully!",
-      duration: 9000,
+      duration: 3000,
       isClosable: true,
       status: "success",
       position: "top",
@@ -75,6 +78,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
       userId: user.id,
     };
     createBudget(newData, accessToken);
+    onClose();
   };
 
   return (
@@ -87,19 +91,41 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
           borderColor="green.500"
           pb="25px"
           borderRadius="10px"
-          boxShadow="0px 1px 7px 2px #00F59B"
+          boxShadow="0px 1px 3px 2px #00F59B"
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalHeader color="white" pb={4}>
-            <ModalCloseButton color="purple.500" fontSize="16px" />
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Add a new budget
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
           </ModalHeader>
           <ModalBody
-            pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
             alignSelf="center"
+            mt="2"
           >
             <FormControl
               display="flex"
@@ -107,46 +133,36 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               justifyContent="center"
               color="white"
             >
-              <FormLabel fontSize="20px">Name</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="name"
-                type="text"
-                {...register("name")}
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                error={errors.name}
               />
-              <p>{errors.name?.message}</p>
             </FormControl>
 
             <FormControl
-              mt={4}
+              mt={2}
               display="flex"
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Max Value</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Max Value"
-                type="number"
-                {...register("max_value")}
+              <InputForm
+                name="max_value"
+                label="Max value"
+                register={register}
+                error={errors.max_value}
               />
-              <p>{errors.max_value?.message}</p>
             </FormControl>
           </ModalBody>
 
           <ModalFooter
             alignSelf="center"
             justifyContent="space-around"
-            w="100%"
-            pr="0px"
-            pl="0px"
-            pb={6}
+            w="90%"
+            pb="2"
           >
-            <Button
+            {/* <Button
               padding="28px 0px"
               colorScheme="gray"
               w="80%"
@@ -162,6 +178,23 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               }}
             >
               Add budget
+            </Button> */}
+            <Button
+              h="60px"
+              w="100%"
+              type="submit"
+              fontWeight="normal"
+              fontSize="lg"
+              // fontSize="2xl"
+              // variant="outline"
+              bg="purple.500"
+              border="2px solid"
+              borderColor="purple.500"
+              // color="green.500"
+              _hover={{ transform: "scale(1.08)" }}
+              // rightIcon={<AiOutlineArrowRight size={20}/>}
+            >
+              Add a new budget now
             </Button>
           </ModalFooter>
         </ModalContent>
