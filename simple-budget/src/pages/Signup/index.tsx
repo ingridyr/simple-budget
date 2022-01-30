@@ -7,6 +7,7 @@ import {
   Button,
   Heading,
   Link,
+  useToast,
 } from "@chakra-ui/react";
 
 import {
@@ -61,8 +62,9 @@ export const Signup = () => {
     resolver: yupResolver(schema),
   });
 
+
   const sendData = (data: DataProps) => {
-    signup(data);
+    signup(data)
   };
 
   return (
