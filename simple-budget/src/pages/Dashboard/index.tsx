@@ -53,7 +53,6 @@ export const Dashboard = () => {
                 m="10px"
               >
                 {budgets.map((item) => {
-                  //listExpenses(item.id, accessToken);
                   return (
                     <>
                       <CardBudget

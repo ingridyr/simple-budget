@@ -1,10 +1,10 @@
 import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
-import logo from "../../assets/LogoSm.svg";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlineHome } from "react-icons/ai";
 import { ModalAddBuget } from "../Modais/addBuget";
 import { useAuth } from "../../providers/AuthContext";
+import logo from "../../assets/LogoSm.svg";
 
 interface SideMenuProps {
   isSelected: any;
@@ -17,7 +17,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
     onClose: onModalAddBudgetClose,
   } = useDisclosure();
 
-  const { logout } = useAuth();
+  const { logout } = useAuth()
 
   return (
     <>
