@@ -5,6 +5,7 @@ import {
   FormControl,
   Button,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 
 import {
@@ -51,8 +52,17 @@ export const Login = () => {
     resolver: yupResolver(schema),
   });
 
+  const toast = useToast();
+
   const sendData = (data: LoginProps) => {
     signin(data);
+    toast({
+      title: "User authenticated successfully!",
+      duration: 4000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+    });
   };
 
   return (
