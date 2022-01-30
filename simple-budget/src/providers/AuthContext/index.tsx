@@ -32,6 +32,7 @@ interface AuthState {
 interface AuthContextData {
   signup: (data: RegisterProps) => void;
   signin: (data: LoginProps) => void;
+  logout: () => void;
   accessToken: string;
   user: User;
   errMessage: string;
@@ -91,9 +92,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
   };
 
+  const logout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
+
   return (
     <AuthContext.Provider
       value={{
+        logout,
         signup,
         signin,
         accessToken: data.accessToken,

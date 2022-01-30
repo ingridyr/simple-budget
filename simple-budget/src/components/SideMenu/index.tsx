@@ -1,20 +1,23 @@
 import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import logo from "../../assets/LogoSm.svg";
 import { BsPlusCircleFill } from "react-icons/bs";
+import { IoExitOutline } from "react-icons/io5";
 import { AiOutlineHome } from "react-icons/ai";
 import { ModalAddBuget } from "../Modais/addBuget";
+import { useAuth } from "../../providers/AuthContext";
 
 interface SideMenuProps {
   isSelected: any;
 }
 
 export const SideMenu = ({ isSelected }: SideMenuProps) => {
-
   const {
     isOpen: isModalAddBudgetOpen,
     onOpen: onModalAddBudgetOpen,
     onClose: onModalAddBudgetClose,
   } = useDisclosure();
+
+  const { logout } = useAuth()
 
   return (
     <>
@@ -46,7 +49,6 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
         <Flex
           alignItems="center"
           justifyContent="center"
-          
           _hover={{
             borderRadius: "50%",
             w: "50px",
@@ -76,6 +78,9 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
             </Flex>
           </>
         )}
+        <Box position="fixed" bottom="28px" cursor="pointer">
+          <IoExitOutline size={40} onClick={() => logout()}/>
+        </Box>
       </Flex>
     </>
   );
