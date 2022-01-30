@@ -15,6 +15,7 @@ import { FaTrash } from "react-icons/fa";
 import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { ModalViewExpenses } from "../Modais/viewExpenses";
 import { ModalAddExpense } from "../../components/Modais/addExpense";
+import { ModalEditBudget } from "../../components/Modais/editBudget";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { useEffect } from "react";
@@ -45,7 +46,14 @@ export const CardBudget = ({
     onClose: onModalAddExpenseClose,
   } = useDisclosure();
 
-  const { listAllExpenses, allExpenses, listExpenses, expenses } = useExpenses();
+  const {
+    isOpen: isModalEditBudgetOpen,
+    onOpen: onModalEditBudgetOpen,
+    onClose: onModalEditBudgetClose,
+  } = useDisclosure();
+
+  const { listAllExpenses, allExpenses, listExpenses, expenses } =
+    useExpenses();
   const { accessToken } = useAuth();
   const { deleteBudget } = useBudgets();
 
@@ -54,13 +62,18 @@ export const CardBudget = ({
     listExpenses(budgetId, accessToken);
   };
 
-  const filteredExpenses = allExpenses.filter((item) => item.budgetId === budgetId)
-  const totalExpend = filteredExpenses.reduce((acc, { amount }) => acc + amount, 0);
-  const percentage = totalExpend * 100 / maxValue
+  const filteredExpenses = allExpenses.filter(
+    (item) => item.budgetId === budgetId
+  );
+  const totalExpend = filteredExpenses.reduce(
+    (acc, { amount }) => acc + amount,
+    0
+  );
+  const percentage = (totalExpend * 100) / maxValue;
 
   useEffect(() => {
     listAllExpenses(accessToken);
-  }, [expenses])
+  }, [expenses]);
 
   const toast = useToast();
 
@@ -89,6 +102,11 @@ export const CardBudget = ({
         budgetId={budgetId}
         budgetName={budgetName}
       />
+      <ModalEditBudget
+        isOpen={isModalEditBudgetOpen}
+        onClose={onModalEditBudgetClose}
+        budgetId={budgetId}
+      />
       <Box w="500px" h="300px" bg="black.300" m="6" borderRadius="10px" p="5px">
         <HStack
           h="40px"
@@ -105,14 +123,16 @@ export const CardBudget = ({
               as={AiFillEdit}
               fontSize="30px"
               cursor="pointer"
-              onClickCapture={() => {}}
+              onClickCapture={() => {onModalEditBudgetOpen()}}
             />
             <Icon
               color="gray.300"
               as={FaTrash}
               fontSize="25px"
               cursor="pointer"
-              onClickCapture={() => {handleDelete(budgetId, accessToken)}}
+              onClickCapture={() => {
+                handleDelete(budgetId, accessToken);
+              }}
             />
           </HStack>
         </HStack>
