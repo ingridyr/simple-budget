@@ -44,21 +44,23 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
           p="5px 5px"
           w="90px"
           h="90px"
-          marginTop="10px"
+          // marginTop="10px"
         />
         <Flex
           alignItems="center"
           justifyContent="center"
           _hover={{
-            borderRadius: "50%",
-            w: "50px",
-            h: "50px",
-            boxShadow: "0px 1px 7px 2px #c28cff",
+            // borderRadius: "50%",
+            // w: "50px",
+            // h: "50px",
+            // boxShadow: "0px 1px 7px 2px #c28cff",
+            transition: "0.2s",
+            transform: "scale(1.1)",
           }}
           cursor="pointer"
         >
           <BsPlusCircleFill
-            size={50}
+            size={40}
             color="white.0"
             onClick={() => onModalAddBudgetOpen()}
           />
@@ -66,20 +68,34 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
         {isSelected && (
           <>
             <Flex
-              boxShadow="0px 1px 7px 2px #5210AF"
+              // boxShadow="0px 1px 7px 2px #5210AF"
               w="100%"
               h="60px"
               alignItems="center"
               justifyContent="flex"
-              gap="10px"
+              gap="18px"
+              _hover={{
+                transition: "0.2s",
+                color: "green.500",
+                // transform: "scale(1.1)",
+              }}
             >
-              <Box w="10px" h="100%" bgColor="white.0" alignSelf="flex-start" />
-              <AiOutlineHome size={40} color="white.0" cursor="pointer" />
+              <Box w="3px" h="100%" bgColor="white.0" alignSelf="flex-start" />
+              <AiOutlineHome size={35} color="white.0" cursor="pointer" />
             </Flex>
           </>
         )}
-        <Box position="fixed" bottom="28px" cursor="pointer">
-          <IoExitOutline size={40} onClick={() => logout()}/>
+        <Box
+          position="fixed"
+          bottom="28px"
+          cursor="pointer"
+          _hover={{
+            transition: "0.2s",
+            color: "green.500",
+            // transform: "scale(1.1)",
+          }}
+        >
+          <IoExitOutline size={40} onClick={() => logout()} />
         </Box>
       </Flex>
     </>

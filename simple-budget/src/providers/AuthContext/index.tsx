@@ -93,7 +93,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("@SimpleBudget:accessToken");
+    localStorage.removeItem("@SimpleBudget:user");
     history.push("/");
   };
 
