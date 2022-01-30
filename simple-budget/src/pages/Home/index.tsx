@@ -30,7 +30,7 @@ export const Home = () => {
         variants={animationFlex}
         // variants={itemAnimation}
       >
-        <Flex flexDirection="column" mt={["16", "12"]}>
+        <Flex flexDirection="column" mt={["16", "0"]}>
           <Text fontSize="2xl" mb="8" align="center">
             gain control over your financial life
           </Text>
@@ -40,10 +40,10 @@ export const Home = () => {
             alt="home image"
             w={["300px", "300px", "400px", "400px"]}
           />
-          <Text fontSize="3xl" mt="8" align="center" fontWeight="bold">
+          <Text fontSize="3xl" mt="4" align="center" fontWeight="bold">
             ...starting now
           </Text>
-          <Flex mt="8" mb="8" w="100%" justifyContent="space-around">
+          <Flex mt="4" mb="8" w="100%" justifyContent="space-around">
             <Button
               isLoading={loading}
               h="60px"
