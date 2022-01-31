@@ -10,13 +10,7 @@ import Logo from "../../assets/Logo.png";
 import HomeImage from "../../assets/HomeImage.svg";
 
 export const Home = () => {
-  const [loading, setLoading] = useState(false);
   const history = useHistory();
-
-  const redirect = (path: string) => {
-    setLoading(true);
-    history.push(path);
-  };
 
   return (
     <Box height="100vh">
@@ -45,7 +39,6 @@ export const Home = () => {
           </Text>
           <Flex mt="4" mb="8" w="100%" justifyContent="space-around">
             <Button
-              isLoading={loading}
               h="60px"
               w="45%"
               fontWeight="normal"
@@ -54,12 +47,11 @@ export const Home = () => {
               border="2px solid"
               borderColor="purple.500"
               _hover={{ color: "green.500", transform: "scale(1.08)" }}
-              onClick={() => redirect("/login")}
+              onClick={() => history.push("/login")}
             >
               Login
             </Button>
             <Button
-              isLoading={loading}
               h="60px"
               w="45%"
               fontWeight="normal"
@@ -68,7 +60,7 @@ export const Home = () => {
               border="2px solid"
               borderColor="purple.500"
               _hover={{ color: "green.500", transform: "scale(1.08)" }}
-              onClick={() => redirect("/signup")}
+              onClick={() => history.push("/signup")}
             >
               Sign up
             </Button>
