@@ -40,7 +40,7 @@ export const Dashboard = () => {
                 m="20px 0 0 100px"
                 size="lg"
               >
-                Expenses by category
+                Budgets
               </Heading>
               <Flex
                 gap="30px"
