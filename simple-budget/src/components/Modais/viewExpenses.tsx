@@ -44,7 +44,7 @@ export const ModalViewExpenses = ({
   budgetId,
   budgetName,
 }: ModalViewExpensesProps) => {
-  const { expenses, deleteExpense } = useExpenses();
+  const { expenses, deleteExpense, restoreInfos} = useExpenses();
   const { accessToken } = useAuth();
 
   const toast = useToast();

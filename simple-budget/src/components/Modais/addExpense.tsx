@@ -129,8 +129,8 @@ export const ModalAddExpense = ({
                   Categories
                 </Box>
 
-                {budgetCategories.map((item) => (
-                  <Box as="option" value={item}>
+                {budgetCategories.map((item, index) => (
+                  <Box as="option" value={item} key={index}>
                     {item}
                   </Box>
                 ))}

@@ -86,6 +86,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem("@SimpleBudget:accessToken", accessToken);
         localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
         history.push("/dashboard")
+        history.push("/dashboard")
         setData({ accessToken, user });
       })
       .catch((err) => {
@@ -96,7 +97,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = () => {
     localStorage.removeItem("@SimpleBudget:accessToken");
     localStorage.removeItem("@SimpleBudget:user");
-    history.push("/");
+    history.push("/login")
   };
 
   return (

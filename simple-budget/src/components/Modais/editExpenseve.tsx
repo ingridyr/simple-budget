@@ -18,6 +18,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import {useExpenses} from "../../providers/ExpensesContext/index"
+
 const schema = yup.object().shape({
   name: yup.string().required("Field Required"),
   description: yup.string().required("Field Required"),
@@ -53,9 +55,11 @@ export const ModalEditExpense = ({
   isOpen,
   onClose,
   onOpen,  
-  selectedItem
+  selectedItem,
 }: ModalEditExpenseProps) => {
   const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
+
+  const {restoreInfos} = useExpenses()
 
   //aqui recebe a função do provider para efetuar a troca:
   const trocaProvider = (data: ModalData) => {
@@ -64,16 +68,22 @@ export const ModalEditExpense = ({
     //...
   };
 
-  console.log(selectedItem)
-  console.log(selectedItem.name)
+  // console.log(selectedItem)
+  // console.log(selectedItem.name)
 
   const {
     formState: { errors },
     handleSubmit,
     register,
+    reset
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    restoreInfos(selectedItem.id, reset)
+  }, [selectedItem])
+
 
   return (
     <>
@@ -111,7 +121,7 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Name"
                 type="text"
-                value={selectedItem.name}
+                // value={selectedItem.name}
                 {...register("name")}
               />
               <Text>{errors.name?.message}</Text>
@@ -129,7 +139,7 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Description"
                 type="string"
-                value={selectedItem.description}
+                // value={selectedItem.description}
                 {...register("description")}
               />
               <Text>{errors.description?.message}</Text>
@@ -147,7 +157,7 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Amount"
                 type="number"
-                value={selectedItem.amount}
+                // value={selectedItem.amount}
                 {...register("amount")}
               />
               <Text>{errors.amount?.message}</Text>

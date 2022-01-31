@@ -7,6 +7,7 @@ import {
 } from "react";
 import { AxiosResponse } from "axios";
 import { api } from "../../services/api";
+import {useAuth} from "../AuthContext/index"
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -36,6 +37,7 @@ interface ExpensesContextData {
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
+  restoreInfos: (id: string, reset: ({}) => void) => void
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -55,6 +57,8 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   //const [errMessage, setErrMessage] = useState<string>("");
+
+  const {accessToken} = useAuth()
 
   const listAllExpenses = useCallback(async (accessToken: string) => {
     try {
@@ -161,6 +165,24 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
     [expenses]
   );
 
+  const restoreInfos = (id: string, reset: ({}) => void) => {
+    api.get(`/expenses/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    .then((response) => {
+      reset({
+        name: response.data.name,
+        description: response.data.description,
+        amount: response.data.amount
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
     <ExpensesContext.Provider
       value={{
@@ -171,6 +193,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         deleteExpense,
         listAllExpenses,
         allExpenses,
+        restoreInfos
       }}
     >
       {children}

@@ -29,6 +29,8 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 
 import { InputForm } from "../../components/Input/index";
 
+import {Redirect} from "react-router-dom"
+
 interface LoginProps {
   email: string;
   password: string;
@@ -37,7 +39,7 @@ interface LoginProps {
 export const Login = () => {
   const history = useHistory();
 
-  const { signin } = useAuth();
+  const { signin, accessToken } = useAuth();
 
   const schema = yup.object().shape({
     email: yup.string().required("Mandatory field").email("Invalid email"),
@@ -64,6 +66,10 @@ export const Login = () => {
       position: "top",
     });
   };
+
+  if(accessToken) {
+    return <Redirect to="/dashboard"/>
+  }
 
   return (
     <>
