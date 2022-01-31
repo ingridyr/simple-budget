@@ -5,8 +5,6 @@ import { CardBudget } from "../../components/Card/index";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { useEffect } from "react";
 import { useAuth } from "../../providers/AuthContext";
-import EmptyPark from "../../assets/DashboardImage1.svg";
-import WhitePapers from "../../assets/DashboardImage2.svg";
 import BlankBoard from "../../assets/DashboardImage3.svg";
 import {
   MotionFlex,
@@ -31,27 +29,14 @@ export const Dashboard = () => {
           flexDirection="column"
           justifyContent="center"
           alignItems="center"
+          pl={["0", "85px"]}
         >
+          {/* <Heading as="h2" mt="8" mb="6" fontWeight="normal" fontSize="3xl">
+            Hi, <b>{user.name}</b>!
+          </Heading> */}
           {budgets.length > 0 ? (
             <>
-              <Heading
-                alignSelf="flex-start"
-                h="50px"
-                m="20px 0 0 100px"
-                size="lg"
-              >
-                Budgets
-              </Heading>
-              <Flex
-                gap="30px"
-                flexWrap="wrap"
-                alignItems="center"
-                justifyContent="center"
-                w="90%"
-                h="70%"
-                alignContent="flex-start"
-                m="10px"
-              >
+              <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
                 {budgets.map((item) => {
                   return (
                     <>
@@ -72,7 +57,7 @@ export const Dashboard = () => {
               alignItems="center"
               flexDirection="column"
               h="100vh"
-              pl="75px"
+              pl={["0", "40px"]}
               // framer-motion props
               initial="hidden"
               animate="visible"
@@ -80,7 +65,7 @@ export const Dashboard = () => {
               // variants={itemAnimation}
             >
               <Text
-                fontSize="3xl"
+                fontSize={["xl", "3xl", "3xl", "3xl"]}
                 color="green.500"
                 // p="20px"
               >

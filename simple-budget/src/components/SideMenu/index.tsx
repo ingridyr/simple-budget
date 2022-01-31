@@ -17,7 +17,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
     onClose: onModalAddBudgetClose,
   } = useDisclosure();
 
-  const { logout } = useAuth()
+  const { logout } = useAuth();
 
   return (
     <>
@@ -37,6 +37,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
         overflow="hidden"
         position="fixed"
         left="0"
+        display={["none", "flex"]}
       >
         <Image
           src={logo}
