@@ -107,37 +107,58 @@ export const CardBudget = ({
         onClose={onModalEditBudgetClose}
         budgetId={budgetId}
       />
-      <Box w="500px" h="300px" bg="black.300" m="6" borderRadius="10px" p="5px">
-        <HStack
-          h="40px"
-          w="100%"
-          justifyContent="space-between"
-          paddingTop="12px"
-        >
-          <Heading pl="30px" fontWeight="medium">
+      <Box
+        w="500px"
+        h="275px"
+        bg="black.300"
+        m="6"
+        borderRadius="10px"
+        _hover={{
+          transition: "0.2s",
+          transform: "scale(1.02)",
+        }}
+      >
+        <HStack h="40px" w="100%" justifyContent="space-between" pl="4" pt="4">
+          <Heading as="h2" fontSize="3xl" fontWeight="normal">
             {budgetName}
           </Heading>
-          <HStack pr="30px" spacing="5">
+          <HStack pr="4" spacing="5">
             <Icon
               color="gray.300"
               as={AiFillEdit}
               fontSize="30px"
               cursor="pointer"
-              onClickCapture={() => {onModalEditBudgetOpen()}}
+              _hover={{
+                transition: "0.2s",
+                color: "green.500",
+              }}
+              onClickCapture={() => {
+                onModalEditBudgetOpen();
+              }}
             />
             <Icon
               color="gray.300"
               as={FaTrash}
-              fontSize="25px"
+              fontSize="23px"
               cursor="pointer"
+              _hover={{
+                transition: "0.2s",
+                color: "green.500",
+              }}
               onClickCapture={() => {
                 handleDelete(budgetId, accessToken);
               }}
             />
           </HStack>
         </HStack>
-        <Flex w="100%" h="200px" justifyContent="space-around" mt="20px">
-          <Flex w="220px" h="100%" justifyContent="center" alignItems="center">
+        <Flex w="100%" h="200px" justifyContent="space-around" mt="6">
+          <Flex
+            w="220px"
+            // h="100%"
+            justifyContent="center"
+            alignItems="center"
+            _hover={{ transition: "0.4s", transform: "scale(1.08)" }}
+          >
             <CircularProgress
               size="165px"
               value={Number(percentage.toFixed(1))}
@@ -161,13 +182,8 @@ export const CardBudget = ({
               </CircularProgressLabel>
             </CircularProgress>
           </Flex>
-          <VStack
-            spacing="4"
-            h="100%"
-            justifyContent="center"
-            padding="0px 7px"
-          >
-            <HStack fontFamily="body.Roboto">
+          <VStack spacing="4" h="100%" justifyContent="center">
+            <HStack>
               <Heading
                 fontSize="30px"
                 as="h4"
@@ -183,45 +199,29 @@ export const CardBudget = ({
             </HStack>
             <Button
               onClick={() => onModalAddExpenseOpen()}
-              w="230px"
+              w="100%"
               h="60px"
-              bg="white"
-              fontSize="24px"
-              color="gray.350"
-              padding="20px 10px"
-              border="3px solid"
-              borderColor="white"
-              fontFamily="other"
-              fontWeight="medium"
-              focusBorderColor="none"
-              _hover={{
-                border: "3px solid",
-                borderColor: "green.500",
-                color: "white",
-                bg: "gray.100",
-              }}
+              bg="black.500"
+              fontSize="xl"
+              fontWeight="normal"
+              color="white.0"
+              border="2px solid"
+              borderColor="purple.500"
+              _hover={{ transform: "scale(1.02)" }}
             >
               Add expense
             </Button>
             <Button
               onClick={handleClick}
-              w="230px"
+              w="100%"
               h="60px"
-              bg="white"
-              fontSize="24px"
-              color="gray.350"
-              padding="20px 10px"
-              border="3px solid"
-              borderColor="white"
-              focusBorderColor="none"
-              fontFamily="other"
-              fontWeight="medium"
-              _hover={{
-                border: "3px solid",
-                borderColor: "green.500",
-                color: "white",
-                bg: "gray.100",
-              }}
+              bg="black.500"
+              fontSize="xl"
+              fontWeight="normal"
+              color="white.0"
+              border="2px solid"
+              borderColor="purple.500"
+              _hover={{ transform: "scale(1.02)" }}
             >
               View expenses
             </Button>
