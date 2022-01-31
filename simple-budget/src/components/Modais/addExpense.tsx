@@ -68,6 +68,7 @@ export const ModalAddExpense = ({
       budgetId: budgetId,
     };
     createExpense(newData, accessToken);
+    onClose()
   };
 
   const {
