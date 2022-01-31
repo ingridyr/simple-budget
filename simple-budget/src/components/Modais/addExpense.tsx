@@ -7,8 +7,6 @@ import {
   ModalCloseButton,
   Button,
   FormControl,
-  FormLabel,
-  Input as ChakraInput,
   InputProps as ChakraInputProps,
   Box,
   useToast,
@@ -18,6 +16,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { useAuth } from "../../providers/AuthContext";
+import { InputForm } from "../Input";
 
 const schema = yup.object().shape({
   name: yup.string().required("Field required"),
@@ -55,7 +54,7 @@ export const ModalAddExpense = ({
   const onSubmitFunction = ({ name, description, amount, type }: ModalData) => {
     toast({
       title: "Expense created successfully!",
-      duration: 9000,
+      duration: 3000,
       isClosable: true,
       status: "success",
       position: "top",
@@ -69,6 +68,7 @@ export const ModalAddExpense = ({
       budgetId: budgetId,
     };
     createExpense(newData, accessToken);
+    onClose()
   };
 
   const {
@@ -93,13 +93,23 @@ export const ModalAddExpense = ({
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalCloseButton color="purple.500" fontSize="16px" m="8px" />
+          <ModalCloseButton
+            color="green.500"
+            fontSize="lg"
+            mt="1"
+            _hover={{
+              transition: "0.2s",
+              color: "purple.500",
+            }}
+          />
+
           <ModalBody
             pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
             alignSelf="center"
+            mt="2"
           >
             <FormControl
               display="flex"
@@ -110,81 +120,68 @@ export const ModalAddExpense = ({
               <Box
                 bg="black.500"
                 as="select"
-                _focusVisible={{
-                  outlineColor: "black.500",
-                }}
-                w="70%"
+                w="50%"
+                mb="20px"
                 fontSize="20px"
-                marginTop="10px"
                 {...register("type")}
               >
                 <Box as="option" disabled selected value="">
-                  Choose the category
+                  Categories
                 </Box>
+
                 {budgetCategories.map((item) => (
                   <Box as="option" value={item}>
                     {item}
                   </Box>
                 ))}
               </Box>
-              <FormLabel marginTop="10px" fontSize="18px">
-                Name
-              </FormLabel>
-              <ChakraInput
-                bg="white"
-                p="23px"
-                color="black.500"
+
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
                 placeholder="Ex: Cardiologist"
-                type="text"
-                {...register("name")}
+                error={errors.name}
               />
 
-              <FormLabel marginTop="10px" fontSize="18px">
-                Description
-              </FormLabel>
-              <ChakraInput
-                bg="white"
-                p="23px"
-                color="black.500"
-                outline="none"
-                type="text"
+              <InputForm
+                name="description"
+                label="Description"
+                register={register}
                 placeholder="Ex: Medical check - Dr.Strauss"
-                {...register("description")}
+                error={errors.description}
               />
 
-              <FormLabel marginTop="10px" fontSize="18px">
-                Amount
-              </FormLabel>
-              <ChakraInput
-                bg="white"
-                p="23px"
-                color="black.500"
-                outline="none"
-                type="number"
+              <InputForm
+                name="amount"
+                label="Amount"
+                register={register}
                 placeholder="Ex: 300.00"
-                {...register("amount")}
+                error={errors.amount}
               />
             </FormControl>
           </ModalBody>
 
-          <ModalFooter justifyContent="center" pr="0px" pl="0px" pb={6}>
+          <ModalFooter
+            alignSelf="center"
+            justifyContent="space-around"
+            w="100%"
+            pr="0px"
+            pl="0px"
+            pb={6}
+          >
             <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="80%"
-              color="black.500"
+              h="60px"
+              w="76%"
               type="submit"
-              border="3px solid"
-              borderRadius="10px"
-              onClickCapture={() => {}}
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
+              fontWeight="normal"
+              fontSize="lg"
+              bg="purple.500"
+              border="2px solid"
+              borderColor="purple.500"
+              _hover={{ transform: "scale(1.08)" }}
             >
-              Add expense
+              Add a new expense
             </Button>
           </ModalFooter>
         </ModalContent>
