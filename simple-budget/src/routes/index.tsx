@@ -1,17 +1,25 @@
-import { Switch, Route} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { Home } from "../pages/Home/index";
-import { Signup } from "../pages/Signup/index";
-import { Login } from "../pages/Login/index";
-import { Dashboard } from "../pages/Dashboard/index";
-// import { useAuth } from "../providers/AuthContext";
+import { Signup } from "../pages/Signup";
+import { Login } from "../pages/Login";
+import { Dashboard } from "../pages/Dashboard";
+import { useAuth } from "../providers/AuthContext";
 
 export const Routes = () => {
+  const { accessToken } = useAuth();
+
   return (
     <Switch>
-      <Route exact path="/" component={Home}/> 
-      <Route path="/signup" component={Signup}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/dashboard" component={Dashboard}/>
+      <Route exact path="/" component={Home} />
+      <Route path="/signup" component={Signup}>
+        {!!accessToken && <Redirect to="/dashboard" />}
+      </Route>
+      <Route path="/login" component={Login}>
+        {!!accessToken && <Redirect to="/dashboard" />}
+      </Route>
+      <Route path="/dashboard" component={Dashboard}>
+        {!accessToken && <Redirect to="/login" />}
+      </Route>
     </Switch>
   );
 };

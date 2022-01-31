@@ -11,31 +11,16 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { AiFillEdit, AiOutlineConsoleSql } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
-import { useDisclosure } from "@chakra-ui/react"
-
-import {ModalEditExpense} from "../Modais/editExpenseve"
-
-import {useState} from "react"
-
 
 interface ModalViewExpensesProps {
   budgetName: string;
   budgetId: string;
   isOpen: boolean;
   onClose: () => void;
-}
-
-interface ModalData {
-  name: string;
-  description: string
-  amount: number;
-  budgetId: string
-  id: string
-  type: string
 }
 
 export const ModalViewExpenses = ({
@@ -49,8 +34,6 @@ export const ModalViewExpenses = ({
 
   const toast = useToast();
 
-  const [selectedItem, setSelectedItem] = useState<ModalData>({} as ModalData)
-
   const handleDelete = (item: any, accessToken: string) => {
     toast({
       title: "Expense deleted successfully",
@@ -61,17 +44,6 @@ export const ModalViewExpenses = ({
     });
     deleteExpense(item, accessToken);
   };
-  
-  const {
-    isOpen: isModalEditExpenseOpen,
-    onOpen: onModalEditExpenseOpen,
-    onClose: onModalEditExpenseClose,
-  } = useDisclosure()
-
-  const modalSelect = (item: ModalData) => {
-    setSelectedItem(item)
-    onModalEditExpenseOpen()
-  }
 
   return (
     <>
@@ -142,7 +114,6 @@ export const ModalViewExpenses = ({
                           color="gray.300"
                           size={25}
                           cursor="pointer"
-                          onClick={() => modalSelect(item)}
                         />
                         <FaTrash
                           color="gray.300"
@@ -156,7 +127,6 @@ export const ModalViewExpenses = ({
                 </>
               );
             })}
-            <ModalEditExpense isOpen={isModalEditExpenseOpen} onOpen={onModalEditExpenseOpen} onClose={onModalEditExpenseClose} selectedItem={selectedItem}/>
           </ModalBody>
         </ModalContent>
       </Modal>
