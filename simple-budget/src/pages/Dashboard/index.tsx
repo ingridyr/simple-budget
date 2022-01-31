@@ -14,6 +14,8 @@ import {
   itemAnimation,
 } from "../../styles/animation";
 
+import {Redirect} from "react-router-dom"
+
 export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
@@ -22,6 +24,10 @@ export const Dashboard = () => {
   useEffect(() => {
     listBudgets(userId, accessToken);
   }, []);
+
+  if(!accessToken) {
+    return <Redirect to="/"/>
+  } 
 
   return (
     <>

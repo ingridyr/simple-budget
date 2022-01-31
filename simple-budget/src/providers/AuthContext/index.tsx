@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         localStorage.setItem("@SimpleBudget:accessToken", accessToken);
         localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
+        history.push("/dashboard")
         setData({ accessToken, user });
       })
       .catch((err) => {

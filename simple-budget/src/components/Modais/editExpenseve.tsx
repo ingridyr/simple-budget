@@ -10,40 +10,52 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
+  Text,
   Input as ChakraInput,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 const schema = yup.object().shape({
-  title: yup.string().required("titulo obrigatorio"),
-  total: yup.number().required("valor a ser inserido"),
+  name: yup.string().required("Field Required"),
+  description: yup.string().required("Field Required"),
+  amount: yup.number().required("Field Required")
 });
 
 interface ModalData {
-  title: string;
-  total: number;
+  name: string;
+  description: string
+  amount: number;
+  budgetId: string
+  id: string
+  type: string
 }
+
+interface SelectedItem {
+  name: string;
+  description: string
+  amount: number;
+  budgetId: string
+  id: string
+  type: string
+}
+
 interface ModalEditExpenseProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  objeto: ModalData;
+  selectedItem: SelectedItem
 }
 
 export const ModalEditExpense = ({
   isOpen,
   onClose,
-  onOpen,
-  objeto,
+  onOpen,  
+  selectedItem
 }: ModalEditExpenseProps) => {
   const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
-  const [inputs, setInputs] = useState<ModalData>({
-    title: objeto.title,
-    total: objeto.total,
-  } as ModalData);
 
   //aqui recebe a função do provider para efetuar a troca:
   const trocaProvider = (data: ModalData) => {
@@ -51,6 +63,9 @@ export const ModalEditExpense = ({
     //logica do provider
     //...
   };
+
+  console.log(selectedItem)
+  console.log(selectedItem.name)
 
   const {
     formState: { errors },
@@ -89,42 +104,53 @@ export const ModalEditExpense = ({
               justifyContent="center"
               color="white"
             >
-              <FormLabel fontSize="20px">title</FormLabel>
+              <FormLabel fontSize="20px">Name</FormLabel>
               <ChakraInput
                 bg="white"
                 p="28px 16px"
                 color="black.500"
-                placeholder="title"
+                placeholder="Name"
                 type="text"
-                value={inputs.title}
-                onChangeCapture={(e) =>
-                  setInputs({ ...inputs, title: e.currentTarget.value })
-                }
-                {...register("title")}
+                value={selectedItem.name}
+                {...register("name")}
               />
-              <p>{errors.title?.message}</p>
+              <Text>{errors.name?.message}</Text>
             </FormControl>
-
             <FormControl
               mt={4}
               display="flex"
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Total</FormLabel>
+              <FormLabel fontSize="20px">Description</FormLabel>
               <ChakraInput
                 bg="white"
                 p="28px 16px"
                 color="black.500"
-                placeholder="Total"
-                type="number"
-                value={inputs.total}
-                onChangeCapture={(e) =>
-                  setInputs({ ...inputs, total: Number(e.currentTarget.value) })
-                }
-                {...register("total")}
+                placeholder="Description"
+                type="string"
+                value={selectedItem.description}
+                {...register("description")}
               />
-              <p>{errors.total?.message}</p>
+              <Text>{errors.description?.message}</Text>
+            </FormControl>
+            <FormControl
+              mt={4}
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <FormLabel fontSize="20px">Amount</FormLabel>
+              <ChakraInput
+                bg="white"
+                p="28px 16px"
+                color="black.500"
+                placeholder="Amount"
+                type="number"
+                value={selectedItem.amount}
+                {...register("amount")}
+              />
+              <Text>{errors.amount?.message}</Text>
             </FormControl>
           </ModalBody>
 
