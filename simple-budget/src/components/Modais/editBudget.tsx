@@ -8,15 +8,16 @@ import {
   ModalCloseButton,
   Button,
   FormControl,
-  FormLabel,
   Input as ChakraInput,
   useToast,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
 import * as yup from "yup";
+import { InputForm } from "../Input";
 
 interface ModalEditBudgetData {
   name: string;
@@ -59,7 +60,7 @@ export const ModalEditBudget = ({
   const onSubmitFunction = ({ name, max_value }: ModalEditBudgetData) => {
     toast({
       title: "Budget updated successfully!",
-      duration: 7000,
+      duration: 3000,
       isClosable: true,
       status: "success",
       position: "top",
@@ -79,6 +80,7 @@ export const ModalEditBudget = ({
       budgetId: budgetId,
     };
     updateBudget(budgetId, accessToken, newData);
+    onClose();
   };
 
   return (
@@ -95,15 +97,38 @@ export const ModalEditBudget = ({
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalHeader color="white" pb={4}>
-            <ModalCloseButton color="purple.500" fontSize="16px" />
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Edit budget
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
           </ModalHeader>
           <ModalBody
-            pb={3.5}
+            //pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
             alignSelf="center"
+            mt="2"
           >
             <FormControl
               display="flex"
@@ -111,34 +136,26 @@ export const ModalEditBudget = ({
               justifyContent="center"
               color="white"
             >
-              <FormLabel fontSize="20px">Name</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="name"
-                type="text"
-                {...register("name")}
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                error={errors.name}
               />
-              <p>{errors.name?.message}</p>
             </FormControl>
 
             <FormControl
-              mt={4}
+              mt={2}
               display="flex"
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Max Value</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Max Value"
-                type="number"
-                {...register("max_value")}
+              <InputForm
+                name="max_value"
+                label="Max value"
+                register={register}
+                error={errors.max_value}
               />
-              <p>{errors.max_value?.message}</p>
             </FormControl>
           </ModalBody>
 
@@ -151,21 +168,17 @@ export const ModalEditBudget = ({
             pb={6}
           >
             <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="80%"
-              color="black.500"
+              h="60px"
+              w="76%"
               type="submit"
-              border="3px solid"
-              borderColor="transparent"
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
+              fontWeight="normal"
+              fontSize="lg"
+              bg="purple.500"
+              border="2px solid"
+              borderColor="purple.500"
+              _hover={{ transform: "scale(1.08)" }}
             >
-              Update budget
+              Edit budget
             </Button>
           </ModalFooter>
         </ModalContent>

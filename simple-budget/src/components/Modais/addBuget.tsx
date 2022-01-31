@@ -25,7 +25,7 @@ interface ModalData {
   name: string;
   max_value: number;
   categories: string[];
-  userId: any;
+  userId: number;
 }
 
 interface ModalAddBudgetProps {
@@ -37,8 +37,8 @@ const schema = yup.object().shape({
   name: yup.string().required("Name required"),
   max_value: yup
     .number()
-    .required("Field required")
-    .min(1, "Minimum value greater than or equal to 1"),
+    .min(1, "Minimum value greater than or equal to 1")
+    .required("Field required"),
 });
 
 export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
