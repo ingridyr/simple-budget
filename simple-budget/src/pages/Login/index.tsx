@@ -112,7 +112,12 @@ export const Login = () => {
             mb="4"
           >
             <form onSubmit={handleSubmit(sendData)}>
-              <Heading fontSize="24px" fontWeight="bold" mb="6">
+              <Heading
+                fontSize="24px"
+                fontWeight="bold"
+                mb="6"
+                color="black.300"
+              >
                 Login
               </Heading>
 
