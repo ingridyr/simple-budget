@@ -135,7 +135,7 @@ export const Login = () => {
               <Button
                 width="100%"
                 height="60px"
-                background="gradient.0"
+                background="purple.500"
                 color="white"
                 fontWeight="normal"
                 fontSize="lg"
@@ -151,7 +151,7 @@ export const Login = () => {
               <Button
                 width="100%"
                 height="60px"
-                background="gradient.0"
+                background="purple.500"
                 color="white"
                 fontWeight="normal"
                 fontSize="lg"
