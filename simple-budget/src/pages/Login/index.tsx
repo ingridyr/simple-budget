@@ -40,8 +40,8 @@ export const Login = () => {
   const { login } = useAuth();
 
   const schema = yup.object().shape({
-    email: yup.string().required("Mandatory field").email("Invalid email"),
-    password: yup.string().required("Mandatory field"),
+    email: yup.string().required("Required field").email("Invalid email"),
+    password: yup.string().required("Required field"),
   });
 
   const {
@@ -56,13 +56,6 @@ export const Login = () => {
 
   const sendData = (data: LoginProps) => {
     login(data);
-    toast({
-      title: "User authenticated successfully!",
-      duration: 4000,
-      isClosable: true,
-      status: "success",
-      position: "top",
-    });
   };
 
   return (

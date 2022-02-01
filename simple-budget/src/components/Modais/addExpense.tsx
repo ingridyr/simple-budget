@@ -19,9 +19,12 @@ import { useAuth } from "../../providers/AuthContext";
 import { InputForm } from "../Input";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Field required"),
-  description: yup.string().required("Field required"),
-  amount: yup.number().required("Field required").min(1, "Amount value should be higher than 0"),
+  name: yup.string().required("Name required"),
+  description: yup.string().required("Description required"),
+  amount: yup
+    .number()
+    .required("Amount required")
+    .min(1, "Amount value should be higher than 0"),
   type: yup.string().required("Choose a category"),
 });
 
@@ -54,7 +57,7 @@ export const ModalAddExpense = ({
   const onSubmitFunction = ({ name, description, amount, type }: ModalData) => {
     toast({
       title: "Expense created successfully!",
-      duration: 3000,
+      duration: 2000,
       isClosable: true,
       status: "success",
       position: "top",
@@ -68,7 +71,7 @@ export const ModalAddExpense = ({
       budgetId: budgetId,
     };
     createExpense(newData, accessToken);
-    onClose()
+    onClose();
   };
 
   const {
@@ -84,6 +87,7 @@ export const ModalAddExpense = ({
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
+          marginY="auto"
           bg="black.500"
           border="1px solid"
           borderColor="green.500"

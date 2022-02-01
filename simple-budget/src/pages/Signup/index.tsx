@@ -43,12 +43,12 @@ export const Signup = () => {
   const { createRegister } = useAuth();
 
   const schema = yup.object().shape({
-    name: yup.string().required("Mandatory field"),
-    email: yup.string().required("Mandatory field").email("Invalid email"),
-    password: yup.string().required("Mandatory field"),
+    name: yup.string().required("Required field"),
+    email: yup.string().required("Required field").email("Invalid email"),
+    password: yup.string().required("Required field"),
     confirm_password: yup
       .string()
-      .required("Mandatory field")
+      .required("Required field")
       .oneOf([yup.ref("password")], "Passwords didn't match"),
   });
 

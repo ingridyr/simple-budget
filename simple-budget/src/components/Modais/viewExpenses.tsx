@@ -15,12 +15,11 @@ import { AiFillEdit, AiOutlineConsoleSql } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
-import { useDisclosure } from "@chakra-ui/react"
+import { useDisclosure } from "@chakra-ui/react";
 
-import {ModalEditExpense} from "../Modais/editExpenseve"
+import { ModalEditExpense } from "../Modais/editExpenseve";
 
-import {useState} from "react"
-
+import { useState } from "react";
 
 interface ModalViewExpensesProps {
   budgetName: string;
@@ -31,11 +30,11 @@ interface ModalViewExpensesProps {
 
 interface ModalData {
   name: string;
-  description: string
+  description: string;
   amount: number;
-  budgetId: string
-  id: string
-  type: string
+  budgetId: string;
+  id: string;
+  type: string;
 }
 
 export const ModalViewExpenses = ({
@@ -44,12 +43,12 @@ export const ModalViewExpenses = ({
   budgetId,
   budgetName,
 }: ModalViewExpensesProps) => {
-  const { expenses, deleteExpense} = useExpenses();
+  const { expenses, deleteExpense } = useExpenses();
   const { accessToken } = useAuth();
 
   const toast = useToast();
 
-  const [selectedItem, setSelectedItem] = useState<ModalData>({} as ModalData)
+  const [selectedItem, setSelectedItem] = useState<ModalData>({} as ModalData);
 
   const handleDelete = (item: any, accessToken: string) => {
     toast({
@@ -61,23 +60,27 @@ export const ModalViewExpenses = ({
     });
     deleteExpense(item, accessToken);
   };
-  
+
   const {
     isOpen: isModalEditExpenseOpen,
     onOpen: onModalEditExpenseOpen,
     onClose: onModalEditExpenseClose,
-  } = useDisclosure()
+  } = useDisclosure();
 
   const modalSelect = (item: ModalData) => {
-    setSelectedItem(item)
-    onModalEditExpenseOpen()
-  }
+    setSelectedItem(item);
+    onModalEditExpenseOpen();
+  };
 
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
         <ModalOverlay />
-        <ModalContent bgColor="black.500" boxShadow="0px 1px 7px 2px #00F59B">
+        <ModalContent
+          bgColor="black.500"
+          boxShadow="0px 1px 7px 2px #00F59B"
+          marginY="auto"
+        >
           <ModalHeader>
             <Flex alignItems="center" justifyContent="space-between">
               <Heading>{budgetName}</Heading>
@@ -116,7 +119,12 @@ export const ModalViewExpenses = ({
                     justifyContent="space-between"
                   >
                     <Flex flexDirection="column">
-                      <Flex fontSize="16px" gap="10px" width="200px" justifyContent="space-between">
+                      <Flex
+                        fontSize="16px"
+                        gap="10px"
+                        width="200px"
+                        justifyContent="space-between"
+                      >
                         <Heading color="white.0" size="md">
                           {item.name}
                         </Heading>
@@ -134,7 +142,11 @@ export const ModalViewExpenses = ({
                       </Text>
                     </Flex>
                     <Box display="block">
-                      <Text fontFamily="other" color="green.500" fontWeight="500">
+                      <Text
+                        fontFamily="other"
+                        color="green.500"
+                        fontWeight="500"
+                      >
                         R$ {item.amount.toFixed(2)}
                       </Text>
                       <Flex m="10px" alignItems="center" gap="10px">
@@ -156,7 +168,12 @@ export const ModalViewExpenses = ({
                 </>
               );
             })}
-            <ModalEditExpense isOpen={isModalEditExpenseOpen} onOpen={onModalEditExpenseOpen} onClose={onModalEditExpenseClose} selectedItem={selectedItem}/>
+            <ModalEditExpense
+              isOpen={isModalEditExpenseOpen}
+              onOpen={onModalEditExpenseOpen}
+              onClose={onModalEditExpenseClose}
+              selectedItem={selectedItem}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
