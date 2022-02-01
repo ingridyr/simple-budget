@@ -16,7 +16,6 @@ import {
   itemAnimation,
 } from "../../styles/animation";
 
-import { useHistory } from "react-router-dom";
 import { Link as ReactRouterLink } from "react-router-dom";
 
 import * as yup from "yup";
@@ -40,9 +39,8 @@ interface DataProps {
 }
 
 export const Signup = () => {
-  const history = useHistory();
 
-  const { signup } = useAuth();
+  const { createRegister } = useAuth();
 
   const schema = yup.object().shape({
     name: yup.string().required("Mandatory field"),
@@ -64,7 +62,7 @@ export const Signup = () => {
 
 
   const sendData = (data: DataProps) => {
-    signup(data)
+    createRegister(data)
   };
 
   return (

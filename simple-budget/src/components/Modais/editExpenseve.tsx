@@ -9,71 +9,79 @@ import {
   Button,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Text,
   Input as ChakraInput,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { useAuth } from "../../providers/AuthContext/index";
+import { useExpenses } from "../../providers/ExpensesContext/index";
+import { InputForm } from "../Input";
+
 const schema = yup.object().shape({
   name: yup.string().required("Field Required"),
   description: yup.string().required("Field Required"),
-  amount: yup.number().required("Field Required")
+  amount: yup
+    .number()
+    .required("Field Required")
+    .min(1, "Amount value should be higher than 0"),
 });
 
 interface ModalData {
   name: string;
-  description: string
+  description: string;
   amount: number;
-  budgetId: string
-  id: string
-  type: string
+  budgetId: string;
+  id: string;
+  type: string;
 }
 
 interface SelectedItem {
   name: string;
-  description: string
+  description: string;
   amount: number;
-  budgetId: string
-  id: string
-  type: string
+  budgetId: string;
+  id: string;
+  type: string;
 }
 
 interface ModalEditExpenseProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  selectedItem: SelectedItem
+  selectedItem: SelectedItem;
 }
 
 export const ModalEditExpense = ({
   isOpen,
   onClose,
-  onOpen,  
-  selectedItem
+  onOpen,
+  selectedItem,
 }: ModalEditExpenseProps) => {
-  const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
+  const { accessToken } = useAuth();
+  const { restoreInfos, updateExpense, deleteExpense } = useExpenses();
 
-  //aqui recebe a função do provider para efetuar a troca:
-  const trocaProvider = (data: ModalData) => {
-    setExpenseve(data);
-    //logica do provider
-    //...
+  const changeExpenseData = (data: ModalData) => {
+    updateExpense(selectedItem.id, accessToken, data);
   };
-
-  console.log(selectedItem)
-  console.log(selectedItem.name)
 
   const {
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (selectedItem.id) {
+      restoreInfos(selectedItem.id, reset);
+    }
+  }, [selectedItem]);
 
   return (
     <>
@@ -87,7 +95,7 @@ export const ModalEditExpense = ({
           borderRadius="10px"
           boxShadow="1px 0px 62px 0px rgb(0,245,155)"
           as="form"
-          onSubmit={handleSubmit(trocaProvider)}
+          onSubmit={handleSubmit(changeExpenseData)}
         >
           <ModalHeader pb={4}></ModalHeader>
           <ModalCloseButton color="purple.500" fontSize="16px" />
@@ -104,17 +112,13 @@ export const ModalEditExpense = ({
               justifyContent="center"
               color="white"
             >
-              <FormLabel fontSize="20px">Name</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Name"
-                type="text"
-                value={selectedItem.name}
-                {...register("name")}
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                placeholder="Ex: Cardiologist"
+                error={errors.name}
               />
-              <Text>{errors.name?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -122,17 +126,13 @@ export const ModalEditExpense = ({
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Description</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Description"
-                type="string"
-                value={selectedItem.description}
-                {...register("description")}
+              <InputForm
+                name="description"
+                label="Description"
+                register={register}
+                placeholder="Ex: doit review"
+                error={errors.description}
               />
-              <Text>{errors.description?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -140,17 +140,13 @@ export const ModalEditExpense = ({
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Amount</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Amount"
-                type="number"
-                value={selectedItem.amount}
-                {...register("amount")}
+              <InputForm
+                name="amount"
+                label="Amount"
+                register={register}
+                placeholder="Ex: 200"
+                error={errors.amount}
               />
-              <Text>{errors.amount?.message}</Text>
             </FormControl>
           </ModalBody>
 
@@ -187,7 +183,10 @@ export const ModalEditExpense = ({
               color="black.500"
               border="3px solid"
               borderColor="white"
-              onClickCapture={() => {}}
+              onClick={() => {
+                deleteExpense(selectedItem.id, accessToken);
+                onClose();
+              }}
               _hover={{
                 bg: "gray.600",
                 border: "3px solid",

@@ -9,6 +9,8 @@ import {
 import Logo from "../../assets/Logo.png";
 import HomeImage from "../../assets/HomeImage.svg";
 
+import {useAuth} from "../../providers/AuthContext/index"
+
 export const Home = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();

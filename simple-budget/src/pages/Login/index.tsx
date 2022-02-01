@@ -37,7 +37,7 @@ interface LoginProps {
 export const Login = () => {
   const history = useHistory();
 
-  const { signin } = useAuth();
+  const { login } = useAuth();
 
   const schema = yup.object().shape({
     email: yup.string().required("Mandatory field").email("Invalid email"),
@@ -55,7 +55,7 @@ export const Login = () => {
   const toast = useToast();
 
   const sendData = (data: LoginProps) => {
-    signin(data);
+    login(data);
     toast({
       title: "User authenticated successfully!",
       duration: 4000,

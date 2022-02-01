@@ -18,7 +18,7 @@ export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
   const userId = user.id;
-
+  
   useEffect(() => {
     listBudgets(userId, accessToken);
   }, []);
