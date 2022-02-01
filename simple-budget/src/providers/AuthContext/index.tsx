@@ -1,6 +1,6 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import { api } from "../../services/api";
-import {useToast} from "@chakra-ui/react"
+import { useToast } from "@chakra-ui/react";
 
 import { useHistory } from "react-router-dom";
 
@@ -37,8 +37,8 @@ interface AuthContextData {
   accessToken: string;
   user: User;
   // errMessage: string;
-  createRegister: (data: RegisterProps) => void
-  login: (data: LoginProps) => void
+  createRegister: (data: RegisterProps) => void;
+  login: (data: LoginProps) => void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -46,55 +46,55 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const history = useHistory();
 
-//   const [errMessage, setErrMessage] = useState<string>("");
+  //   const [errMessage, setErrMessage] = useState<string>("");
 
-//   const [data, setData] = useState<AuthState>(() => {
-//     const accessToken = localStorage.getItem("@SimpleBudget:accessToken");
-//     const user = localStorage.getItem("@SimpleBudget:user");
+  //   const [data, setData] = useState<AuthState>(() => {
+  //     const accessToken = localStorage.getItem("@SimpleBudget:accessToken");
+  //     const user = localStorage.getItem("@SimpleBudget:user");
 
-//     if (accessToken && user) {
-//       return {
-//         accessToken,
-//         user: JSON.parse(user),
-//       };
-//     }
+  //     if (accessToken && user) {
+  //       return {
+  //         accessToken,
+  //         user: JSON.parse(user),
+  //       };
+  //     }
 
-//     return {} as AuthState;
-//   });
+  //     return {} as AuthState;
+  //   });
 
-//   const signup = (data: RegisterProps) => {
-//     const newData = {
-//       name: data.name,
-//       email: data.email,
-//       password: data.password,
-//     };
+  //   const signup = (data: RegisterProps) => {
+  //     const newData = {
+  //       name: data.name,
+  //       email: data.email,
+  //       password: data.password,
+  //     };
 
-//     api
-//       .post("/register", newData)
-//       .then((_) => {
-//         history.push("/login");
-//       })
-//       .catch((err) => {
-//         setErrMessage(err.message);
-//       });
-//   };
+  //     api
+  //       .post("/register", newData)
+  //       .then((_) => {
+  //         history.push("/login");
+  //       })
+  //       .catch((err) => {
+  //         setErrMessage(err.message);
+  //       });
+  //   };
 
-//   const signin = (data: LoginProps) => {
-//     api
-//       .post("/login", data)
-//       .then((response) => {
-//         const accessToken = response.data.accessToken;
-//         const user = response.data.user;
+  //   const signin = (data: LoginProps) => {
+  //     api
+  //       .post("/login", data)
+  //       .then((response) => {
+  //         const accessToken = response.data.accessToken;
+  //         const user = response.data.user;
 
-//         localStorage. setItem("@SimpleBudget:accessToken", accessToken);
-//         localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
-//         history.push("/dashboard")
-//         setData({ accessToken, user });
-//       })
-//       .catch((err) => {
-//         setErrMessage(err.message);
-//       });
-//   };
+  //         localStorage. setItem("@SimpleBudget:accessToken", accessToken);
+  //         localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
+  //         history.push("/dashboard")
+  //         setData({ accessToken, user });
+  //       })
+  //       .catch((err) => {
+  //         setErrMessage(err.message);
+  //       });
+  //   };
 
   // const logout = () => {
   //   localStorage.removeItem("@SimpleBudget:accessToken");
@@ -102,111 +102,116 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   //   history.push("/login")
   // };
 
-//   return (
-//     <AuthContext.Provider
-//       value={{
-//         logout,
-//         signup,
-//         signin,
-//         accessToken: data.accessToken,
-//         user: data.user,
-//         errMessage,
-//       }}
-//     >
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+  //   return (
+  //     <AuthContext.Provider
+  //       value={{
+  //         logout,
+  //         signup,
+  //         signin,
+  //         accessToken: data.accessToken,
+  //         user: data.user,
+  //         errMessage,
+  //       }}
+  //     >
+  //       {children}
+  //     </AuthContext.Provider>
+  //   );
+  // };
 
-// export const useAuth = () => useContext(AuthContext);
+  // export const useAuth = () => useContext(AuthContext);
 
-    const toast = useToast()
+  const toast = useToast();
 
-    const [data, setData] = useState<AuthState>(() => {
-        const accessToken = localStorage.getItem("@SimpleBudget:accessToken")
-        const user = localStorage.getItem("@SimpleBudget:user")
+  const [data, setData] = useState<AuthState>(() => {
+    const accessToken = localStorage.getItem("@SimpleBudget:accessToken");
+    const user = localStorage.getItem("@SimpleBudget:user");
 
-        if(accessToken && user) {
-            return {
-                accessToken, user: JSON.parse(user)
-            }
-        }
-
-        return {} as AuthState
-    })
-
-    const createRegister = (data: RegisterProps) => {
-        const newData = {
-            name: data.name,
-            email: data.email,
-            password: data.password
-        }
-
-        api.post("/signup/", newData)
-        .then((response) => {
-            toast({
-                title: "Cadastro Realizado!",
-                description: "Cadastro Realizado2",
-                status: "success",
-                duration: 5000,
-                isClosable: true
-            })
-            history.push("/login")
-        })
-        .catch((err) => {
-            console.log(err)
-            toast({
-                title: "Falha no Cadastro!",
-                description: "Este Email pode já existir.",
-                status: "error",
-                duration: 5000,
-                isClosable: true
-            })
-        })
+    if (accessToken && user) {
+      return {
+        accessToken,
+        user: JSON.parse(user),
+      };
     }
 
-    const login = (data: LoginProps) => {
-        api.post("/login", data)
-        .then((response) => {
-            const accessToken = response.data.accessToken
-            const user = response.data.user
+    return {} as AuthState;
+  });
 
-            localStorage.setItem("@SimpleBudget:accessToken", accessToken)
-            localStorage.setItem("@SimpleBudget:user", JSON.stringify(user))
-
-            toast({
-                title: "Login Realizado!",
-                status: "success",
-                duration: 5000,
-                isClosable: true
-            })
-
-            setData({accessToken, user})
-            history.push("/dashboard")
-        })
-        .catch((err) => {
-            console.log(err)
-            toast({
-                title: "Falha no Login!",
-                description: "Verifique os Campos Novamente.",
-                status: "error",
-                duration: 5000,
-                isClosable: true
-            })
-        })
-    }
-
-    const logout = () => {
-      localStorage.removeItem("@SimpleBudget:accessToken");
-      localStorage.removeItem("@SimpleBudget:user");
-      history.push("/login")
+  const createRegister = (data: RegisterProps) => {
+    const newData = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
     };
 
-    return (
-        <AuthContext.Provider value={{createRegister, login, accessToken: data.accessToken, user: data.user, logout}}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
+    api
+      .post("/signup/", newData)
+      .then((response) => {
+        toast({
+          title: "User created!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+        history.push("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Something went wrong...",
+          description: "This email might be already registered.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      });
+  };
+
+  const login = (data: LoginProps) => {
+    api
+      .post("/login", data)
+      .then((response) => {
+        const accessToken = response.data.accessToken;
+        const user = response.data.user;
+
+        localStorage.setItem("@SimpleBudget:accessToken", accessToken);
+        localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
+
+        setData({ accessToken, user });
+        history.push("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: "Authentication failed",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+      });
+  };
+
+  const logout = () => {
+    localStorage.removeItem("@SimpleBudget:accessToken");
+    localStorage.removeItem("@SimpleBudget:user");
+    history.push("/login");
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        createRegister,
+        login,
+        accessToken: data.accessToken,
+        user: data.user,
+        logout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
 export const useAuth = () => useContext(AuthContext);
