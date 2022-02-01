@@ -1,3 +1,5 @@
+import React from "react";
+import IntlCurrencyInput from "react-intl-currency-input";
 import {
   FormLabel,
   InputGroup,
@@ -6,10 +8,23 @@ import {
   Input,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { theme } from "../../styles/theme";
 import { FieldError } from "react-hook-form";
 import { IconType } from "react-icons/lib";
-import { InputHTMLAttributes } from "react";
+import { theme } from "../../styles/theme";
+
+const currencyConfig = {
+  locale: "pt-BR",
+  formats: {
+    number: {
+      BRL: {
+        style: "currency",
+        currency: "BRL",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      },
+    },
+  },
+};
 
 interface InputProps {
   name: string;
@@ -19,14 +34,9 @@ interface InputProps {
   error?: FieldError | null;
   icon?: IconType;
   register: (user: any) => void;
-  value?: string;
-  //onChange: (props: string) => void;
-  //handlechange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  //handlechange?: (props: string) => any;
-  //change?: string;
 }
 
-export const InputForm = ({
+const InputCurrency = ({
   name,
   type,
   placeholder,
@@ -34,17 +44,23 @@ export const InputForm = ({
   error = null,
   icon: Icon,
   register,
-  value,
-  //handlechange,
-  //change,
   ...rest
 }: InputProps) => {
+  const handleChange = (
+    evt: React.ChangeEvent<HTMLInputElement>,
+    value: any,
+    maskedValue: any
+  ) => {
+    evt.preventDefault();
+    console.log(value);
+    console.log(maskedValue);
+  };
   return (
     <>
-      <FormLabel htmlFor={name} fontSize="18px" mb="1">
+      <FormLabel htmlFor={name} fontSize="18px">
         {label}
       </FormLabel>
-      <InputGroup flexDirection="column" h="85px">
+      <InputGroup flexDirection="column">
         {Icon && (
           <InputLeftElement
             mt="2.5"
@@ -59,15 +75,17 @@ export const InputForm = ({
           height="60px"
           fontSize="lg"
           type={type}
-          value={value}
-          //onChange={(e) => handlechange(e.target.value)}
           {...register(name)}
           {...rest}
+          as={IntlCurrencyInput}
+          currency="BRL"
+          config={currencyConfig}
         />
-        <Text color="red.500" fontSize="md" pl="2" mb="0" pb="0">
+        <Text marginBottom="12px" color="red.500" fontSize="md" pl="2">
           {error?.message}
         </Text>
       </InputGroup>
     </>
   );
 };
+export default InputCurrency;

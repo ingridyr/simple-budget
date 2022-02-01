@@ -11,15 +11,16 @@ import {
   FormLabel,
   Text,
   Input as ChakraInput,
+  Box,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useAuth } from "../../providers/AuthContext/index";
 import { useExpenses } from "../../providers/ExpensesContext/index";
 import { InputForm } from "../Input";
+import InputCurrency from "../Input/inputINTL";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
@@ -98,7 +99,9 @@ export const ModalEditExpense = ({
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-          <ModalHeader pb={4}></ModalHeader>
+          {/*<ModalHeader pb={3} borderBottom="1px solid" borderColor="gray.350">
+          </ModalHeader>
+          */}
           <ModalCloseButton color="purple.500" fontSize="16px" />
           <ModalBody
             pb={3.5}
@@ -107,48 +110,48 @@ export const ModalEditExpense = ({
             flexDir="column"
             alignSelf="center"
           >
-            <FormControl
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-              color="white"
+            <Box
+              bg="black.500"
+              as="select"
+              w="50%"
+              mb="20px"
+              fontSize="20px"
+              {...register("type")}
             >
-              <InputForm
-                name="name"
-                label="Name"
-                register={register}
-                placeholder="Ex: Cardiologist"
-                error={errors.name}
-              />
-            </FormControl>
-            <FormControl
-              mt={4}
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-            >
-              <InputForm
-                name="description"
-                label="Description"
-                register={register}
-                placeholder="Ex: doit review"
-                error={errors.description}
-              />
-            </FormControl>
-            <FormControl
-              mt={4}
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-            >
-              <InputForm
-                name="amount"
-                label="Amount"
-                register={register}
-                placeholder="Ex: 200"
-                error={errors.amount}
-              />
-            </FormControl>
+              <Box as="option" disabled selected value="">
+                Categories
+              </Box>
+
+              {[1, 2, 3, 4, 5, 6].map((item) => (
+                <Box as="option" value={item}>
+                  {item}
+                </Box>
+              ))}
+            </Box>
+
+            <InputForm
+              name="name"
+              label="Name"
+              register={register}
+              placeholder="Ex: Cardiologist"
+              error={errors.name}
+            />
+
+            <InputForm
+              name="description"
+              label="Description"
+              register={register}
+              placeholder="Ex: doit review"
+              error={errors.description}
+            />
+
+            <InputCurrency
+              name="amount"
+              label="Amount"
+              register={register}
+              placeholder="Ex: 200"
+              error={errors.amount}
+            />
           </ModalBody>
 
           <ModalFooter
