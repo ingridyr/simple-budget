@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { BottomMenu } from "../../components/BottomMenu";
 import { SideMenu } from "../../components/SideMenu";
+import { TopBar } from "../../components/TopBar";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { useExpenses } from "../../providers/ExpensesContext";
