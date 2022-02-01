@@ -31,6 +31,7 @@ export const BottomMenu = () => {
         position="fixed"
         bottom="0"
         overflow="hidden"
+        zIndex="1"
       >
         <Flex alignItems="center" justifyContent="center" w="100%" h="100%">
           <HStack spacing="16">

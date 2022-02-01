@@ -149,7 +149,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         toast({
           title: "User created!",
           status: "success",
-          duration: 3000,
+          duration: 2000,
           isClosable: true,
           position: "top",
         });
@@ -161,7 +161,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           title: "Something went wrong...",
           description: "This email might be already registered.",
           status: "error",
-          duration: 3000,
+          duration: 2000,
           isClosable: true,
           position: "top",
         });
@@ -179,6 +179,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         localStorage.setItem("@SimpleBudget:user", JSON.stringify(user));
 
         setData({ accessToken, user });
+        toast({
+          title: "User authenticated successfully!",
+          duration: 1000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
         history.push("/dashboard");
       })
       .catch((err) => {
@@ -186,7 +193,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         toast({
           title: "Authentication failed",
           status: "error",
-          duration: 3000,
+          duration: 1000,
           isClosable: true,
           position: "top",
         });

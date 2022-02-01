@@ -22,11 +22,11 @@ import { useExpenses } from "../../providers/ExpensesContext/index";
 import { InputForm } from "../Input";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Field Required"),
-  description: yup.string().required("Field Required"),
+  name: yup.string().required("Name required"),
+  description: yup.string().required("Description required"),
   amount: yup
     .number()
-    .required("Field Required")
+    .required("Amount Required")
     .min(1, "Amount value should be higher than 0"),
 });
 
@@ -88,6 +88,7 @@ export const ModalEditExpense = ({
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
+          marginY="auto"
           bg="black.500"
           border="1px solid"
           borderColor="green.500"

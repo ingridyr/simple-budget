@@ -32,10 +32,10 @@ export const InputForm = ({
 }: InputProps) => {
   return (
     <>
-      <FormLabel htmlFor={name} fontSize="18px">
+      <FormLabel htmlFor={name} fontSize="18px" mb="1">
         {label}
       </FormLabel>
-      <InputGroup flexDirection="column">
+      <InputGroup flexDirection="column" h="85px">
         {Icon && (
           <InputLeftElement
             mt="2.5"
@@ -53,7 +53,7 @@ export const InputForm = ({
           {...register(name)}
           {...rest}
         />
-        <Text marginBottom="12px" color="red.500" fontSize="md" pl="2">
+        <Text color="red.500" fontSize="md" pl="2" mb="0" pb="0">
           {error?.message}
         </Text>
       </InputGroup>

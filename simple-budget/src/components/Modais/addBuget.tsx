@@ -38,7 +38,7 @@ const schema = yup.object().shape({
   max_value: yup
     .number()
     .min(1, "Minimum value greater than or equal to 1")
-    .required("Field required"),
+    .required("Max value required"),
 });
 
 export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
@@ -86,6 +86,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ModalOverlay />
         <ModalContent
+          marginY="auto"
           bg="black.500"
           border="1px solid"
           borderColor="green.500"
