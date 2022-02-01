@@ -12,21 +12,15 @@ import {
   itemAnimation,
 } from "../../styles/animation";
 
-import {Redirect} from "react-router-dom"
-
 export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
   const userId = user.id;
-
+  
   useEffect(() => {
     listBudgets(userId, accessToken);
   }, []);
-
-  if(!accessToken) {
-    return <Redirect to="/"/>
-  } 
-
+  
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">

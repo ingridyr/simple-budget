@@ -37,7 +37,7 @@ interface LoginProps {
 export const Login = () => {
   const history = useHistory();
 
-  const { signin } = useAuth();
+  const { signin, accessToken } = useAuth();
 
   const schema = yup.object().shape({
     email: yup.string().required("Mandatory field").email("Invalid email"),

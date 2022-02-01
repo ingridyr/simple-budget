@@ -16,7 +16,6 @@ import {
   itemAnimation,
 } from "../../styles/animation";
 
-import { useHistory } from "react-router-dom";
 import { Link as ReactRouterLink } from "react-router-dom";
 
 import * as yup from "yup";
@@ -40,7 +39,6 @@ interface DataProps {
 }
 
 export const Signup = () => {
-  const history = useHistory();
 
   const { signup } = useAuth();
 
