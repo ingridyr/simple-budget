@@ -1,5 +1,6 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { SideMenu } from "../../components/SideMenu";
+import { BottomMenu } from "../../components/BottomMenu";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { CardBudget } from "../../components/Card/index";
 import { useBudgets } from "../../providers/BudgetsContext";
@@ -18,19 +19,20 @@ export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
   const userId = user.id;
-  
+
   useEffect(() => {
     listBudgets(userId, accessToken);
   }, []);
 
   /* if(!accessToken) {
     return <Redirect to="/"/>
-  } */ 
+  } */
 
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">
         <SideMenu isSelected={true} />
+        <BottomMenu />
         <Flex
           flexDirection="column"
           justifyContent="center"
