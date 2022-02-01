@@ -1,4 +1,5 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
+import { TopBar } from "../../components/TopBar";
 import { SideMenu } from "../../components/SideMenu";
 import { BottomMenu } from "../../components/BottomMenu";
 import { BsPlusCircleFill } from "react-icons/bs";
@@ -31,6 +32,7 @@ export const Dashboard = () => {
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">
+        <TopBar />
         <SideMenu isSelected={true} />
         <BottomMenu />
         <Flex
