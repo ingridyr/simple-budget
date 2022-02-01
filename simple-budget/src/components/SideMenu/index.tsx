@@ -1,10 +1,11 @@
 import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlinePieChart } from "react-icons/ai";
 import { ModalAddBuget } from "../Modais/addBuget";
 import { useAuth } from "../../providers/AuthContext";
 import logo from "../../assets/LogoSm.svg";
+import { useHistory } from "react-router-dom";
 
 interface SideMenuProps {
   isSelected: any;
@@ -18,6 +19,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
   } = useDisclosure();
 
   const { logout } = useAuth();
+  const history = useHistory();
 
   return (
     <>
@@ -66,26 +68,66 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
             onClick={() => onModalAddBudgetOpen()}
           />
         </Flex>
-        {isSelected && (
-          <>
+        <Flex alignItems="center" w="100%">
+          {isSelected === "dashboard" && (
             <Flex
               // boxShadow="0px 1px 7px 2px #5210AF"
-              w="100%"
+              width="20px"
               h="60px"
+              position="fixed"
               alignItems="center"
               justifyContent="flex"
-              gap="18px"
               _hover={{
                 transition: "0.2s",
                 color: "green.500",
                 // transform: "scale(1.1)",
               }}
             >
-              <Box w="3px" h="100%" bgColor="white.0" alignSelf="flex-start" />
-              <AiOutlineHome size={35} color="white.0" cursor="pointer" />
+              <Flex w="3px" h="100%" bgColor="white.0" alignSelf="flex-start" />
             </Flex>
-          </>
-        )}
+          )}
+          <Box
+            position="relative"
+            left="20px"
+            _hover={{
+              transition: "0.2s",
+              color: "green.500",
+              // transform: "scale(1.1)",
+            }}
+          >
+            <AiOutlineHome size={35} color="white.0" cursor="pointer" onClick={() => history.push("/dashboard")}/>
+          </Box>
+        </Flex>
+        <Flex className="boxIcone" alignItems="center" w="100%">
+          {isSelected === "statistics" && (
+            <Flex
+              // boxShadow="0px 1px 7px 2px #5210AF"
+              position="fixed"
+              width="20px"
+              h="60px"
+              alignItems="center"
+              justifyContent="flex"
+              _hover={{
+                transition: "0.2s",
+                color: "green.500",
+                // transform: "scale(1.1)",
+              }}
+            >
+              <Flex w="3px" h="100%" bgColor="white.0" alignSelf="flex-start" />
+            </Flex>
+          )}
+          <Box
+            position="relative"
+            left="20px"
+            _hover={{
+              transition: "0.2s",
+              color: "green.500",
+              // transform: "scale(1.1)",
+            }}
+          >
+            <AiOutlinePieChart size={35} color="white.0" cursor="pointer" onClick={() => history.push("/statistics")}/>
+          </Box>
+        </Flex>
         <Box
           position="fixed"
           bottom="28px"

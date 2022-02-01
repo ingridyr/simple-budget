@@ -35,6 +35,7 @@ export const Dashboard = () => {
         <TopBar />
         <SideMenu isSelected={true} />
         <BottomMenu />
+        <SideMenu isSelected={"dashboard"} />
         <Flex
           flexDirection="column"
           justifyContent="center"
