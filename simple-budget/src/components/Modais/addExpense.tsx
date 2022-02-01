@@ -21,7 +21,7 @@ import { InputForm } from "../Input";
 const schema = yup.object().shape({
   name: yup.string().required("Field required"),
   description: yup.string().required("Field required"),
-  amount: yup.number().required("Field required"),
+  amount: yup.number().required("Field required").min(1, "Amount value should be higher than 0"),
   type: yup.string().required("Choose a category"),
 });
 

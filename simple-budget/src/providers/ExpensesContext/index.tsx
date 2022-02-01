@@ -9,6 +9,8 @@ import { AxiosResponse } from "axios";
 import { api } from "../../services/api";
 import {useAuth} from "../AuthContext/index"
 
+import {useToast} from "@chakra-ui/react"
+
 interface ExpenseProviderProps {
   children: ReactNode;
 }
@@ -57,6 +59,8 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   //const [errMessage, setErrMessage] = useState<string>("");
+
+  const toast = useToast()
 
   const {accessToken} = useAuth()
 
@@ -157,6 +161,14 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
             if (dataUpdate.type !== "") {
               expenseFind.type = dataUpdate.type;
             }
+
+            toast({
+              title: "Expense Updated!",
+              duration: 3000,
+              isClosable: true,
+              status: "success",
+              position: "top"
+            })
             setExpenses([...filteredExpenses, expenseFind]);
           }
         })

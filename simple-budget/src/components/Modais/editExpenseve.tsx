@@ -9,21 +9,21 @@ import {
   Button,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   Text,
   Input as ChakraInput,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import {useAuth} from "../../providers/AuthContext/index"
 import {useExpenses} from "../../providers/ExpensesContext/index"
 
 const schema = yup.object().shape({
   name: yup.string().required("Field Required"),
   description: yup.string().required("Field Required"),
-  amount: yup.number().required("Field Required")
+  amount: yup.number().required("Field Required").min(1, "Amount value should be higher than 0")
 });
 
 interface ModalData {
@@ -57,19 +57,13 @@ export const ModalEditExpense = ({
   onOpen,  
   selectedItem,
 }: ModalEditExpenseProps) => {
-  const [expenseve, setExpenseve] = useState<ModalData>({} as ModalData);
 
-  const {restoreInfos} = useExpenses()
+  const {accessToken} = useAuth()
+  const {restoreInfos, updateExpense} = useExpenses()
 
-  //aqui recebe a função do provider para efetuar a troca:
-  const trocaProvider = (data: ModalData) => {
-    setExpenseve(data);
-    //logica do provider
-    //...
+  const changeExpenseData = (data: ModalData) => {
+    updateExpense(selectedItem.id, accessToken, data)
   };
-
-  // console.log(selectedItem)
-  // console.log(selectedItem.name)
 
   const {
     formState: { errors },
@@ -81,9 +75,10 @@ export const ModalEditExpense = ({
   });
 
   useEffect(() => {
-    restoreInfos(selectedItem.id, reset)
+    if(selectedItem.id){
+      restoreInfos(selectedItem.id, reset)
+    }
   }, [selectedItem])
-
 
   return (
     <>
@@ -97,7 +92,7 @@ export const ModalEditExpense = ({
           borderRadius="10px"
           boxShadow="1px 0px 62px 0px rgb(0,245,155)"
           as="form"
-          onSubmit={handleSubmit(trocaProvider)}
+          onSubmit={handleSubmit(changeExpenseData)}
         >
           <ModalHeader pb={4}></ModalHeader>
           <ModalCloseButton color="purple.500" fontSize="16px" />
@@ -121,10 +116,9 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Name"
                 type="text"
-                // value={selectedItem.name}
                 {...register("name")}
               />
-              <Text>{errors.name?.message}</Text>
+              <Text color="red">{errors.name?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -138,11 +132,10 @@ export const ModalEditExpense = ({
                 p="28px 16px"
                 color="black.500"
                 placeholder="Description"
-                type="string"
-                // value={selectedItem.description}
+                type="text"
                 {...register("description")}
               />
-              <Text>{errors.description?.message}</Text>
+              <Text color="red">{errors.description?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -157,10 +150,9 @@ export const ModalEditExpense = ({
                 color="black.500"
                 placeholder="Amount"
                 type="number"
-                // value={selectedItem.amount}
                 {...register("amount")}
               />
-              <Text>{errors.amount?.message}</Text>
+              <Text color="red">{errors.amount?.message}</Text>
             </FormControl>
           </ModalBody>
 
