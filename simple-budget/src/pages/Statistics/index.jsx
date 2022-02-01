@@ -1,6 +1,7 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { Chart } from "react-google-charts";
+import { BottomMenu } from "../../components/BottomMenu";
 import { SideMenu } from "../../components/SideMenu";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
@@ -15,12 +16,22 @@ export const Statistics = () => {
     listBudgets(user.id, accessToken);
     listAllExpenses(accessToken);
   }, []);
-  
-  const health = allExpenses.filter((item) => item.type === "health").reduce((acc, { amount }) => acc + amount, 0)
-  const entertainment = allExpenses.filter((item) => item.type === "entertainment").reduce((acc, { amount }) => acc + amount, 0)
-  const transport = allExpenses.filter((item) => item.type === "transport").reduce((acc, { amount }) => acc + amount, 0)
-  const home = allExpenses.filter((item) => item.type === "home").reduce((acc, { amount }) => acc + amount, 0)
-  const food = allExpenses.filter((item) => item.type === "food").reduce((acc, { amount }) => acc + amount, 0)
+
+  const health = allExpenses
+    .filter((item) => item.type === "health")
+    .reduce((acc, { amount }) => acc + amount, 0);
+  const entertainment = allExpenses
+    .filter((item) => item.type === "entertainment")
+    .reduce((acc, { amount }) => acc + amount, 0);
+  const transport = allExpenses
+    .filter((item) => item.type === "transport")
+    .reduce((acc, { amount }) => acc + amount, 0);
+  const home = allExpenses
+    .filter((item) => item.type === "home")
+    .reduce((acc, { amount }) => acc + amount, 0);
+  const food = allExpenses
+    .filter((item) => item.type === "food")
+    .reduce((acc, { amount }) => acc + amount, 0);
 
   //para o grafico de linhas:
   //por uma opção pre setada dos meses no budget (select)
@@ -38,29 +49,30 @@ export const Statistics = () => {
     ["Food", 7],
   ];
 
-  for(let i = 1; i < data.length; i++){
-
-    if(data[i][0] === "Health"){
-      data[i][1] = health
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][0] === "Health") {
+      data[i][1] = health;
     }
-    if(data[i][0] === "Entertainment"){
-      data[i][1] = entertainment
+    if (data[i][0] === "Entertainment") {
+      data[i][1] = entertainment;
     }
-    if(data[i][0] === "Transport"){
-      data[i][1] = transport
+    if (data[i][0] === "Transport") {
+      data[i][1] = transport;
     }
-    if(data[i][0] === "Home"){
-      data[i][1] = home
+    if (data[i][0] === "Home") {
+      data[i][1] = home;
     }
-    if(data[i][0] === "Food"){
-      data[i][1] = food
+    if (data[i][0] === "Food") {
+      data[i][1] = food;
     }
-    console.log(data)
+    console.log(data);
   }
 
   return (
     <>
       <Flex justifyContent="center">
+        <TopBar />
+        <BottomMenu />
         <SideMenu isSelected={"statistics"} />
         <Box w="70%">
           <Box m="20px 0" borderBottom="2px solid grey" w="90%">
@@ -73,7 +85,13 @@ export const Statistics = () => {
               options={{
                 is3D: true,
                 title: "By category",
-                colors: ["blueviolet", "Indigo", "DarkViolet", "MediumSeaGreen", "SpringGreen"],
+                colors: [
+                  "blueviolet",
+                  "Indigo",
+                  "DarkViolet",
+                  "MediumSeaGreen",
+                  "SpringGreen",
+                ],
                 backgroundColor: "transparent",
                 titleTextStyle: {
                   color: "#ffffff",
