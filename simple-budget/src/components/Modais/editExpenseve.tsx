@@ -17,68 +17,71 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import {useAuth} from "../../providers/AuthContext/index"
-import {useExpenses} from "../../providers/ExpensesContext/index"
+import { useAuth } from "../../providers/AuthContext/index";
+import { useExpenses } from "../../providers/ExpensesContext/index";
+import { InputForm } from "../Input";
 
 const schema = yup.object().shape({
   name: yup.string().required("Field Required"),
   description: yup.string().required("Field Required"),
-  amount: yup.number().required("Field Required").min(1, "Amount value should be higher than 0")
+  amount: yup
+    .number()
+    .required("Field Required")
+    .min(1, "Amount value should be higher than 0"),
 });
 
 interface ModalData {
   name: string;
-  description: string
+  description: string;
   amount: number;
-  budgetId: string
-  id: string
-  type: string
+  budgetId: string;
+  id: string;
+  type: string;
 }
 
 interface SelectedItem {
   name: string;
-  description: string
+  description: string;
   amount: number;
-  budgetId: string
-  id: string
-  type: string
+  budgetId: string;
+  id: string;
+  type: string;
 }
 
 interface ModalEditExpenseProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
-  selectedItem: SelectedItem
+  selectedItem: SelectedItem;
 }
 
 export const ModalEditExpense = ({
   isOpen,
   onClose,
-  onOpen,  
+  onOpen,
   selectedItem,
 }: ModalEditExpenseProps) => {
-
-  const {accessToken} = useAuth()
-  const {restoreInfos, updateExpense} = useExpenses()
+  const { accessToken } = useAuth();
+  const { restoreInfos, updateExpense, deleteExpense } = useExpenses();
 
   const changeExpenseData = (data: ModalData) => {
-    updateExpense(selectedItem.id, accessToken, data)
+    updateExpense(selectedItem.id, accessToken, data);
   };
 
   const {
     formState: { errors },
     handleSubmit,
     register,
-    reset
+    reset,
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
-    if(selectedItem.id){
-      restoreInfos(selectedItem.id, reset)
+    if (selectedItem.id) {
+      restoreInfos(selectedItem.id, reset);
     }
-  }, [selectedItem])
+  }, [selectedItem]);
 
   return (
     <>
@@ -109,16 +112,13 @@ export const ModalEditExpense = ({
               justifyContent="center"
               color="white"
             >
-              <FormLabel fontSize="20px">Name</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Name"
-                type="text"
-                {...register("name")}
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                placeholder="Ex: Cardiologist"
+                error={errors.name}
               />
-              <Text color="red">{errors.name?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -126,16 +126,13 @@ export const ModalEditExpense = ({
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Description</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Description"
-                type="text"
-                {...register("description")}
+              <InputForm
+                name="description"
+                label="Description"
+                register={register}
+                placeholder="Ex: doit review"
+                error={errors.description}
               />
-              <Text color="red">{errors.description?.message}</Text>
             </FormControl>
             <FormControl
               mt={4}
@@ -143,16 +140,13 @@ export const ModalEditExpense = ({
               flexDir="column"
               justifyContent="center"
             >
-              <FormLabel fontSize="20px">Amount</FormLabel>
-              <ChakraInput
-                bg="white"
-                p="28px 16px"
-                color="black.500"
-                placeholder="Amount"
-                type="number"
-                {...register("amount")}
+              <InputForm
+                name="amount"
+                label="Amount"
+                register={register}
+                placeholder="Ex: 200"
+                error={errors.amount}
               />
-              <Text color="red">{errors.amount?.message}</Text>
             </FormControl>
           </ModalBody>
 
@@ -189,7 +183,10 @@ export const ModalEditExpense = ({
               color="black.500"
               border="3px solid"
               borderColor="white"
-              onClickCapture={() => {}}
+              onClick={() => {
+                deleteExpense(selectedItem.id, accessToken);
+                onClose();
+              }}
               _hover={{
                 bg: "gray.600",
                 border: "3px solid",
