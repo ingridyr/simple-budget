@@ -61,7 +61,7 @@ export const Statistics = () => {
   return (
     <>
       <Flex justifyContent="center">
-        <SideMenu isSelected={true} />
+        <SideMenu isSelected={"statistics"} />
         <Box w="70%">
           <Box m="20px 0" borderBottom="2px solid grey" w="90%">
             <Heading>Statistics</Heading>
