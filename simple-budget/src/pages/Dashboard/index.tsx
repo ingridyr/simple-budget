@@ -30,7 +30,7 @@ export const Dashboard = () => {
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">
-        <SideMenu isSelected={true} />
+        <SideMenu isSelected={"dashboard"} />
         <Flex
           flexDirection="column"
           justifyContent="center"
