@@ -9,23 +9,16 @@ import {
 import Logo from "../../assets/Logo.png";
 import HomeImage from "../../assets/HomeImage.svg";
 
-import {Redirect} from "react-router-dom"
 import {useAuth} from "../../providers/AuthContext/index"
 
 export const Home = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const {accessToken} = useAuth()
-
   const redirect = (path: string) => {
     setLoading(true);
     history.push(path);
   };
-
-  if(accessToken) {
-    return <Redirect to="/dashboard"/>
-  }
 
   return (
     <Box height="100vh">

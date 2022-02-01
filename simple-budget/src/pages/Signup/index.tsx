@@ -16,7 +16,6 @@ import {
   itemAnimation,
 } from "../../styles/animation";
 
-import { Redirect } from "react-router-dom";
 import { Link as ReactRouterLink } from "react-router-dom";
 
 import * as yup from "yup";
@@ -41,7 +40,7 @@ interface DataProps {
 
 export const Signup = () => {
 
-  const { signup, accessToken } = useAuth();
+  const { signup } = useAuth();
 
   const schema = yup.object().shape({
     name: yup.string().required("Mandatory field"),
@@ -65,10 +64,6 @@ export const Signup = () => {
   const sendData = (data: DataProps) => {
     signup(data)
   };
-
-  if(accessToken) {
-    return <Redirect to="/dashboard"/>
-  }
 
   return (
     <>

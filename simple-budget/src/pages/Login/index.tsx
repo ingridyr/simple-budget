@@ -29,8 +29,6 @@ import { FaEnvelope, FaLock } from "react-icons/fa";
 
 import { InputForm } from "../../components/Input/index";
 
-import {Redirect} from "react-router-dom"
-
 interface LoginProps {
   email: string;
   password: string;
@@ -66,10 +64,6 @@ export const Login = () => {
       position: "top",
     });
   };
-
-  if(accessToken) {
-    return <Redirect to="/dashboard"/>
-  }
 
   return (
     <>
