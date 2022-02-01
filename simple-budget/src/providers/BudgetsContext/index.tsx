@@ -80,7 +80,6 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
         })
         .then((response: AxiosResponse<Budget>) => {
           setBudgets((oldBudgets) => [...oldBudgets, response.data]);
-          console.log(response);
         })
         .catch((err) => console.log(err));
     },

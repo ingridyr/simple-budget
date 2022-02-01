@@ -1,16 +1,18 @@
-import { Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { Flex, Image, Text } from "@chakra-ui/react";
 import { SideMenu } from "../../components/SideMenu";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { CardBudget } from "../../components/Card/index";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { useEffect } from "react";
-import { useAuth } from "../../providers/AuthContext";
 import BlankBoard from "../../assets/DashboardImage3.svg";
 import {
   MotionFlex,
   animationFlex,
   itemAnimation,
 } from "../../styles/animation";
+
+import { useAuth } from "../../providers/AuthContext";
+//import {Redirect} from "react-router-dom"
 
 export const Dashboard = () => {
   const { listBudgets, budgets } = useBudgets();
@@ -20,7 +22,11 @@ export const Dashboard = () => {
   useEffect(() => {
     listBudgets(userId, accessToken);
   }, []);
-  
+
+  /* if(!accessToken) {
+    return <Redirect to="/"/>
+  } */ 
+
   return (
     <>
       <Flex justifyContent="center" alignItems="flex-start">
