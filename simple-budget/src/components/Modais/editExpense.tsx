@@ -5,9 +5,12 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalHeader,
   Button,
+  FormControl,
   Input as ChakraInput,
   Box,
+  Heading,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -62,6 +65,7 @@ export const ModalEditExpense = ({
 
   const changeExpenseData = (data: ModalData) => {
     updateExpense(selectedItem.id, accessToken, data);
+    onClose()
   };
 
   const {
@@ -90,92 +94,107 @@ export const ModalEditExpense = ({
           borderColor="green.500"
           pb="25px"
           borderRadius="10px"
-          boxShadow="1px 0px 62px 0px rgb(0,245,155)"
+          boxShadow="1px 0px 6px 0px rgb(0,245,155)"
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-          {/*<ModalHeader pb={3} borderBottom="1px solid" borderColor="gray.350">
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Edit expense
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
           </ModalHeader>
-          */}
           <ModalCloseButton color="purple.500" fontSize="16px" />
           <ModalBody
-            pb={3.5}
+            // pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
             alignSelf="center"
           >
-            <Box
-              bg="black.500"
-              as="select"
-              w="50%"
-              mb="20px"
-              fontSize="20px"
-              {...register("type")}
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+              color="white"
             >
-              <Box as="option" disabled selected value="">
-                Categories
-              </Box>
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                error={errors.name}
+              />
+            </FormControl>
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <InputForm
+                name="description"
+                label="Description"
+                register={register}
+                error={errors.description}
+              />
+            </FormControl>
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <InputForm
+                name="amount"
+                label="Amount"
+                register={register}
+                placeholder="Ex: 200"
+                error={errors.amount}
+              />
+            </FormControl>
 
-              {[1, 2, 3, 4, 5, 6].map((item, idx) => (
-                <Box as="option" value={item} key={idx}>
-                  {item}
-                </Box>
-              ))}
-            </Box>
-
-            <InputForm
-              name="name"
-              label="Name"
-              register={register}
-              placeholder="Ex: Cardiologist"
-              error={errors.name}
-            />
-
-            <InputForm
-              name="description"
-              label="Description"
-              register={register}
-              placeholder="Ex: doit review"
-              error={errors.description}
-            />
-
-            <InputForm
-              name="amount"
-              label="Amount"
-              register={register}
-              placeholder="Ex: 200"
-              error={errors.amount}
-            />
+            <Button
+              h="60px"
+              w="100%"
+              type="submit"
+              fontWeight="normal"
+              fontSize="lg"
+              bg="purple.500"
+              // border="2px solid"
+              borderColor="purple.500"
+              onClickCapture={() => {}}
+              _hover={{ transform: "scale(1.08)" }}
+            >
+              Confirm changes
+            </Button>
           </ModalBody>
 
-          <ModalFooter
+          {/* <ModalFooter
             w="80%"
             alignSelf="center"
             justifyContent="space-around"
             pr="0px"
             pl="0px"
-            pb={6}
-          >
-            <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="45%"
-              color="black.500"
-              type="submit"
-              border="3px solid"
-              borderColor="white"
-              onClickCapture={() => {}}
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
-            >
-              Edit
-            </Button>
-            <Button
+          > */}
+
+            {/* <Button
               padding="28px 0px"
               colorScheme="gray"
               w="45%"
@@ -194,8 +213,8 @@ export const ModalEditExpense = ({
               }}
             >
               Delete
-            </Button>
-          </ModalFooter>
+            </Button> */}
+          {/* </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>

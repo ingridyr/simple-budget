@@ -126,7 +126,6 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             display="flex"
             flexDir="column"
             alignSelf="center"
-            mt="2"
           >
             <FormControl
               display="flex"
@@ -143,7 +142,6 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             </FormControl>
 
             <FormControl
-              mt={2}
               display="flex"
               flexDir="column"
               justifyContent="center"
@@ -155,49 +153,21 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 error={errors.max_value}
               />
             </FormControl>
-          </ModalBody>
 
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="90%"
-            pb="2"
-          >
-            {/* <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="80%"
-              color="black.500"
-              type="submit"
-              border="3px solid"
-              borderColor="transparent"
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
-            >
-              Add budget
-            </Button> */}
             <Button
               h="60px"
               w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
-              // fontSize="2xl"
-              // variant="outline"
               bg="purple.500"
               border="2px solid"
               borderColor="purple.500"
-              // color="green.500"
               _hover={{ transform: "scale(1.08)" }}
-              // rightIcon={<AiOutlineArrowRight size={20}/>}
             >
               Add a new budget now
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
