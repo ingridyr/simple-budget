@@ -50,6 +50,7 @@ export const InputForm = ({
           height="60px"
           fontSize="lg"
           type={type}
+          placeholder={placeholder}
           {...register(name)}
           {...rest}
         />
