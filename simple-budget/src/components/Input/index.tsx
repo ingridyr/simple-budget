@@ -52,6 +52,7 @@ export const InputForm = ({
           fontSize="lg"
           type={type}
           value={value}
+          placeholder={placeholder}
           {...register(name)}
           {...rest}
         />
