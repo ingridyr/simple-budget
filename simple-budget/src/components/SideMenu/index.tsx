@@ -66,6 +66,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
             size={40}
             color="white.0"
             onClick={() => onModalAddBudgetOpen()}
+            data-testid="addbudget"
           />
         </Flex>
         <Flex alignItems="center" w="100%">
@@ -138,7 +139,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
             // transform: "scale(1.1)",
           }}
         >
-          <IoExitOutline size={40} onClick={() => logout()} />
+          <IoExitOutline size={40} onClick={() => logout()} data-testid="logout"/>
         </Box>
       </Flex>
     </>
