@@ -7,7 +7,7 @@ import {
   InputElementProps,
 } from "@chakra-ui/react";
 import { FieldError } from "react-hook-form";
-import React, { InputHTMLAttributes, useCallback } from "react";
+import React, { useCallback } from "react";
 import { currencyMask } from "./masks";
 
 interface InputProps extends InputElementProps {
@@ -55,6 +55,7 @@ export const InputMaskedCurrency = ({
           color="white"
           height="60px"
           fontSize="lg"
+          placeholder={placeholder}
           type={type}
           value={value}
           {...register(name)}
