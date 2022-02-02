@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from "@chakra-ui/react";
+import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { TopBar } from "../../components/TopBar";
 import { SideMenu } from "../../components/SideMenu";
 import { BottomMenu } from "../../components/BottomMenu";
@@ -42,17 +42,25 @@ export const Dashboard = () => {
           alignItems="center"
           pl={["0", "85px"]}
         >
-          {/* <Heading as="h2" mt="8" mb="6" fontWeight="normal" fontSize="3xl">
+          <Heading
+            position="absolute"
+            textAlign="center"
+            fontSize={["2xl", "3xl"]}
+            top={["95px", "28px"]}
+            left={["20px", "220px"]}
+            fontWeight="normal"
+          >
             Hi, <b>{user.name}</b>!
-          </Heading> */}
+          </Heading>
+
           {budgets.length > 0 ? (
             <>
               <Flex
                 flexWrap="wrap"
                 alignItems="center"
                 justifyContent="center"
-                mt={["90px", "0"]}
-                mb={["90px", "0"]}
+                mt={["130px", "90px"]}
+                mb={["90px", "40px"]}
               >
                 {budgets.map((item) => {
                   return (
