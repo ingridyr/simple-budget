@@ -2,7 +2,7 @@ import { Box, Flex, Image, useDisclosure } from "@chakra-ui/react";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { IoExitOutline } from "react-icons/io5";
 import { AiOutlineHome, AiOutlinePieChart } from "react-icons/ai";
-import { ModalAddBuget } from "../Modais/addBuget";
+import { ModalAddBudget } from "../Modais/addBudget";
 import { useAuth } from "../../providers/AuthContext";
 import logo from "../../assets/LogoSm.svg";
 import { useHistory } from "react-router-dom";
@@ -23,7 +23,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
 
   return (
     <>
-      <ModalAddBuget
+      <ModalAddBudget
         isOpen={isModalAddBudgetOpen}
         onClose={onModalAddBudgetClose}
       />
@@ -95,7 +95,12 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
               // transform: "scale(1.1)",
             }}
           >
-            <AiOutlineHome size={35} color="white.0" cursor="pointer" onClick={() => history.push("/dashboard")}/>
+            <AiOutlineHome
+              size={35}
+              color="white.0"
+              cursor="pointer"
+              onClick={() => history.push("/dashboard")}
+            />
           </Box>
         </Flex>
         <Flex className="boxIcone" alignItems="center" w="100%">
@@ -125,7 +130,12 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
               // transform: "scale(1.1)",
             }}
           >
-            <AiOutlinePieChart size={35} color="white.0" cursor="pointer" onClick={() => history.push("/statistics")}/>
+            <AiOutlinePieChart
+              size={35}
+              color="white.0"
+              cursor="pointer"
+              onClick={() => history.push("/statistics")}
+            />
           </Box>
         </Flex>
         <Box

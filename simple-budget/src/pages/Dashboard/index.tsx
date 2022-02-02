@@ -49,21 +49,16 @@ export const Dashboard = () => {
           </Heading> */}
           {budgets.length > 0 ? (
             <>
-              <Flex
-                flexWrap="wrap"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {budgets.map((item) => {
+              <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
+                {budgets.map((item, idx) => {
                   return (
-                    <>
-                      <CardBudget
-                        budgetId={item.id}
-                        budgetName={item.name}
-                        budgetCategories={item.categories}
-                        maxValue={item.max_value}
-                      />
-                    </>
+                    <CardBudget
+                      key={idx}
+                      budgetId={item.id}
+                      budgetName={item.name}
+                      budgetCategories={item.categories}
+                      maxValue={item.max_value}
+                    />
                   );
                 })}
               </Flex>

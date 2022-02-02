@@ -2,7 +2,7 @@ import { Box, Center, Flex, HStack, useDisclosure } from "@chakra-ui/react";
 import { AiOutlineHome, AiOutlinePieChart } from "react-icons/ai";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
-import { ModalAddBuget } from "../Modais/addBuget";
+import { ModalAddBudget } from "../Modais/addBudget";
 
 export const BottomMenu = () => {
   const {
@@ -19,7 +19,7 @@ export const BottomMenu = () => {
 
   return (
     <>
-      <ModalAddBuget
+      <ModalAddBudget
         isOpen={isModalAddBudgetOpen}
         onClose={onModalAddBudgetClose}
       />
