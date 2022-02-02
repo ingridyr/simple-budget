@@ -39,7 +39,6 @@ interface DataProps {
 }
 
 export const Signup = () => {
-
   const { createRegister } = useAuth();
 
   const schema = yup.object().shape({
@@ -60,15 +59,14 @@ export const Signup = () => {
     resolver: yupResolver(schema),
   });
 
-
   const sendData = (data: DataProps) => {
-    createRegister(data)
+    createRegister(data);
   };
 
   return (
     <>
-      <Box h={["150px", "200px"]}>
-        <Image src={Logo} alt="Logo" pt="15px" pl="15px" />
+      <Box h={["150px", "200px"]} p="4">
+        <Image src={Logo} alt="Logo" w="150px" />
       </Box>
       <Flex
         display="flex"
@@ -115,7 +113,7 @@ export const Signup = () => {
           <FormControl
             maxWidth="440px"
             backgroundColor="green.500"
-            padding="20px"
+            padding={["10px", "20px"]}
             color="black.500"
             borderRadius="5px"
             mr="4"
@@ -152,6 +150,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.name}
                 icon={FaUser}
+                placeholder="John Smith"
               />
               <InputForm
                 name="email"
@@ -159,6 +158,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.email}
                 icon={FaEnvelope}
+                placeholder="your@email.com"
               />
               <InputForm
                 name="password"
@@ -167,6 +167,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.password}
                 icon={FaLock}
+                placeholder="******"
               />
               <InputForm
                 name="confirm_password"
@@ -175,6 +176,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.confirm_password}
                 icon={FaLock}
+                placeholder="******"
               />
 
               <Button
@@ -185,7 +187,7 @@ export const Signup = () => {
                 type="submit"
                 fontWeight="normal"
                 fontSize="lg"
-                mt="6"
+                mt="2"
                 _hover={{ transform: "scale(1.02)" }}
               >
                 SIGN UP

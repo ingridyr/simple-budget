@@ -60,7 +60,9 @@ export const Login = () => {
 
   return (
     <>
-      <Image src={Logo} alt="Logo" padding="15px" />
+      <Flex alignContent="center" p="4" mb={["0", "4"]}>
+        <Image src={Logo} alt="Logo" w="150px" />
+      </Flex>
       <Flex
         display="flex"
         flexDirection={["column", "column", "row-reverse", "row-reverse"]}
@@ -97,7 +99,7 @@ export const Login = () => {
           <FormControl
             maxWidth="440px"
             backgroundColor="green.500"
-            padding="20px"
+            padding={["10px", "20px"]}
             color="black.500"
             borderRadius="5px"
             mr="4"
@@ -115,11 +117,13 @@ export const Login = () => {
                 register={register}
                 error={errors.email}
                 icon={FaEnvelope}
+                placeholder="your@email.com"
               />
               <InputForm
                 name="password"
                 label="Password"
                 type="password"
+                placeholder="******"
                 register={register}
                 error={errors.password}
                 icon={FaLock}
@@ -133,7 +137,7 @@ export const Login = () => {
                 fontWeight="normal"
                 fontSize="lg"
                 type="submit"
-                mt="6"
+                mt="2"
                 _hover={{ transform: "scale(1.02)" }}
               >
                 LOGIN

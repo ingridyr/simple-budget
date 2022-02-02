@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Heading,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,8 +17,8 @@ import { FaTrash } from "react-icons/fa";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { useDisclosure } from "@chakra-ui/react";
-
-import { ModalEditExpense } from "../Modais/editExpenseve";
+import { ModalEditExpense } from "../Modais/editExpense";
+import EmptyStreet from "../../assets/Empty.svg";
 
 import { useState } from "react";
 
@@ -78,13 +79,23 @@ export const ModalViewExpenses = ({
         <ModalOverlay />
         <ModalContent
           bgColor="black.500"
-          boxShadow="0px 1px 7px 2px #00F59B"
+          boxShadow="0px 1px 6px 1px #00F59B"
           marginY="auto"
         >
           <ModalHeader>
             <Flex alignItems="center" justifyContent="space-between">
-              <Heading>{budgetName}</Heading>
-              <ModalCloseButton m="10px" color="purple.500" fontSize="16px" />
+              <Heading as="h1" fontSize={["2xl", "3xl"]} fontWeight="normal">
+                {budgetName}
+              </Heading>
+              <ModalCloseButton
+                mt="10px"
+                color="purple.500"
+                fontSize="16px"
+                _hover={{
+                  transition: "0.2s",
+                  color: "green.500",
+                }}
+              />
             </Flex>
           </ModalHeader>
           <ModalBody
@@ -92,7 +103,7 @@ export const ModalViewExpenses = ({
             css={{
               "&::-webkit-scrollbar": {
                 width: "8px",
-                heigth: "8px",
+                height: "8px",
               },
               "&::-webkit-scrollbar-track": {
                 background: "#141416",
@@ -107,15 +118,16 @@ export const ModalViewExpenses = ({
               },
             }}
           >
-            {expenses.map((item) => {
-              return (
-                <>
+            {expenses.length > 0 ? (
+              expenses.map((item, idx) => {
+                return (
                   <Flex
+                    key={idx}
                     bgColor="black.300"
                     borderRadius="5px"
-                    gap="10px"
-                    m="10px 0"
-                    p="10px 15px"
+                    // gap="10px"
+                    // m="10px 0"
+                    p="10px 10px"
                     justifyContent="space-between"
                   >
                     <Flex flexDirection="column">
@@ -125,18 +137,19 @@ export const ModalViewExpenses = ({
                         width="200px"
                         justifyContent="space-between"
                       >
-                        <Heading color="white.0" size="md">
+                        <Heading color="white.0" size="md" fontWeight="normal">
                           {item.name}
                         </Heading>
-                        <Heading color="gray.350" size="md">
+                        <Heading color="gray.300" size="md" fontWeight="normal">
                           {item.type}
                         </Heading>
                       </Flex>
                       <Text
                         fontSize="sm"
-                        color="white.0"
-                        marginLeft="5px"
-                        p="10px"
+                        // color="white.0"
+                        color="gray.100"
+                        // marginLeft="5px"
+                        // p="10px"
                       >
                         {item.description}
                       </Text>
@@ -147,27 +160,40 @@ export const ModalViewExpenses = ({
                         color="green.500"
                         fontWeight="500"
                       >
-                        R$ {item.amount.toFixed(2)}
+                        {item?.amount?.toLocaleString("pt-br", {
+                          style: "currency",
+                          currency: "BRL",
+                        })}
                       </Text>
-                      <Flex m="10px" alignItems="center" gap="10px">
+                      <Flex
+                        m="10px"
+                        alignItems="center"
+                        gap="10px"
+                        color="gray.300"
+                      >
                         <AiFillEdit
-                          color="gray.300"
                           size={25}
                           cursor="pointer"
                           onClick={() => modalSelect(item)}
                         />
                         <FaTrash
-                          color="gray.300"
-                          size={18}
+                          size={19}
                           cursor="pointer"
                           onClick={() => handleDelete(item.id, accessToken)}
                         />
                       </Flex>
                     </Box>
                   </Flex>
-                </>
-              );
-            })}
+                );
+              })
+            ) : (
+              <>
+                <Text fontSize="xl" color="green.500">
+                  You don't have any registered expense.
+                </Text>
+                <Image src={EmptyStreet} alt="Empty" mt="4" mb="4" />
+              </>
+            )}
             <ModalEditExpense
               isOpen={isModalEditExpenseOpen}
               onOpen={onModalEditExpenseOpen}
