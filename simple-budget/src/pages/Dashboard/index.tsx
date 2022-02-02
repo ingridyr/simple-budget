@@ -46,7 +46,7 @@ export const Dashboard = () => {
             position="absolute"
             textAlign="center"
             fontSize={["2xl", "3xl"]}
-            top={["95px", "28px"]}
+            top={["110px", "28px"]}
             left={["20px", "220px"]}
             fontWeight="normal"
           >
@@ -59,7 +59,7 @@ export const Dashboard = () => {
                 flexWrap="wrap"
                 alignItems="center"
                 justifyContent="center"
-                mt={["130px", "90px"]}
+                mt={["150px", "90px"]}
                 mb={["90px", "40px"]}
               >
                 {budgets.map((item, idx) => {

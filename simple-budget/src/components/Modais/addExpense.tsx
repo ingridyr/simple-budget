@@ -10,6 +10,8 @@ import {
   Text,
   Box,
   useToast,
+  ModalHeader,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -94,26 +96,40 @@ export const ModalAddExpense = ({
           marginY="auto"
           bg="black.500"
           w="95%"
+          pb="4"
           border="1px solid"
           borderColor="green.500"
-          py="20px"
           borderRadius="10px"
           boxShadow="0px 1px 2px 1px #00F59B"
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalCloseButton
-            color="green.500"
-            fontSize="lg"
-            mt="1"
-            _hover={{
-              transition: "0.2s",
-              color: "purple.500",
-            }}
-          />
-
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Add a new expense
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
+          </ModalHeader>
           <ModalBody
-            pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
@@ -126,9 +142,9 @@ export const ModalAddExpense = ({
               justifyContent="center"
               color="white"
             >
-              <Box h="50px" w="60%" mb="12px">
+              <Box h="50px" w="100%" mt="2" mb="2">
                 <Box
-                  w="95%"
+                  w="100%"
                   border="2px solid"
                   borderColor="purple.500"
                   borderRadius="5px"
@@ -188,19 +204,10 @@ export const ModalAddExpense = ({
                 prefix="R$"
               />
             </FormControl>
-          </ModalBody>
-
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="100%"
-            pr="0px"
-            pl="0px"
-            pb={6}
-          >
             <Button
+              mt="2"
               h="60px"
-              w="76%"
+              w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
@@ -211,7 +218,7 @@ export const ModalAddExpense = ({
             >
               Add a new expense
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
