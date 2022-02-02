@@ -93,6 +93,7 @@ export const ModalAddExpense = ({
         <ModalContent
           marginY="auto"
           bg="black.500"
+          w="95%"
           border="1px solid"
           borderColor="green.500"
           py="20px"
