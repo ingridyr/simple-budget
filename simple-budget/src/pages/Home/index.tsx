@@ -1,82 +1,86 @@
-import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
-import {
-  MotionFlex,
-  animationFlex,
-  itemAnimation,
-} from "../../styles/animation";
+import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
+import { MotionFlex, animationFlex } from "../../styles/animation";
 import Logo from "../../assets/Logo.png";
 import HomeImage from "../../assets/HomeImage.svg";
 
-import {useAuth} from "../../providers/AuthContext/index"
-
 export const Home = () => {
-  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const redirect = (path: string) => {
-    setLoading(true);
     history.push(path);
   };
 
   return (
     <Box height="100vh">
-      <Image src={Logo} alt="Logo" pt="15px" pl="15px" />
-      <MotionFlex
-        justifyContent="center"
-        alignItems="center"
-        // framer-motion props
-        initial="hidden"
-        animate="visible"
-        variants={animationFlex}
-        // variants={itemAnimation}
-      >
-        <Flex flexDirection="column" mt={["16", "0"]}>
-          <Text fontSize="2xl" mb="8" align="center">
+      <Flex justifyContent="space-between" alignContent="center" p="4">
+        <Image src={Logo} alt="Logo" w="150px" />
+        <Center>
+          <Button
+            h="60px"
+            w="150px"
+            fontWeight="normal"
+            fontSize="2xl"
+            variant="outline"
+            border="2px solid"
+            borderColor="purple.500"
+            mr="4"
+            _hover={{ color: "green.500", transform: "scale(1.08)" }}
+            onClick={() => redirect("/login")}
+          >
+            Login
+          </Button>
+          <Button
+            h="60px"
+            w="150px"
+            fontWeight="normal"
+            fontSize="2xl"
+            variant="outline"
+            border="2px solid"
+            borderColor="purple.500"
+            _hover={{ color: "green.500", transform: "scale(1.08)" }}
+            onClick={() => redirect("/signup")}
+          >
+            Sign up
+          </Button>
+        </Center>
+      </Flex>
+      <Flex justifyContent="center" alignItems="center" mt="14" h="75vh">
+        <Flex w="50%" flexDirection="column" alignSelf="flex-start">
+          <Text fontSize="45px" color="purple.500">
             gain control over your financial life
           </Text>
-          <Image
-            alignSelf="center"
-            src={HomeImage}
-            alt="home image"
-            w={["300px", "300px", "400px", "400px"]}
-          />
-          <Text fontSize="3xl" mt="4" align="center" fontWeight="bold">
-            ...starting now
+          <Text color="gray.100" fontSize="lg">
+            no more being caught off guard by unexpected and unnecessary
+            expenses - with the SimpleBudget application, you can keep your
+            budget in order in an extremely <strong>simple</strong> and{" "}
+            <strong>elegant</strong> way. Add your categories and expenses,
+            visualize where your money is going and no more headaches. It's that
+            simple!
           </Text>
-          <Flex mt="4" mb="8" w="100%" justifyContent="space-around">
-            <Button
-              isLoading={loading}
-              h="60px"
-              w="45%"
-              fontWeight="normal"
-              fontSize="2xl"
-              variant="outline"
-              border="2px solid"
-              borderColor="purple.500"
-              _hover={{ color: "green.500", transform: "scale(1.08)" }}
-              onClick={() => redirect("/login")}
-            >
-              Login
-            </Button>
-            <Button
-              isLoading={loading}
-              h="60px"
-              w="45%"
-              fontWeight="normal"
-              fontSize="2xl"
-              variant="outline"
-              border="2px solid"
-              borderColor="purple.500"
-              _hover={{ color: "green.500", transform: "scale(1.08)" }}
-              onClick={() => redirect("/signup")}
-            >
-              Sign up
-            </Button>
-          </Flex>
         </Flex>
-      </MotionFlex>
+        <MotionFlex
+          w="30%"
+          ml="12"
+          // pr="15%"
+          // framer-motion props
+          initial="hidden"
+          animate="visible"
+          variants={animationFlex}
+        >
+          <Flex flexDirection="column" mt={["16", "0"]}>
+            <Image
+              // alignSelf="center"
+              src={HomeImage}
+              alt="home image"
+              w={["300px", "300px", "400px", "800px"]}
+            />
+            <Text fontSize="3xl" mt="4" align="center" fontWeight="bold">
+              ...starting now
+            </Text>
+          </Flex>
+        </MotionFlex>
+      </Flex>
     </Box>
   );
 };

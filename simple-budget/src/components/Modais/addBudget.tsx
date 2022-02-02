@@ -128,7 +128,6 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             display="flex"
             flexDir="column"
             alignSelf="center"
-            mt="2"
           >
             <FormControl
               display="flex"
@@ -146,7 +145,6 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             </FormControl>
 
             <FormControl
-              mt={2}
               display="flex"
               flexDir="column"
               justifyContent="center"
@@ -160,8 +158,6 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 prefix="R$"
               />
             </FormControl>
-          </ModalBody>
-
           <ModalFooter
             alignSelf="center"
             justifyContent="space-around"
@@ -181,7 +177,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             >
               Add a new budget now
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

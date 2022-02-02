@@ -2,6 +2,7 @@ import {
   Box,
   Flex,
   Heading,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -16,8 +17,8 @@ import { FaTrash } from "react-icons/fa";
 import { useAuth } from "../../providers/AuthContext";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { useDisclosure } from "@chakra-ui/react";
-
-import { ModalEditExpense } from "./editExpense";
+import EmptyStreet from "../../assets/Empty.svg";
+import { ModalEditExpense } from "../Modais/editExpense";
 
 import { useState } from "react";
 
@@ -78,13 +79,23 @@ export const ModalViewExpenses = ({
         <ModalOverlay />
         <ModalContent
           bgColor="black.500"
-          boxShadow="0px 1px 7px 2px #00F59B"
+          boxShadow="0px 1px 6px 1px #00F59B"
           marginY="auto"
         >
           <ModalHeader>
             <Flex alignItems="center" justifyContent="space-between">
-              <Heading>{budgetName}</Heading>
-              <ModalCloseButton m="10px" color="purple.500" fontSize="16px" />
+              <Heading as="h1" fontSize={["2xl", "3xl"]} fontWeight="normal">
+                {budgetName}
+              </Heading>
+              <ModalCloseButton
+                mt="10px"
+                color="purple.500"
+                fontSize="16px"
+                _hover={{
+                  transition: "0.2s",
+                  color: "green.500",
+                }}
+              />
             </Flex>
           </ModalHeader>
           <ModalBody

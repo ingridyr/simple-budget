@@ -53,6 +53,7 @@ export const InputForm = ({
           placeholder={placeholder}
           type={type}
           value={value}
+          placeholder={placeholder}
           {...register(name)}
           {...rest}
         />

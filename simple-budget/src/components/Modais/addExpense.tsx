@@ -98,7 +98,7 @@ export const ModalAddExpense = ({
           borderColor="green.500"
           py="20px"
           borderRadius="10px"
-          boxShadow="0px 1px 7px 2px #00F59B"
+          boxShadow="0px 1px 2px 1px #00F59B"
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
