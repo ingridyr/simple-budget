@@ -138,7 +138,6 @@ export const CardBudget = ({
       <Flex w="100%" h="200px" justifyContent="space-around" mt={["1", "6"]}>
         <Flex
           w="190px"
-          // h="100%"
           justifyContent="center"
           alignItems="center"
           _hover={{ transition: "0.4s", transform: "scale(1.08)" }}
@@ -250,6 +249,8 @@ export const CardBudget = ({
         isOpen={isModalEditBudgetOpen}
         onClose={onModalEditBudgetClose}
         budgetId={budgetId}
+        name_to_edit={budgetName}
+        max_value_to_edit={maxValue.toString()}
       />
     </Box>
   );

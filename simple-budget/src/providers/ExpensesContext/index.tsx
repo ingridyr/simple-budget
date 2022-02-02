@@ -7,9 +7,7 @@ import {
 } from "react";
 import { AxiosResponse } from "axios";
 import { api } from "../../services/api";
-import {useAuth} from "../AuthContext/index"
-
-import {useToast} from "@chakra-ui/react"
+import { useAuth } from "../AuthContext/index";
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -39,7 +37,7 @@ interface ExpensesContextData {
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
-  restoreInfos: (id: string, reset: ({}) => void) => void
+  restoreInfos: (id: string, reset: ({}) => void) => void;
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -60,9 +58,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   //const [errMessage, setErrMessage] = useState<string>("");
 
-  const toast = useToast()
-
-  const {accessToken} = useAuth()
+  const { accessToken } = useAuth();
 
   const listAllExpenses = useCallback(async (accessToken: string) => {
     try {
@@ -162,13 +158,6 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
               expenseFind.type = dataUpdate.type;
             }
 
-            toast({
-              title: "Expense Updated!",
-              duration: 3000,
-              isClosable: true,
-              status: "success",
-              position: "top"
-            })
             setExpenses([...filteredExpenses, expenseFind]);
           }
         })
@@ -178,22 +167,24 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   );
 
   const restoreInfos = (id: string, reset: ({}) => void) => {
-    api.get(`/expenses/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-    .then((response) => {
-      reset({
-        name: response.data.name,
-        description: response.data.description,
-        amount: response.data.amount
+    api
+      .get(`/expenses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+      .then((response) => {
+        reset({
+          name: response.data.name,
+          description: response.data.description,
+          amount: response.data.amount,
+          type: response.data.type,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <ExpensesContext.Provider
@@ -205,7 +196,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         deleteExpense,
         listAllExpenses,
         allExpenses,
-        restoreInfos
+        restoreInfos,
       }}
     >
       {children}
