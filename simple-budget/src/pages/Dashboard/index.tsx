@@ -62,16 +62,15 @@ export const Dashboard = () => {
                 mt={["130px", "90px"]}
                 mb={["90px", "40px"]}
               >
-                {budgets.map((item) => {
+                {budgets.map((item, idx) => {
                   return (
-                    <>
-                      <CardBudget
-                        budgetId={item.id}
-                        budgetName={item.name}
-                        budgetCategories={item.categories}
-                        maxValue={item.max_value}
-                      />
-                    </>
+                    <CardBudget
+                      key={idx}
+                      budgetId={item.id}
+                      budgetName={item.name}
+                      budgetCategories={item.categories}
+                      maxValue={item.max_value}
+                    />
                   );
                 })}
               </Flex>

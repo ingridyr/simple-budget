@@ -2,22 +2,20 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalHeader,
   Button,
   FormControl,
-  FormLabel,
-  Text,
   Input as ChakraInput,
+  Box,
   Heading,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useAuth } from "../../providers/AuthContext/index";
 import { useExpenses } from "../../providers/ExpensesContext/index";
 import { InputForm } from "../Input";
