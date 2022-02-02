@@ -41,8 +41,6 @@ export const Dashboard = () => {
           justifyContent="center"
           alignItems="center"
           pl={["0", "85px"]}
-          mt={["100px", "0"]}
-          mb={["100px", "0"]}
         >
           {/* <Heading as="h2" mt="8" mb="6" fontWeight="normal" fontSize="3xl">
             Hi, <b>{user.name}</b>!
@@ -53,6 +51,8 @@ export const Dashboard = () => {
                 flexWrap="wrap"
                 alignItems="center"
                 justifyContent="center"
+                mt={["90px", "0"]}
+                mb={["90px", "0"]}
               >
                 {budgets.map((item) => {
                   return (
