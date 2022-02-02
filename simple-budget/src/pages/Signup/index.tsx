@@ -39,7 +39,6 @@ interface DataProps {
 }
 
 export const Signup = () => {
-
   const { createRegister } = useAuth();
 
   const schema = yup.object().shape({
@@ -60,9 +59,8 @@ export const Signup = () => {
     resolver: yupResolver(schema),
   });
 
-
   const sendData = (data: DataProps) => {
-    createRegister(data)
+    createRegister(data);
   };
 
   return (
@@ -152,6 +150,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.name}
                 icon={FaUser}
+                placeholder="John Smith"
               />
               <InputForm
                 name="email"
@@ -159,6 +158,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.email}
                 icon={FaEnvelope}
+                placeholder="your@email.com"
               />
               <InputForm
                 name="password"
@@ -167,6 +167,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.password}
                 icon={FaLock}
+                placeholder="******"
               />
               <InputForm
                 name="confirm_password"
@@ -175,6 +176,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.confirm_password}
                 icon={FaLock}
+                placeholder="******"
               />
 
               <Button

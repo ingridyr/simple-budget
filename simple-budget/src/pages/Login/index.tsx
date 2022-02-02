@@ -115,11 +115,13 @@ export const Login = () => {
                 register={register}
                 error={errors.email}
                 icon={FaEnvelope}
+                placeholder="your@email.com"
               />
               <InputForm
                 name="password"
                 label="Password"
                 type="password"
+                placeholder="******"
                 register={register}
                 error={errors.password}
                 icon={FaLock}
