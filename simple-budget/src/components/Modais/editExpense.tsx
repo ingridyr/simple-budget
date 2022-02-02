@@ -2,14 +2,10 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
   Button,
-  FormControl,
-  FormLabel,
-  Text,
   Input as ChakraInput,
   Box,
 } from "@chakra-ui/react";
@@ -20,7 +16,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext/index";
 import { useExpenses } from "../../providers/ExpensesContext/index";
 import { InputForm } from "../Input";
-import InputCurrency from "../Input/inputINTL";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
@@ -122,8 +117,8 @@ export const ModalEditExpense = ({
                 Categories
               </Box>
 
-              {[1, 2, 3, 4, 5, 6].map((item) => (
-                <Box as="option" value={item}>
+              {[1, 2, 3, 4, 5, 6].map((item, idx) => (
+                <Box as="option" value={item} key={idx}>
                   {item}
                 </Box>
               ))}
@@ -145,7 +140,7 @@ export const ModalEditExpense = ({
               error={errors.description}
             />
 
-            <InputCurrency
+            <InputForm
               name="amount"
               label="Amount"
               register={register}

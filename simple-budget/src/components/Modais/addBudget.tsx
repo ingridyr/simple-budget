@@ -41,7 +41,7 @@ const schema = yup.object().shape({
     .required("Max value required"),
 });
 
-export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
+export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
@@ -68,12 +68,12 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
       name: name,
       max_value: max_value,
       categories: [
-        "food",
-        "entertainment",
-        "transport",
-        "home",
-        "health",
-        "others",
+        "Food",
+        "Entertainment",
+        "Transport",
+        "Home",
+        "Health",
+        "Others",
       ],
       userId: user.id,
     };
