@@ -123,12 +123,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               }}
             />
           </ModalHeader>
-          <ModalBody
-            w="90%"
-            display="flex"
-            flexDir="column"
-            alignSelf="center"
-          >
+          <ModalBody w="90%" display="flex" flexDir="column" alignSelf="center">
             <FormControl
               display="flex"
               flexDir="column"
@@ -158,13 +153,9 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 prefix="R$"
               />
             </FormControl>
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="90%"
-            pb="2"
-          >
+
             <Button
+              mt="2"
               h="60px"
               w="100%"
               type="submit"

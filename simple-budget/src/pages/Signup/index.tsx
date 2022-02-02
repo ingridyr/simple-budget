@@ -65,8 +65,8 @@ export const Signup = () => {
 
   return (
     <>
-      <Box h={["150px", "200px"]}>
-        <Image src={Logo} alt="Logo" pt="15px" pl="15px" />
+      <Box h={["150px", "200px"]} p="4">
+        <Image src={Logo} alt="Logo" w="150px" />
       </Box>
       <Flex
         display="flex"
@@ -113,7 +113,7 @@ export const Signup = () => {
           <FormControl
             maxWidth="440px"
             backgroundColor="green.500"
-            padding="20px"
+            padding={["10px", "20px"]}
             color="black.500"
             borderRadius="5px"
             mr="4"
@@ -187,7 +187,7 @@ export const Signup = () => {
                 type="submit"
                 fontWeight="normal"
                 fontSize="lg"
-                mt="6"
+                mt="2"
                 _hover={{ transform: "scale(1.02)" }}
               >
                 SIGN UP
