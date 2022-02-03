@@ -7,9 +7,11 @@ import {
   ModalCloseButton,
   Button,
   FormControl,
-  InputProps as ChakraInputProps,
+  Text,
   Box,
   useToast,
+  ModalHeader,
+  Heading,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -17,21 +19,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { useAuth } from "../../providers/AuthContext";
 import { InputForm } from "../Input";
+import { InputMaskedCurrency } from "../Input/inputMasked";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name required"),
-  description: yup.string().required("Description required"),
-  amount: yup
-    .number()
-    .required("Amount required")
-    .min(1, "Amount value should be higher than 0"),
+  name: yup.string().required("Name is required"),
+  description: yup.string().required("Description is required"),
+  amount: yup.string().required("Amount is required"),
   type: yup.string().required("Choose a category"),
 });
 
 interface ModalData {
   name: string;
   description: string;
-  amount: number;
+  amount: string;
   type: string;
   userId: string;
 }
@@ -55,29 +55,35 @@ export const ModalAddExpense = ({
   const toast = useToast();
 
   const onSubmitFunction = ({ name, description, amount, type }: ModalData) => {
-    toast({
-      title: "Expense created successfully!",
-      duration: 2000,
-      isClosable: true,
-      status: "success",
-      position: "top",
-    });
+    const newAmount = Number(amount.replaceAll(".", "").replace(",", "."));
 
     const newData = {
       name: name,
       description: description,
-      amount: amount,
+      amount: newAmount,
       type: type,
       budgetId: budgetId,
     };
-    createExpense(newData, accessToken);
-    onClose();
+    createExpense(newData, accessToken)
+      .then((_) => {
+        toast({
+          title: "Expense created successfully!",
+          duration: 2000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
+        onClose();
+        reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   const {
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
@@ -89,26 +95,41 @@ export const ModalAddExpense = ({
         <ModalContent
           marginY="auto"
           bg="black.500"
+          w="95%"
+          pb="4"
           border="1px solid"
           borderColor="green.500"
-          pb="25px"
           borderRadius="10px"
           boxShadow="0px 1px 2px 1px #00F59B"
           as="form"
           onSubmit={handleSubmit(onSubmitFunction)}
         >
-          <ModalCloseButton
-            color="green.500"
-            fontSize="lg"
-            mt="1"
-            _hover={{
-              transition: "0.2s",
-              color: "purple.500",
-            }}
-          />
-
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Add a new expense
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
+          </ModalHeader>
           <ModalBody
-            pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
@@ -121,23 +142,42 @@ export const ModalAddExpense = ({
               justifyContent="center"
               color="white"
             >
-              <Box
-                bg="black.500"
-                as="select"
-                w="50%"
-                mb="20px"
-                fontSize="20px"
-                {...register("type")}
-              >
-                <Box as="option" disabled selected value="">
-                  Categories
-                </Box>
-
-                {budgetCategories.map((item, index) => (
-                  <Box as="option" value={item} key={index}>
-                    {item}
+              <Box h="50px" w="100%" mt="2" mb="2">
+                <Box
+                  w="100%"
+                  border="2px solid"
+                  borderColor="purple.500"
+                  borderRadius="5px"
+                  _hover={{ borderColor: "#474747", cursor: "pointer" }}
+                  padding="2px"
+                  bg="black.500"
+                  as="select"
+                  fontSize="20px"
+                  mb="1px"
+                  paddingRight="5px"
+                  defaultValue={""}
+                  {...register("type")}
+                >
+                  <Box as="option" disabled value="">
+                    Categories
                   </Box>
-                ))}
+
+                  {budgetCategories.map((item, index) => (
+                    <Box as="option" value={item} key={index}>
+                      {item}
+                    </Box>
+                  ))}
+                </Box>
+                <Text
+                  color="red.500"
+                  fontSize="md"
+                  pl="2"
+                  mb="0"
+                  pb="0"
+                  h="20px"
+                >
+                  {errors.type?.message}
+                </Text>
               </Box>
 
               <InputForm
@@ -155,28 +195,19 @@ export const ModalAddExpense = ({
                 placeholder="Ex: Medical check - Dr.Strauss"
                 error={errors.description}
               />
-
-              <InputForm
+              <InputMaskedCurrency
                 name="amount"
                 label="Amount"
                 register={register}
                 placeholder="Ex: 300.00"
                 error={errors.amount}
+                prefix="R$"
               />
             </FormControl>
-          </ModalBody>
-
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="100%"
-            pr="0px"
-            pl="0px"
-            pb={6}
-          >
             <Button
+              mt="2"
               h="60px"
-              w="76%"
+              w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
@@ -187,7 +218,7 @@ export const ModalAddExpense = ({
             >
               Add a new expense
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

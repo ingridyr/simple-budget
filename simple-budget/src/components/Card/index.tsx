@@ -89,7 +89,150 @@ export const CardBudget = ({
   };
 
   return (
-    <>
+    <Box
+      w={["93%", "500px"]}
+      h={["245px", "275px"]}
+      bg="black.300"
+      mt="4"
+      mr="4"
+      ml="4"
+      borderRadius="10px"
+      _hover={{
+        transition: "0.2s",
+        // transform: "scale(1.02)",
+      }}
+    >
+      <HStack h="40px" w="100%" justifyContent="space-between" pl="4" pt="4">
+        <Heading as="h2" fontSize={["2xl", "3xl"]} fontWeight="normal">
+          {budgetName}
+        </Heading>
+        <HStack pr="4" spacing="5">
+          <Icon
+            color="gray.300"
+            as={AiFillEdit}
+            fontSize={["25px", "30px"]}
+            cursor="pointer"
+            _hover={{
+              transition: "0.2s",
+              color: "green.500",
+            }}
+            onClickCapture={() => {
+              onModalEditBudgetOpen();
+            }}
+          />
+          <Icon
+            color="gray.300"
+            as={FaTrash}
+            fontSize={["18px", "23px"]}
+            cursor="pointer"
+            _hover={{
+              transition: "0.2s",
+              color: "green.500",
+            }}
+            onClickCapture={() => {
+              handleDelete(budgetId, accessToken);
+            }}
+          />
+        </HStack>
+      </HStack>
+      <Flex w="100%" h="200px" justifyContent="space-around" mt={["1", "6"]}>
+        <Flex
+          w="190px"
+          justifyContent="center"
+          alignItems="center"
+          _hover={{ transition: "0.4s", transform: "scale(1.08)" }}
+        >
+          <CircularProgress
+            size="155px"
+            value={Number(percentage.toFixed(1))}
+            color="green.500"
+            trackColor="purple.500"
+            thickness="10px"
+          >
+            <CircularProgressLabel
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="white"
+              fontSize={["xl", "2xl"]}
+              fontWeight="bold"
+              bg="#2F2E41"
+              borderRadius="50%"
+              h="75%"
+              w="75%"
+            >
+              {percentage.toFixed(1)}%
+            </CircularProgressLabel>
+          </CircularProgress>
+        </Flex>
+        <VStack
+          spacing="4"
+          w="50%"
+          h="100%"
+          justifyContent="center"
+          pr={["2", "2"]}
+        >
+          <HStack ml="auto" pr={["2", "0"]}>
+            <Heading
+              fontSize={["17px", "25px"]}
+              as="h4"
+              color="green.500"
+              fontFamily="other"
+              fontWeight="medium"
+            >
+              {maxValue.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </Heading>
+            <Text
+              fontSize={["14px", "20px"]}
+              color="gray.100"
+              fontFamily="other"
+            >
+              /
+            </Text>
+            <Text
+              fontSize={["14px", "20px"]}
+              color="gray.100"
+              fontFamily="other"
+            >
+              {totalExpend.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
+            </Text>
+          </HStack>
+          <Button
+            onClick={() => onModalAddExpenseOpen()}
+            w={["90%", "100%"]}
+            h={["50px", "60px"]}
+            bg="black.500"
+            fontSize={["lg", "xl"]}
+            fontWeight="normal"
+            color="white.0"
+            border="2px solid"
+            borderColor="purple.500"
+            _hover={{ transform: "scale(1.02)" }}
+          >
+            Add expense
+          </Button>
+          <Button
+            onClick={handleClick}
+            w={["90%", "100%"]}
+            h={["50px", "60px"]}
+            bg="black.500"
+            fontSize={["lg", "xl"]}
+            fontWeight="normal"
+            color="white.0"
+            border="2px solid"
+            borderColor="purple.500"
+            _hover={{ transform: "scale(1.02)" }}
+          >
+            View expenses
+          </Button>
+        </VStack>
+      </Flex>
       <ModalAddExpense
         isOpen={isModalAddExpenseOpen}
         onClose={onModalAddExpenseClose}
@@ -106,141 +249,9 @@ export const CardBudget = ({
         isOpen={isModalEditBudgetOpen}
         onClose={onModalEditBudgetClose}
         budgetId={budgetId}
+        name_to_edit={budgetName}
+        max_value_to_edit={maxValue.toString()}
       />
-      <Box
-        w={["340px", "500px"]}
-        h={["245px", "275px"]}
-        bg="black.300"
-        mt="4"
-        mr="4"
-        ml="4"
-        borderRadius="10px"
-        _hover={{
-          transition: "0.2s",
-          // transform: "scale(1.02)",
-        }}
-      >
-        <HStack h="40px" w="100%" justifyContent="space-between" pl="4" pt="4">
-          <Heading as="h2" fontSize={["2xl", "3xl"]} fontWeight="normal">
-            {budgetName}
-          </Heading>
-          <HStack pr="4" spacing="5">
-            <Icon
-              color="gray.300"
-              as={AiFillEdit}
-              fontSize={["25px", "30px"]}
-              cursor="pointer"
-              _hover={{
-                transition: "0.2s",
-                color: "green.500",
-              }}
-              onClickCapture={() => {
-                onModalEditBudgetOpen();
-              }}
-            />
-            <Icon
-              color="gray.300"
-              as={FaTrash}
-              fontSize={["18px", "23px"]}
-              cursor="pointer"
-              _hover={{
-                transition: "0.2s",
-                color: "green.500",
-              }}
-              onClickCapture={() => {
-                handleDelete(budgetId, accessToken);
-              }}
-            />
-          </HStack>
-        </HStack>
-        <Flex w="100%" h="200px" justifyContent="space-around" mt={["1", "6"]}>
-          <Flex
-            w="190px"
-            // h="100%"
-            justifyContent="center"
-            alignItems="center"
-            _hover={{ transition: "0.4s", transform: "scale(1.08)" }}
-          >
-            <CircularProgress
-              size="155px"
-              value={Number(percentage.toFixed(1))}
-              color="green.500"
-              trackColor="purple.500"
-              thickness="10px"
-            >
-              <CircularProgressLabel
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                color="white"
-                fontSize={["xl", "2xl"]}
-                fontWeight="bold"
-                bg="#2F2E41"
-                borderRadius="50%"
-                h="75%"
-                w="75%"
-              >
-                {percentage.toFixed(1)}%
-              </CircularProgressLabel>
-            </CircularProgress>
-          </Flex>
-          <VStack
-            spacing="4"
-            w="50%"
-            h="100%"
-            justifyContent="center"
-            pr={["2", "2"]}
-          >
-            <HStack ml="auto" pr={["2", "0"]}>
-              <Heading
-                fontSize={["lg", "30px"]}
-                as="h4"
-                color="green.500"
-                fontFamily="other"
-                fontWeight="medium"
-              >
-                R$ {maxValue}
-              </Heading>
-              <Text
-                fontSize={["md", "24px"]}
-                color="gray.100"
-                fontFamily="other"
-              >
-                / R$ {totalExpend}
-              </Text>
-            </HStack>
-            <Button
-              onClick={() => onModalAddExpenseOpen()}
-              w={["90%", "100%"]}
-              h={["50px", "60px"]}
-              bg="black.500"
-              fontSize={["lg", "xl"]}
-              fontWeight="normal"
-              color="white.0"
-              border="2px solid"
-              borderColor="purple.500"
-              _hover={{ transform: "scale(1.02)" }}
-            >
-              Add expense
-            </Button>
-            <Button
-              onClick={handleClick}
-              w={["90%", "100%"]}
-              h={["50px", "60px"]}
-              bg="black.500"
-              fontSize={["lg", "xl"]}
-              // fontSize="xl"
-              fontWeight="normal"
-              color="white.0"
-              border="2px solid"
-              borderColor="purple.500"
-              _hover={{ transform: "scale(1.02)" }}
-            >
-              View expenses
-            </Button>
-          </VStack>
-        </Flex>
-      </Box>
-    </>
+    </Box>
   );
 };

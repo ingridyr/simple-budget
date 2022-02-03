@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   Button,
   FormControl,
-  Input as ChakraInput,
   useToast,
   Heading,
 } from "@chakra-ui/react";
@@ -18,31 +17,34 @@ import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
 import * as yup from "yup";
 import { InputForm } from "../Input";
+import { InputMaskedCurrency } from "../Input/inputMasked";
+import { formatToCurrency } from "../Input/masks";
 
 interface ModalEditBudgetData {
   name: string;
-  max_value: number;
+  max_value: string;
   categories: string[];
 }
 
 interface ModalEditBudgetProps {
   budgetId: string;
+  name_to_edit: string;
+  max_value_to_edit: string;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name required"),
-  max_value: yup
-    .number()
-    .required("Max value required")
-    .min(1, "Minimum value greater than or equal to 1"),
+  name: yup.string().required("Name is required"),
+  max_value: yup.string().required("Max value is required"),
 });
 
 export const ModalEditBudget = ({
   isOpen,
   onClose,
   budgetId,
+  name_to_edit,
+  max_value_to_edit,
 }: ModalEditBudgetProps) => {
   const { accessToken } = useAuth();
   const { updateBudget } = useBudgets();
@@ -51,24 +53,21 @@ export const ModalEditBudget = ({
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<ModalEditBudgetData>({
     resolver: yupResolver(schema),
   });
 
   const toast = useToast();
 
+  const newMaxValue_to_edit = formatToCurrency(max_value_to_edit);
+
   const onSubmitFunction = ({ name, max_value }: ModalEditBudgetData) => {
-    toast({
-      title: "Budget updated successfully!",
-      duration: 3000,
-      isClosable: true,
-      status: "success",
-      position: "top",
-    });
+    const newMaxValue = Number(max_value.replaceAll(".", "").replace(",", "."));
 
     const newData = {
       name: name,
-      max_value: max_value,
+      max_value: newMaxValue,
       categories: [
         "food",
         "entertainment",
@@ -79,8 +78,19 @@ export const ModalEditBudget = ({
       ],
       budgetId: budgetId,
     };
-    updateBudget(budgetId, accessToken, newData);
-    onClose();
+    updateBudget(budgetId, accessToken, newData)
+      .then((_) => {
+        toast({
+          title: "Budget updated successfully!",
+          duration: 3000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
+        onClose();
+        reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -124,7 +134,6 @@ export const ModalEditBudget = ({
             />
           </ModalHeader>
           <ModalBody
-            //pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
@@ -142,6 +151,8 @@ export const ModalEditBudget = ({
                 label="Name"
                 register={register}
                 error={errors.name}
+                placeholder="Type budget name"
+                defaultValue={name_to_edit}
               />
             </FormControl>
 
@@ -151,26 +162,21 @@ export const ModalEditBudget = ({
               flexDir="column"
               justifyContent="center"
             >
-              <InputForm
+              <InputMaskedCurrency
                 name="max_value"
-                label="Max value"
+                label="Amount"
                 register={register}
+                placeholder="Ex: 300.00"
+                defaultValue={newMaxValue_to_edit}
                 error={errors.max_value}
+                prefix="R$"
               />
             </FormControl>
-          </ModalBody>
 
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="100%"
-            pr="0px"
-            pl="0px"
-            pb={6}
-          >
             <Button
+              mt="2"
               h="60px"
-              w="76%"
+              w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
@@ -179,9 +185,9 @@ export const ModalEditBudget = ({
               borderColor="purple.500"
               _hover={{ transform: "scale(1.08)" }}
             >
-              Edit budget
+              Confirm changes
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

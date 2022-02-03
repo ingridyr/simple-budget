@@ -8,7 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   FormControl,
-  Input as ChakraInput,
   useToast,
   Heading,
 } from "@chakra-ui/react";
@@ -18,12 +17,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { InputForm } from "../Input";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { InputMaskedCurrency } from "../Input/inputMasked";
 
 interface ModalData {
   name: string;
-  max_value: number;
+  max_value: string;
   categories: string[];
   userId: number;
 }
@@ -35,13 +33,10 @@ interface ModalAddBudgetProps {
 
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
-  max_value: yup
-    .number()
-    .min(1, "Minimum value greater than or equal to 1")
-    .required("Max value required"),
+  max_value: yup.string().required("Max value required"),
 });
 
-export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
+export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
@@ -49,6 +44,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
@@ -56,29 +52,34 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const toast = useToast();
 
   const onSubmitFunction = ({ name, max_value }: ModalData) => {
-    toast({
-      title: "Budget created successfully!",
-      duration: 3000,
-      isClosable: true,
-      status: "success",
-      position: "top",
-    });
+    const newMaxValue = Number(max_value.replaceAll(".", "").replace(",", "."));
 
     const newData = {
       name: name,
-      max_value: max_value,
+      max_value: newMaxValue,
       categories: [
-        "food",
-        "entertainment",
-        "transport",
-        "home",
-        "health",
-        "others",
+        "Food",
+        "Entertainment",
+        "Transport",
+        "Home",
+        "Health",
+        "Others",
       ],
       userId: user.id,
     };
-    createBudget(newData, accessToken);
-    onClose();
+    createBudget(newData, accessToken)
+      .then((_) => {
+        toast({
+          title: "Budget created successfully!",
+          duration: 3000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
+        onClose();
+        reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -88,6 +89,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
         <ModalContent
           marginY="auto"
           bg="black.500"
+          w="95%"
           border="1px solid"
           borderColor="green.500"
           pb="25px"
@@ -121,12 +123,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               }}
             />
           </ModalHeader>
-          <ModalBody
-            w="90%"
-            display="flex"
-            flexDir="column"
-            alignSelf="center"
-          >
+          <ModalBody w="90%" display="flex" flexDir="column" alignSelf="center">
             <FormControl
               display="flex"
               flexDir="column"
@@ -138,6 +135,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 label="Name"
                 register={register}
                 error={errors.name}
+                placeholder="Type budget name"
               />
             </FormControl>
 
@@ -146,15 +144,18 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               flexDir="column"
               justifyContent="center"
             >
-              <InputForm
+              <InputMaskedCurrency
                 name="max_value"
                 label="Max value"
                 register={register}
+                placeholder="Ex: 3000.00"
                 error={errors.max_value}
+                prefix="R$"
               />
             </FormControl>
 
             <Button
+              mt="2"
               h="60px"
               w="100%"
               type="submit"
