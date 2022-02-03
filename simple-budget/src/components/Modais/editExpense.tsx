@@ -12,6 +12,8 @@ import {
   Text,
   Heading,
   useToast,
+  FormControl,
+  Input as ChakraInput,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -125,7 +127,7 @@ export const ModalEditExpense = ({
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-          <ModalHeader paddingY="20px">
+<!--           <ModalHeader paddingY="20px">
             <Flex alignItems="center" justifyContent="space-between">
               <Heading as="h4" fontSize="24px" ml="20px">
                 Edit expense
@@ -140,9 +142,38 @@ export const ModalEditExpense = ({
                 }}
               />
             </Flex>
+          </ModalHeader> -->
+<!--           boxShadow="1px 0px 6px 0px rgb(0,245,155)"
+          as="form"
+          onSubmit={handleSubmit(changeExpenseData)} -->
+        >
+          <ModalHeader
+            color="white"
+            pb={4}
+            align="center"
+            borderBottom="1px solid"
+            borderColor="gray.900"
+          >
+            <Heading
+              as="h1"
+              fontSize="xl"
+              fontWeight="normal"
+              color="green.500"
+            >
+              Edit expense
+            </Heading>
+            <ModalCloseButton
+              color="green.500"
+              fontSize="lg"
+              mt="1"
+              _hover={{
+                transition: "0.2s",
+                color: "purple.500",
+              }}
+            />
           </ModalHeader>
           <ModalBody
-            pb={3.5}
+            // pb={3.5}
             w="90%"
             display="flex"
             flexDir="column"
@@ -203,44 +234,61 @@ export const ModalEditExpense = ({
               error={errors.amount}
               prefix="R$"
             />
-          </ModalBody>
+=======
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+              color="white"
+            >
+              <InputForm
+                name="name"
+                label="Name"
+                register={register}
+                error={errors.name}
+              />
+            </FormControl>
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <InputForm
+                name="description"
+                label="Description"
+                register={register}
+                error={errors.description}
+              />
+            </FormControl>
+            <FormControl
+              display="flex"
+              flexDir="column"
+              justifyContent="center"
+            >
+              <InputForm
+                name="amount"
+                label="Amount"
+                register={register}
+                placeholder="Ex: 200"
+                error={errors.amount}
+              />
+            </FormControl>
 
-          <ModalFooter
-            w="80%"
-            alignSelf="center"
-            justifyContent="space-around"
-            pr="0px"
-            pl="0px"
-            pb={6}
-          >
             <Button
               h="60px"
-              w="45%"
+              w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
               bg="purple.500"
-              border="2px solid"
+              // border="2px solid"
               borderColor="purple.500"
+              onClickCapture={() => {}}
               _hover={{ transform: "scale(1.08)" }}
             >
-              Save
+              Confirm changes
             </Button>
-            <Button
-              h="60px"
-              w="45%"
-              type="submit"
-              fontWeight="normal"
-              fontSize="lg"
-              bg="purple.500"
-              border="2px solid"
-              borderColor="purple.500"
-              _hover={{ transform: "scale(1.08)" }}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>

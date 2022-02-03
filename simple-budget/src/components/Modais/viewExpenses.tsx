@@ -1,6 +1,7 @@
 import {
   Flex,
   Heading,
+  Image,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,9 +14,12 @@ import {
 import { useState } from "react";
 
 import { useExpenses } from "../../providers/ExpensesContext";
-
 import { ModalEditExpense } from "./editExpense";
 import { ExpenseCard } from "../Card/expenseCard";
+import { useDisclosure } from "@chakra-ui/react";
+import EmptyStreet from "../../assets/Empty.svg";
+
+import { useState } from "react";
 
 interface ModalViewExpensesProps {
   budgetName: string;
@@ -103,22 +107,22 @@ export const ModalViewExpenses = ({
         <ModalOverlay />
         <ModalContent
           bgColor="black.500"
-          boxShadow="0px 1px 7px 2px #00F59B"
+          boxShadow="0px 1px 6px 1px #00F59B"
           marginY="auto"
           height="500px"
         >
           <ModalHeader paddingY="20px">
             <Flex alignItems="center" justifyContent="space-between">
-              <Heading as="h4" fontSize="24px" ml="20px">
+              <Heading as="h1" fontSize={["2xl", "3xl"]} fontWeight="normal">
                 {budgetName}
               </Heading>
               <ModalCloseButton
-                color="green.500"
-                fontSize="lg"
-                mt="1"
+                mt="10px"
+                color="purple.500"
+                fontSize="16px"
                 _hover={{
                   transition: "0.2s",
-                  color: "purple.500",
+                  color: "green.500",
                 }}
               />
             </Flex>
@@ -145,7 +149,8 @@ export const ModalViewExpenses = ({
               },
             }}
           >
-            {expenses.map((item, idx) => {
+       {expenses.length > 0 ? (
+              expenses.map((item, idx) => {    
               return (
                 <ExpenseCard
                   item={item}
@@ -154,7 +159,17 @@ export const ModalViewExpenses = ({
                   handleDelete={handleDelete}
                 />
               );
-            })}
+            })
+              : (
+              <>
+                <Text fontSize="xl" color="green.500">
+                  You don't have any registered expense.
+                </Text>
+                <Image src={EmptyStreet} alt="Empty" mt="4" mb="4" />
+              </>
+            )}
+              
+              }
             <ModalEditExpense
               budgetCategories={budgetsCategories}
               isOpen={isModalEditExpenseOpen}

@@ -172,19 +172,11 @@ export const ModalEditBudget = ({
                 prefix="R$"
               />
             </FormControl>
-          </ModalBody>
 
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="100%"
-            pr="0px"
-            pl="0px"
-            pb={6}
-          >
             <Button
+              mt="2"
               h="60px"
-              w="76%"
+              w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
@@ -193,9 +185,9 @@ export const ModalEditBudget = ({
               borderColor="purple.500"
               _hover={{ transform: "scale(1.08)" }}
             >
-              Save
+              Confirm changes
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
