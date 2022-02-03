@@ -127,7 +127,7 @@ export const ModalEditExpense = ({
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-<!--           <ModalHeader paddingY="20px">
+{/* <!--           <ModalHeader paddingY="20px">
             <Flex alignItems="center" justifyContent="space-between">
               <Heading as="h4" fontSize="24px" ml="20px">
                 Edit expense
@@ -145,8 +145,8 @@ export const ModalEditExpense = ({
           </ModalHeader> -->
 <!--           boxShadow="1px 0px 6px 0px rgb(0,245,155)"
           as="form"
-          onSubmit={handleSubmit(changeExpenseData)} -->
-        >
+          onSubmit={handleSubmit(changeExpenseData)} --> */}
+        {/* > */}
           <ModalHeader
             color="white"
             pb={4}
@@ -234,7 +234,7 @@ export const ModalEditExpense = ({
               error={errors.amount}
               prefix="R$"
             />
-=======
+            
             <FormControl
               display="flex"
               flexDir="column"
