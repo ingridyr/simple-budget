@@ -3,6 +3,7 @@ import { api } from "../../services/api";
 import { useToast } from "@chakra-ui/react";
 
 import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -33,7 +34,7 @@ interface AuthState {
 interface AuthContextData {
   // signup: (data: RegisterProps) => void;
   // signin: (data: LoginProps) => void;
-  logout: () => void;
+  logout: (path: string) => void;
   accessToken: string;
   user: User;
   // errMessage: string;
@@ -200,10 +201,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       });
   };
 
-  const logout = () => {
+  const logout = (path: string) => {
     localStorage.removeItem("@SimpleBudget:accessToken");
     localStorage.removeItem("@SimpleBudget:user");
-    history.push("/login");
+    // <Redirect push to="/" />;
+    history.push(path);
   };
 
   return (
