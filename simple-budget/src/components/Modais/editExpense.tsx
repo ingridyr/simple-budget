@@ -127,7 +127,7 @@ export const ModalEditExpense = ({
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-{/* <!--           <ModalHeader paddingY="20px">
+          {/* <!--           <ModalHeader paddingY="20px">
             <Flex alignItems="center" justifyContent="space-between">
               <Heading as="h4" fontSize="24px" ml="20px">
                 Edit expense
@@ -146,7 +146,7 @@ export const ModalEditExpense = ({
 <!--           boxShadow="1px 0px 6px 0px rgb(0,245,155)"
           as="form"
           onSubmit={handleSubmit(changeExpenseData)} --> */}
-        {/* > */}
+          {/* > */}
           <ModalHeader
             color="white"
             pb={4}
@@ -172,16 +172,11 @@ export const ModalEditExpense = ({
               }}
             />
           </ModalHeader>
-          <ModalBody
-            // pb={3.5}
-            w="90%"
-            display="flex"
-            flexDir="column"
-            alignSelf="center"
-          >
-            <Box h="50px" w="60%" mb="12px">
+          <ModalBody w="90%" display="flex" flexDir="column" alignSelf="center">
+            <Box h="50px" w="100%" mb="12px">
               <Box
-                w="95%"
+                w="100%"
+                mt="2"
                 border="2px solid"
                 borderColor="purple.500"
                 borderRadius="5px"
@@ -190,8 +185,8 @@ export const ModalEditExpense = ({
                 bg="black.500"
                 as="select"
                 fontSize="20px"
-                mb="1px"
-                paddingRight="5px"
+                // mb="1px"
+                // paddingRight="5px"
                 defaultValue={""}
                 {...register("type")}
               >
@@ -234,45 +229,6 @@ export const ModalEditExpense = ({
               error={errors.amount}
               prefix="R$"
             />
-            
-            <FormControl
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-              color="white"
-            >
-              <InputForm
-                name="name"
-                label="Name"
-                register={register}
-                error={errors.name}
-              />
-            </FormControl>
-            <FormControl
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-            >
-              <InputForm
-                name="description"
-                label="Description"
-                register={register}
-                error={errors.description}
-              />
-            </FormControl>
-            <FormControl
-              display="flex"
-              flexDir="column"
-              justifyContent="center"
-            >
-              <InputForm
-                name="amount"
-                label="Amount"
-                register={register}
-                placeholder="Ex: 200"
-                error={errors.amount}
-              />
-            </FormControl>
 
             <Button
               h="60px"
