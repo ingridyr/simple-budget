@@ -20,6 +20,8 @@ interface Expense {
   description: string;
   type: string;
   budgetId: string;
+  userId: number;
+  month: string,
 }
 
 interface ExpensesContextData {
@@ -32,12 +34,14 @@ interface ExpensesContextData {
   updateExpense: (
     expenseId: string,
     accessToken: string,
-    dataUpdate: Omit<Expense, "id" | "budgetId">
+    dataUpdate: Omit<Expense, "id" | "budgetId" | "userId" | "month">
   ) => Promise<void>;
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
   restoreInfos: (id: string, reset: ({}) => void) => void;
+  getUserExpenses: (userId: number, accessToken: string) => Promise<void>;
+  listUserExpenses: Expense[];
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -56,7 +60,7 @@ const useExpenses = () => {
 const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
-  //const [errMessage, setErrMessage] = useState<string>("");
+  const [listUserExpenses, setListUserExpenses] = useState<Expense[]>([]);
 
   const { accessToken } = useAuth();
 
@@ -130,7 +134,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
     async (
       expenseId: string,
       accessToken: string,
-      dataUpdate: Omit<Expense, "id" | "budgetId">
+      dataUpdate: Omit<Expense, "id" | "budgetId" | "userId" | "month">
     ) => {
       await api
         .patch(`/expenses/${expenseId}`, dataUpdate, {
@@ -186,6 +190,23 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
       });
   };
 
+  const getUserExpenses = useCallback(
+    async (userId: number, accessToken: string) => {
+      try {
+        const res = await api.get(`/expenses?userId=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        setListUserExpenses(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    []
+  );
+
   return (
     <ExpensesContext.Provider
       value={{
@@ -197,6 +218,8 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         listAllExpenses,
         allExpenses,
         restoreInfos,
+        getUserExpenses,
+        listUserExpenses,
       }}
     >
       {children}

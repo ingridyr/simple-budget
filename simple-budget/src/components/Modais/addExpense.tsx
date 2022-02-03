@@ -33,7 +33,9 @@ interface ModalData {
   description: string;
   amount: string;
   type: string;
-  userId: string;
+  budgetId: string;
+  userId: number;
+  month: string;
 }
 
 interface ModalAddExpenseProps {
@@ -50,7 +52,10 @@ export const ModalAddExpense = ({
   onClose,
 }: ModalAddExpenseProps) => {
   const { createExpense } = useExpenses();
-  const { accessToken } = useAuth();
+  const { user, accessToken } = useAuth();
+
+  let data = new Date();
+  const month = String(data.getMonth() + 1).padStart(2, '0');
 
   const toast = useToast();
 
@@ -63,6 +68,8 @@ export const ModalAddExpense = ({
       amount: newAmount,
       type: type,
       budgetId: budgetId,
+      userId: user.id,
+      month: month,
     };
     createExpense(newData, accessToken)
       .then((_) => {

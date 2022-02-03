@@ -43,6 +43,7 @@ interface ItemDataApi {
   budgetId: string;
   id: string;
   type: string;
+  month: string,
 }
 
 const budgetsCategories = [

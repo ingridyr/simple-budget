@@ -18,6 +18,7 @@ interface Budget {
   max_value: number;
   categories: string[];
   userId: number;
+  month: string;
 }
 
 interface BudgetsContextData {

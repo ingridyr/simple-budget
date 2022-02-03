@@ -2,18 +2,14 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalFooter,
   ModalBody,
   ModalHeader,
   ModalCloseButton,
   Button,
-  Flex,
   Box,
   Text,
   Heading,
   useToast,
-  FormControl,
-  Input as ChakraInput,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -64,14 +60,9 @@ export const ModalEditExpense = ({
   selectedItem,
 }: ModalEditExpenseProps) => {
   const { accessToken } = useAuth();
-  const { restoreInfos, updateExpense, deleteExpense } = useExpenses();
+  const { restoreInfos, updateExpense } = useExpenses();
 
   const toast = useToast();
-
-  const handleDelete = () => {
-    deleteExpense(selectedItem.id, accessToken);
-    onClose();
-  };
 
   const changeExpenseData = (data: ModalData) => {
     const newAmount = Number(data.amount.replace(",", "."));
@@ -127,26 +118,6 @@ export const ModalEditExpense = ({
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
         >
-          {/* <!--           <ModalHeader paddingY="20px">
-            <Flex alignItems="center" justifyContent="space-between">
-              <Heading as="h4" fontSize="24px" ml="20px">
-                Edit expense
-              </Heading>
-              <ModalCloseButton
-                color="green.500"
-                fontSize="lg"
-                mt="1"
-                _hover={{
-                  transition: "0.2s",
-                  color: "purple.500",
-                }}
-              />
-            </Flex>
-          </ModalHeader> -->
-<!--           boxShadow="1px 0px 6px 0px rgb(0,245,155)"
-          as="form"
-          onSubmit={handleSubmit(changeExpenseData)} --> */}
-          {/* > */}
           <ModalHeader
             color="white"
             pb={4}
@@ -185,8 +156,6 @@ export const ModalEditExpense = ({
                 bg="black.500"
                 as="select"
                 fontSize="20px"
-                // mb="1px"
-                // paddingRight="5px"
                 defaultValue={""}
                 {...register("type")}
               >
@@ -237,7 +206,6 @@ export const ModalEditExpense = ({
               fontWeight="normal"
               fontSize="lg"
               bg="purple.500"
-              // border="2px solid"
               borderColor="purple.500"
               onClickCapture={() => {}}
               _hover={{ transform: "scale(1.08)" }}
