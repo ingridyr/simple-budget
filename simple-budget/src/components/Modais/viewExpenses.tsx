@@ -10,13 +10,12 @@ import {
   ModalOverlay,
   useToast,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 import { useExpenses } from "../../providers/ExpensesContext";
 import { ModalEditExpense } from "./editExpense";
 import { ExpenseCard } from "../Card/expenseCard";
-import { useDisclosure } from "@chakra-ui/react";
 import EmptyStreet from "../../assets/Empty.svg";
 
 import { useState } from "react";
@@ -149,18 +148,18 @@ export const ModalViewExpenses = ({
               },
             }}
           >
-       {expenses.length > 0 ? (
-              expenses.map((item, idx) => {    
-              return (
-                <ExpenseCard
-                  item={item}
-                  key={idx}
-                  modalSelect={modalSelect}
-                  handleDelete={handleDelete}
-                />
-              );
-            })
-              : (
+            {expenses.length > 0 ? (
+              expenses.map((item, idx) => {
+                return (
+                  <ExpenseCard
+                    item={item}
+                    key={idx}
+                    modalSelect={modalSelect}
+                    handleDelete={handleDelete}
+                  />
+                );
+              })
+            ) : (
               <>
                 <Text fontSize="xl" color="green.500">
                   You don't have any registered expense.
@@ -168,8 +167,6 @@ export const ModalViewExpenses = ({
                 <Image src={EmptyStreet} alt="Empty" mt="4" mb="4" />
               </>
             )}
-              
-              }
             <ModalEditExpense
               budgetCategories={budgetsCategories}
               isOpen={isModalEditExpenseOpen}
