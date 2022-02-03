@@ -18,12 +18,14 @@ interface InputProps {
   icon?: IconType;
   register: (user: any) => void;
   value?: string;
+  defaultValue?: string;
 }
 
 export const InputForm = ({
   name,
   type,
   placeholder,
+  defaultValue,
   label,
   error = null,
   icon: Icon,
@@ -51,6 +53,7 @@ export const InputForm = ({
           height="60px"
           fontSize="lg"
           placeholder={placeholder}
+          defaultValue={defaultValue}
           type={type}
           value={value}
           {...register(name)}

@@ -4,7 +4,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./styles/theme";
-import {Providers} from "./providers/index"
+import { Providers } from "./providers/index";
 
 ReactDOM.render(
   <React.StrictMode>

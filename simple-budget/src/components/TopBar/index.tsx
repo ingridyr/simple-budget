@@ -34,7 +34,7 @@ export const TopBar = () => {
             transition: "0.4s",
             color: "green.500",
           }}
-          onClick={logout}
+          onClick={() => logout('/')}
         >
           <IoExitOutline size={35} />
         </Center>
