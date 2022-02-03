@@ -149,7 +149,7 @@ export const SideMenu = ({ isSelected }: SideMenuProps) => {
             // transform: "scale(1.1)",
           }}
         >
-          <IoExitOutline size={40} onClick={() => logout('/')} />
+          <IoExitOutline size={40} onClick={() => logout("/")} />
         </Box>
       </Flex>
     </>
