@@ -172,13 +172,14 @@ export const CardBudget = ({
           justifyContent="center"
           pr={["2", "2"]}
         >
-          <HStack ml="auto" pr={["2", "0"]}>
+          <HStack ml="auto" pr={["2", "0"]} w="100%">
             <Heading
               fontSize={["17px", "25px"]}
               as="h4"
               color="green.500"
               fontFamily="other"
               fontWeight="medium"
+              overflow="auto"
             >
               {maxValue.toLocaleString("pt-br", {
                 style: "currency",
