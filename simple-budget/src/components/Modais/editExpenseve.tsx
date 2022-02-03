@@ -38,6 +38,7 @@ interface ModalData {
   id: string;
   type: string;
   userId: number;
+  month: string,
 }
 
 interface SelectedItem {
@@ -47,6 +48,7 @@ interface SelectedItem {
   budgetId: string;
   id: string;
   type: string;
+  month: string;
 }
 
 interface ModalEditExpenseProps {

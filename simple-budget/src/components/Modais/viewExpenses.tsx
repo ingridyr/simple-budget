@@ -35,6 +35,7 @@ interface ModalData {
   budgetId: string;
   id: string;
   type: string;
+  month: string,
 }
 
 export const ModalViewExpenses = ({

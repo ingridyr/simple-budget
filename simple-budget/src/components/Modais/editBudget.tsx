@@ -23,6 +23,7 @@ interface ModalEditBudgetData {
   name: string;
   max_value: number;
   categories: string[];
+  month: string;
 }
 
 interface ModalEditBudgetProps {
@@ -46,6 +47,9 @@ export const ModalEditBudget = ({
 }: ModalEditBudgetProps) => {
   const { accessToken } = useAuth();
   const { updateBudget } = useBudgets();
+
+  let data = new Date();
+  const month = String(data.getMonth() + 1).padStart(2, '0');
 
   const {
     formState: { errors },
@@ -78,6 +82,7 @@ export const ModalEditBudget = ({
         "others",
       ],
       budgetId: budgetId,
+      month: month,
     };
     updateBudget(budgetId, accessToken, newData);
     onClose();

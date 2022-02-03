@@ -23,6 +23,7 @@ interface Expense {
   type: string;
   budgetId: string;
   userId: number;
+  month: string,
 }
 
 interface ExpensesContextData {

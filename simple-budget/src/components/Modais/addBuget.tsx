@@ -11,6 +11,7 @@ import {
   Input as ChakraInput,
   useToast,
   Heading,
+  Box,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -21,18 +22,6 @@ import { InputForm } from "../Input";
 import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { AiOutlineArrowRight } from "react-icons/ai";
 
-interface ModalData {
-  name: string;
-  max_value: number;
-  categories: string[];
-  userId: number;
-}
-
-interface ModalAddBudgetProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
   max_value: yup
@@ -41,19 +30,27 @@ const schema = yup.object().shape({
     .required("Max value required"),
 });
 
+interface ModalData {
+  name: string;
+  max_value: number;
+  categories: string[];
+  userId: number;
+  month: string;
+}
+
+interface ModalAddBudgetProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
 export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-  } = useForm<ModalData>({
-    resolver: yupResolver(schema),
-  });
-
   const toast = useToast();
+
+  let data = new Date();
+  const month = String(data.getMonth() + 1).padStart(2, '0');
 
   const onSubmitFunction = ({ name, max_value }: ModalData) => {
     toast({
@@ -76,10 +73,19 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
         "others",
       ],
       userId: user.id,
+      month: month,
     };
     createBudget(newData, accessToken);
     onClose();
   };
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+  } = useForm<ModalData>({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <>
@@ -128,6 +134,25 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
             alignSelf="center"
             mt="2"
           >
+            {/* <FormControl>
+              <Box
+                bg="black.500"
+                as="select"
+                w="50%"
+                mb="20px"
+                fontSize="20px"
+                {...register("month")}
+              >
+                <Box as="option" disabled selected value="">
+                  Month
+                </Box>
+                {readMonths.map((item, index) => (
+                  <Box as="option" value={item} key={index}>
+                    {item}
+                  </Box>
+                ))}
+              </Box>
+            </FormControl> */}
             <FormControl
               display="flex"
               flexDir="column"
