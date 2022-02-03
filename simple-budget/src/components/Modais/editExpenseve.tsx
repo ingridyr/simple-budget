@@ -37,6 +37,7 @@ interface ModalData {
   budgetId: string;
   id: string;
   type: string;
+  userId: number;
 }
 
 interface SelectedItem {

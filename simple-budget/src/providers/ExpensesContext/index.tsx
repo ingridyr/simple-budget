@@ -22,6 +22,7 @@ interface Expense {
   description: string;
   type: string;
   budgetId: string;
+  userId: number;
 }
 
 interface ExpensesContextData {
@@ -39,7 +40,9 @@ interface ExpensesContextData {
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
-  restoreInfos: (id: string, reset: ({}) => void) => void
+  restoreInfos: (id: string, reset: ({}) => void) => void;
+  getUserExpenses: (userId: number, accessToken: string) => Promise<void>;
+  listUserExpenses: Expense[];
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -58,6 +61,7 @@ const useExpenses = () => {
 const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
+  const [listUserExpenses, setListUserExpenses] = useState<Expense[]>([]);
   //const [errMessage, setErrMessage] = useState<string>("");
 
   const toast = useToast()
@@ -195,6 +199,23 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
     })
   }
 
+  const getUserExpenses = useCallback(
+    async (userId: number, accessToken: string) => {
+      try {
+        const res = await api.get(`/expenses?userId=${userId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        setListUserExpenses(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    []
+  );
+
   return (
     <ExpensesContext.Provider
       value={{
@@ -205,7 +226,9 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         deleteExpense,
         listAllExpenses,
         allExpenses,
-        restoreInfos
+        restoreInfos,
+        getUserExpenses,
+        listUserExpenses,
       }}
     >
       {children}

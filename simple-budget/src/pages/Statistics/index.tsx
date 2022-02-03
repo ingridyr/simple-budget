@@ -1,36 +1,33 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { BottomMenu } from "../../components/BottomMenu";
 import { SideMenu } from "../../components/SideMenu";
 import { TopBar } from "../../components/TopBar";
 import { useAuth } from "../../providers/AuthContext";
-import { useBudgets } from "../../providers/BudgetsContext";
 import { useExpenses } from "../../providers/ExpensesContext";
 
 export const Statistics = () => {
-  const { listBudgets } = useBudgets();
-  const { allExpenses, listAllExpenses } = useExpenses();
+  const { listUserExpenses, getUserExpenses } = useExpenses();
   const { user, accessToken } = useAuth();
 
   useEffect(() => {
-    listBudgets(user.id, accessToken);
-    listAllExpenses(accessToken);
+    getUserExpenses(user.id, accessToken);
   }, []);
 
-  const health = allExpenses
+  const health = listUserExpenses
     .filter((item) => item.type === "health")
     .reduce((acc, { amount }) => acc + amount, 0);
-  const entertainment = allExpenses
+  const entertainment = listUserExpenses
     .filter((item) => item.type === "entertainment")
     .reduce((acc, { amount }) => acc + amount, 0);
-  const transport = allExpenses
+  const transport = listUserExpenses
     .filter((item) => item.type === "transport")
     .reduce((acc, { amount }) => acc + amount, 0);
-  const home = allExpenses
+  const home = listUserExpenses
     .filter((item) => item.type === "home")
     .reduce((acc, { amount }) => acc + amount, 0);
-  const food = allExpenses
+  const food = listUserExpenses
     .filter((item) => item.type === "food")
     .reduce((acc, { amount }) => acc + amount, 0);
 
@@ -43,30 +40,30 @@ export const Statistics = () => {
 
   const data = [
     ["Categories", "Expenses"],
-    ["Health", 11],
-    ["Entertainment", 2],
-    ["Transport", 2],
-    ["Home", 2],
-    ["Food", 7],
+    ["Health", 0],
+    ["Entertainment", 0],
+    ["Transport", 0],
+    ["Home", 0],
+    ["Food", 0],
   ];
 
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === "Health") {
-      data[i][1] = health;
+      data[i][1] = Number(health);
     }
     if (data[i][0] === "Entertainment") {
-      data[i][1] = entertainment;
+      data[i][1] = Number(entertainment);
     }
     if (data[i][0] === "Transport") {
-      data[i][1] = transport;
+      data[i][1] = Number(transport);
     }
     if (data[i][0] === "Home") {
-      data[i][1] = home;
+      data[i][1] = Number(home);
     }
     if (data[i][0] === "Food") {
-      data[i][1] = food;
+      data[i][1] = Number(food);
     }
-    console.log(data);
+    //console.log(data);
   }
 
   return (
@@ -80,39 +77,43 @@ export const Statistics = () => {
             <Heading>Statistics</Heading>
           </Box>
           <Box m="auto" w="80%">
-            <Chart
-              chartType="PieChart"
-              data={data}
-              options={{
-                is3D: true,
-                title: "By category",
-                colors: [
-                  "blueviolet",
-                  "Indigo",
-                  "DarkViolet",
-                  "MediumSeaGreen",
-                  "SpringGreen",
-                ],
-                backgroundColor: "transparent",
-                titleTextStyle: {
-                  color: "#ffffff",
-                },
-                legend: {
-                  textStyle: {
+            {listUserExpenses.length > 0 ? (
+              <Chart
+                chartType="PieChart"
+                data={data}
+                options={{
+                  is3D: true,
+                  title: "By category",
+                  colors: [
+                    "blueviolet",
+                    "Indigo",
+                    "DarkViolet",
+                    "MediumSeaGreen",
+                    "SpringGreen",
+                  ],
+                  backgroundColor: "transparent",
+                  titleTextStyle: {
                     color: "#ffffff",
                   },
-                  position: "bottom",
-                },
-                chartArea: {
-                  left: 40,
-                  top: 60,
-                  width: "100%",
-                  height: "100px",
-                },
-              }}
-              width="100%"
-              height="500px"
-            />
+                  legend: {
+                    textStyle: {
+                      color: "#ffffff",
+                    },
+                    position: "bottom",
+                  },
+                  chartArea: {
+                    left: 40,
+                    top: 60,
+                    width: "100%",
+                    height: "100px",
+                  },
+                }}
+                width="100%"
+                height="500px"
+              />
+            ) : (
+              <Heading>texto de voce não tem expenses aqui</Heading>
+            )}
           </Box>
 
           <Box mt="30px" width="100%">
