@@ -7,9 +7,7 @@ import {
 } from "react";
 import { AxiosResponse } from "axios";
 import { api } from "../../services/api";
-import {useAuth} from "../AuthContext/index"
-
-import {useToast} from "@chakra-ui/react"
+import { useAuth } from "../AuthContext/index";
 
 interface ExpenseProviderProps {
   children: ReactNode;
@@ -42,8 +40,11 @@ interface ExpensesContextData {
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
   restoreInfos: (id: string, reset: ({}) => void) => void;
+<<<<<<< HEAD
   getUserExpenses: (userId: number, accessToken: string) => Promise<void>;
   listUserExpenses: Expense[];
+=======
+>>>>>>> af73addc102029fa61d77f42cedcb338242e85b5
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -65,9 +66,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [listUserExpenses, setListUserExpenses] = useState<Expense[]>([]);
   //const [errMessage, setErrMessage] = useState<string>("");
 
-  const toast = useToast()
-
-  const {accessToken} = useAuth()
+  const { accessToken } = useAuth();
 
   const listAllExpenses = useCallback(async (accessToken: string) => {
     try {
@@ -167,13 +166,6 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
               expenseFind.type = dataUpdate.type;
             }
 
-            toast({
-              title: "Expense Updated!",
-              duration: 3000,
-              isClosable: true,
-              status: "success",
-              position: "top"
-            })
             setExpenses([...filteredExpenses, expenseFind]);
           }
         })
@@ -183,22 +175,24 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   );
 
   const restoreInfos = (id: string, reset: ({}) => void) => {
-    api.get(`/expenses/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
-    })
-    .then((response) => {
-      reset({
-        name: response.data.name,
-        description: response.data.description,
-        amount: response.data.amount
+    api
+      .get(`/expenses/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       })
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+      .then((response) => {
+        reset({
+          name: response.data.name,
+          description: response.data.description,
+          amount: response.data.amount,
+          type: response.data.type,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getUserExpenses = useCallback(
     async (userId: number, accessToken: string) => {
@@ -228,8 +222,11 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         listAllExpenses,
         allExpenses,
         restoreInfos,
+<<<<<<< HEAD
         getUserExpenses,
         listUserExpenses,
+=======
+>>>>>>> af73addc102029fa61d77f42cedcb338242e85b5
       }}
     >
       {children}

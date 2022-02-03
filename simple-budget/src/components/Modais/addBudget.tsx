@@ -8,7 +8,6 @@ import {
   ModalBody,
   ModalCloseButton,
   FormControl,
-  Input as ChakraInput,
   useToast,
   Heading,
   Box,
@@ -19,8 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext";
 import { useBudgets } from "../../providers/BudgetsContext";
 import { InputForm } from "../Input";
-import { IoArrowForwardCircleOutline } from "react-icons/io5";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { InputMaskedCurrency } from "../Input/inputMasked";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
@@ -32,7 +30,7 @@ const schema = yup.object().shape({
 
 interface ModalData {
   name: string;
-  max_value: number;
+  max_value: string;
   categories: string[];
   userId: number;
   month: string;
@@ -43,40 +41,66 @@ interface ModalAddBudgetProps {
   onClose: () => void;
 }
 
+<<<<<<< HEAD:simple-budget/src/components/Modais/addBuget.tsx
 export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
+=======
+const schema = yup.object().shape({
+  name: yup.string().required("Name required"),
+  max_value: yup.string().required("Max value required"),
+});
+
+export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
+  const { user, accessToken } = useAuth();
+  const { createBudget } = useBudgets();
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<ModalData>({
+    resolver: yupResolver(schema),
+  });
+
+>>>>>>> af73addc102029fa61d77f42cedcb338242e85b5:simple-budget/src/components/Modais/addBudget.tsx
   const toast = useToast();
 
   let data = new Date();
   const month = String(data.getMonth() + 1).padStart(2, '0');
 
   const onSubmitFunction = ({ name, max_value }: ModalData) => {
-    toast({
-      title: "Budget created successfully!",
-      duration: 3000,
-      isClosable: true,
-      status: "success",
-      position: "top",
-    });
+    const newMaxValue = Number(max_value.replaceAll(".", "").replace(",", "."));
 
     const newData = {
       name: name,
-      max_value: max_value,
+      max_value: newMaxValue,
       categories: [
-        "food",
-        "entertainment",
-        "transport",
-        "home",
-        "health",
-        "others",
+        "Food",
+        "Entertainment",
+        "Transport",
+        "Home",
+        "Health",
+        "Others",
       ],
       userId: user.id,
       month: month,
     };
-    createBudget(newData, accessToken);
-    onClose();
+    createBudget(newData, accessToken)
+      .then((_) => {
+        toast({
+          title: "Budget created successfully!",
+          duration: 3000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
+        onClose();
+        reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   const {
@@ -94,6 +118,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
         <ModalContent
           marginY="auto"
           bg="black.500"
+          w="95%"
           border="1px solid"
           borderColor="green.500"
           pb="25px"
@@ -127,6 +152,7 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               }}
             />
           </ModalHeader>
+<<<<<<< HEAD:simple-budget/src/components/Modais/addBuget.tsx
           <ModalBody
             w="90%"
             display="flex"
@@ -153,6 +179,9 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 ))}
               </Box>
             </FormControl> */}
+=======
+          <ModalBody w="90%" display="flex" flexDir="column" alignSelf="center">
+>>>>>>> af73addc102029fa61d77f42cedcb338242e85b5:simple-budget/src/components/Modais/addBudget.tsx
             <FormControl
               display="flex"
               flexDir="column"
@@ -164,65 +193,40 @@ export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
                 label="Name"
                 register={register}
                 error={errors.name}
+                placeholder="Type budget name"
               />
             </FormControl>
 
             <FormControl
-              mt={2}
               display="flex"
               flexDir="column"
               justifyContent="center"
             >
-              <InputForm
+              <InputMaskedCurrency
                 name="max_value"
                 label="Max value"
                 register={register}
+                placeholder="Ex: 3000.00"
                 error={errors.max_value}
+                prefix="R$"
               />
             </FormControl>
-          </ModalBody>
 
-          <ModalFooter
-            alignSelf="center"
-            justifyContent="space-around"
-            w="90%"
-            pb="2"
-          >
-            {/* <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="80%"
-              color="black.500"
-              type="submit"
-              border="3px solid"
-              borderColor="transparent"
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
-            >
-              Add budget
-            </Button> */}
             <Button
+              mt="2"
               h="60px"
               w="100%"
               type="submit"
               fontWeight="normal"
               fontSize="lg"
-              // fontSize="2xl"
-              // variant="outline"
               bg="purple.500"
               border="2px solid"
               borderColor="purple.500"
-              // color="green.500"
               _hover={{ transform: "scale(1.08)" }}
-              // rightIcon={<AiOutlineArrowRight size={20}/>}
             >
               Add a new budget now
             </Button>
-          </ModalFooter>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
