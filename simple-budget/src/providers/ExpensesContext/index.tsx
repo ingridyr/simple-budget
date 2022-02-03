@@ -34,17 +34,14 @@ interface ExpensesContextData {
   updateExpense: (
     expenseId: string,
     accessToken: string,
-    dataUpdate: Omit<Expense, "id" | "budgetId">
+    dataUpdate: Omit<Expense, "id" | "budgetId" | "userId" | "month">
   ) => Promise<void>;
   deleteExpense: (expenseId: string, accessToken: string) => Promise<void>;
   listAllExpenses: (accessToken: string) => Promise<void>;
   allExpenses: Expense[];
   restoreInfos: (id: string, reset: ({}) => void) => void;
-<<<<<<< HEAD
   getUserExpenses: (userId: number, accessToken: string) => Promise<void>;
   listUserExpenses: Expense[];
-=======
->>>>>>> af73addc102029fa61d77f42cedcb338242e85b5
 }
 
 const ExpensesContext = createContext<ExpensesContextData>(
@@ -64,7 +61,6 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [allExpenses, setAllExpenses] = useState<Expense[]>([]);
   const [listUserExpenses, setListUserExpenses] = useState<Expense[]>([]);
-  //const [errMessage, setErrMessage] = useState<string>("");
 
   const { accessToken } = useAuth();
 
@@ -138,7 +134,7 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
     async (
       expenseId: string,
       accessToken: string,
-      dataUpdate: Omit<Expense, "id" | "budgetId">
+      dataUpdate: Omit<Expense, "id" | "budgetId" | "userId" | "month">
     ) => {
       await api
         .patch(`/expenses/${expenseId}`, dataUpdate, {
@@ -222,11 +218,8 @@ const ExpensesProvider = ({ children }: ExpenseProviderProps) => {
         listAllExpenses,
         allExpenses,
         restoreInfos,
-<<<<<<< HEAD
         getUserExpenses,
         listUserExpenses,
-=======
->>>>>>> af73addc102029fa61d77f42cedcb338242e85b5
       }}
     >
       {children}

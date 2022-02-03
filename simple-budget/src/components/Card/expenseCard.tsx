@@ -11,6 +11,7 @@ interface ItemDataApi {
   budgetId: string;
   id: string;
   type: string;
+  month: string,
 }
 
 interface ExpenseCardProps {

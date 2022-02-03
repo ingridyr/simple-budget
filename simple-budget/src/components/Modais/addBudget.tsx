@@ -4,13 +4,11 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   FormControl,
   useToast,
   Heading,
-  Box,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -22,10 +20,7 @@ import { InputMaskedCurrency } from "../Input/inputMasked";
 
 const schema = yup.object().shape({
   name: yup.string().required("Name required"),
-  max_value: yup
-    .number()
-    .min(1, "Minimum value greater than or equal to 1")
-    .required("Max value required"),
+  max_value: yup.string().required("Max value required"),
 });
 
 interface ModalData {
@@ -41,31 +36,10 @@ interface ModalAddBudgetProps {
   onClose: () => void;
 }
 
-<<<<<<< HEAD:simple-budget/src/components/Modais/addBuget.tsx
-export const ModalAddBuget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
-  const { user, accessToken } = useAuth();
-  const { createBudget } = useBudgets();
-
-=======
-const schema = yup.object().shape({
-  name: yup.string().required("Name required"),
-  max_value: yup.string().required("Max value required"),
-});
-
 export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<ModalData>({
-    resolver: yupResolver(schema),
-  });
-
->>>>>>> af73addc102029fa61d77f42cedcb338242e85b5:simple-budget/src/components/Modais/addBudget.tsx
   const toast = useToast();
 
   let data = new Date();
@@ -107,6 +81,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
     formState: { errors },
     handleSubmit,
     register,
+    reset,
   } = useForm<ModalData>({
     resolver: yupResolver(schema),
   });
@@ -152,36 +127,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               }}
             />
           </ModalHeader>
-<<<<<<< HEAD:simple-budget/src/components/Modais/addBuget.tsx
-          <ModalBody
-            w="90%"
-            display="flex"
-            flexDir="column"
-            alignSelf="center"
-            mt="2"
-          >
-            {/* <FormControl>
-              <Box
-                bg="black.500"
-                as="select"
-                w="50%"
-                mb="20px"
-                fontSize="20px"
-                {...register("month")}
-              >
-                <Box as="option" disabled selected value="">
-                  Month
-                </Box>
-                {readMonths.map((item, index) => (
-                  <Box as="option" value={item} key={index}>
-                    {item}
-                  </Box>
-                ))}
-              </Box>
-            </FormControl> */}
-=======
           <ModalBody w="90%" display="flex" flexDir="column" alignSelf="center">
->>>>>>> af73addc102029fa61d77f42cedcb338242e85b5:simple-budget/src/components/Modais/addBudget.tsx
             <FormControl
               display="flex"
               flexDir="column"

@@ -2,6 +2,7 @@ import { Box, Flex, Heading } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import { BottomMenu } from "../../components/BottomMenu";
+import { PieChart } from "../../components/PieChart";
 import { SideMenu } from "../../components/SideMenu";
 import { TopBar } from "../../components/TopBar";
 import { useAuth } from "../../providers/AuthContext";
@@ -17,56 +18,6 @@ export const Statistics = () => {
     getUserExpenses(user.id, accessToken);
     listBudgets(user.id, accessToken);
   }, []);
-
-  const health = listUserExpenses
-    .filter((item) => item.type === "health")
-    .reduce((acc, { amount }) => acc + amount, 0);
-  const entertainment = listUserExpenses
-    .filter((item) => item.type === "entertainment")
-    .reduce((acc, { amount }) => acc + amount, 0);
-  const transport = listUserExpenses
-    .filter((item) => item.type === "transport")
-    .reduce((acc, { amount }) => acc + amount, 0);
-  const home = listUserExpenses
-    .filter((item) => item.type === "home")
-    .reduce((acc, { amount }) => acc + amount, 0);
-  const food = listUserExpenses
-    .filter((item) => item.type === "food")
-    .reduce((acc, { amount }) => acc + amount, 0);
-  const others = listUserExpenses
-    .filter((item) => item.type === "others")
-    .reduce((acc, { amount }) => acc + amount, 0);
-
-  const data = [
-    ["Categories", "Expenses"],
-    ["Health", 0],
-    ["Entertainment", 0],
-    ["Transport", 0],
-    ["Home", 0],
-    ["Food", 0],
-    ["Others", 0],
-  ];
-
-  for (let i = 1; i < data.length; i++) {
-    if (data[i][0] === "Health") {
-      data[i][1] = Number(health);
-    }
-    if (data[i][0] === "Entertainment") {
-      data[i][1] = Number(entertainment);
-    }
-    if (data[i][0] === "Transport") {
-      data[i][1] = Number(transport);
-    }
-    if (data[i][0] === "Home") {
-      data[i][1] = Number(home);
-    }
-    if (data[i][0] === "Food") {
-      data[i][1] = Number(food);
-    }
-    if (data[i][0] === "Others") {
-      data[i][1] = Number(others);
-    }
-  }
 
   const january = budgets
     .filter((item) => item.month === "01")
@@ -147,7 +98,7 @@ export const Statistics = () => {
     ["January", 0, 0],
     ["February", 0, 0],
     ["March", 0, 0],
-    ["April", 0, 0],
+    ["April", 500, 1000],
     ["May", 0, 0],
     ["June", 0, 0],
     ["July", 0, 0],
@@ -207,6 +158,7 @@ export const Statistics = () => {
       dataLine[i][1] = decemberExp;
       dataLine[i][2] = december;
     }
+    console.log(dataLine)
   }
 
   return (
@@ -219,41 +171,12 @@ export const Statistics = () => {
           <Box m="20px 0" borderBottom="2px solid grey" w="90%">
             <Heading>Statistics</Heading>
           </Box>
-          <Box m="auto" w="80%">
+          <Box m="auto" w="80%" className="paidografico">
             {listUserExpenses.length > 0 ? (
-              <Chart
-                chartType="PieChart"
-                data={data}
-                options={{
-                  is3D: true,
-                  title: "By category",
-                  colors: [
-                    "blueviolet",
-                    "Indigo",
-                    "DarkViolet",
-                    "MediumSeaGreen",
-                    "SpringGreen",
-                  ],
-                  backgroundColor: "transparent",
-                  titleTextStyle: {
-                    color: "#ffffff",
-                  },
-                  legend: {
-                    textStyle: {
-                      color: "#ffffff",
-                    },
-                    position: "bottom",
-                  },
-                  chartArea: {
-                    left: 40,
-                    top: 60,
-                    width: "100%",
-                    height: "100px",
-                  },
-                }}
-                width="100%"
-                height="500px"
-              />
+              <>
+                {/*  */}
+                <PieChart />
+              </>
             ) : (
               <Heading>texto de voce não tem expenses aqui</Heading>
             )}
