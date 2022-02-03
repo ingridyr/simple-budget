@@ -4,13 +4,16 @@ import {
   ModalContent,
   ModalFooter,
   ModalBody,
-  ModalCloseButton,
   ModalHeader,
+  ModalCloseButton,
   Button,
+  Flex,
+  Box,
+  Text,
+  Heading,
+  useToast,
   FormControl,
   Input as ChakraInput,
-  Box,
-  Heading,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -19,20 +22,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../providers/AuthContext/index";
 import { useExpenses } from "../../providers/ExpensesContext/index";
 import { InputForm } from "../Input";
+import { InputMaskedCurrency } from "../Input/inputMasked";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Name required"),
-  description: yup.string().required("Description required"),
-  amount: yup
-    .number()
-    .required("Amount Required")
-    .min(1, "Amount value should be higher than 0"),
+  name: yup.string().required("Name is required"),
+  description: yup.string().required("Description is required"),
+  amount: yup.string().required("Amount is required"),
+  type: yup.string().required("Choose a category"),
 });
 
 interface ModalData {
   name: string;
   description: string;
-  amount: number;
+  amount: string;
   budgetId: string;
   id: string;
   type: string;
@@ -41,13 +43,14 @@ interface ModalData {
 interface SelectedItem {
   name: string;
   description: string;
-  amount: number;
+  amount: string;
   budgetId: string;
   id: string;
   type: string;
 }
 
 interface ModalEditExpenseProps {
+  budgetCategories: string[];
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
@@ -55,17 +58,43 @@ interface ModalEditExpenseProps {
 }
 
 export const ModalEditExpense = ({
+  budgetCategories,
   isOpen,
   onClose,
-  onOpen,
   selectedItem,
 }: ModalEditExpenseProps) => {
   const { accessToken } = useAuth();
   const { restoreInfos, updateExpense, deleteExpense } = useExpenses();
 
+  const toast = useToast();
+
+  const handleDelete = () => {
+    deleteExpense(selectedItem.id, accessToken);
+    onClose();
+  };
+
   const changeExpenseData = (data: ModalData) => {
-    updateExpense(selectedItem.id, accessToken, data);
-    onClose()
+    const newAmount = Number(data.amount.replace(",", "."));
+
+    const newData = {
+      name: data.name,
+      description: data.description,
+      amount: newAmount,
+      type: data.type,
+    };
+
+    updateExpense(selectedItem.id, accessToken, newData)
+      .then((_) => {
+        toast({
+          title: "Expense updated successfully!",
+          duration: 2000,
+          isClosable: true,
+          status: "success",
+          position: "top",
+        });
+        onClose();
+      })
+      .catch((err) => console.log(err));
   };
 
   const {
@@ -92,11 +121,31 @@ export const ModalEditExpense = ({
           bg="black.500"
           border="1px solid"
           borderColor="green.500"
-          pb="25px"
+          pb="20px"
           borderRadius="10px"
-          boxShadow="1px 0px 6px 0px rgb(0,245,155)"
+          boxShadow="0px 1px 7px 2px #00F59B"
           as="form"
           onSubmit={handleSubmit(changeExpenseData)}
+        >
+<!--           <ModalHeader paddingY="20px">
+            <Flex alignItems="center" justifyContent="space-between">
+              <Heading as="h4" fontSize="24px" ml="20px">
+                Edit expense
+              </Heading>
+              <ModalCloseButton
+                color="green.500"
+                fontSize="lg"
+                mt="1"
+                _hover={{
+                  transition: "0.2s",
+                  color: "purple.500",
+                }}
+              />
+            </Flex>
+          </ModalHeader> -->
+<!--           boxShadow="1px 0px 6px 0px rgb(0,245,155)"
+          as="form"
+          onSubmit={handleSubmit(changeExpenseData)} -->
         >
           <ModalHeader
             color="white"
@@ -123,7 +172,6 @@ export const ModalEditExpense = ({
               }}
             />
           </ModalHeader>
-          <ModalCloseButton color="purple.500" fontSize="16px" />
           <ModalBody
             // pb={3.5}
             w="90%"
@@ -131,6 +179,62 @@ export const ModalEditExpense = ({
             flexDir="column"
             alignSelf="center"
           >
+            <Box h="50px" w="60%" mb="12px">
+              <Box
+                w="95%"
+                border="2px solid"
+                borderColor="purple.500"
+                borderRadius="5px"
+                _hover={{ borderColor: "#474747", cursor: "pointer" }}
+                padding="2px"
+                bg="black.500"
+                as="select"
+                fontSize="20px"
+                mb="1px"
+                paddingRight="5px"
+                defaultValue={""}
+                {...register("type")}
+              >
+                <Box as="option" disabled value="">
+                  Categories
+                </Box>
+
+                {budgetCategories.map((item, index) => (
+                  <Box as="option" value={item} key={index}>
+                    {item}
+                  </Box>
+                ))}
+              </Box>
+              <Text color="red.500" fontSize="md" pl="2" mb="0" pb="0" h="20px">
+                {errors.type?.message}
+              </Text>
+            </Box>
+
+            <InputForm
+              name="name"
+              label="Name"
+              register={register}
+              placeholder="Ex: Cardiologist"
+              error={errors.name}
+            />
+
+            <InputForm
+              name="description"
+              label="Description"
+              register={register}
+              placeholder="Ex: Medical check - Dr.Strauss"
+              error={errors.description}
+            />
+
+            <InputMaskedCurrency
+              name="amount"
+              label="Amount"
+              register={register}
+              placeholder="Ex: 300.00"
+              error={errors.amount}
+              prefix="R$"
+            />
+=======
             <FormControl
               display="flex"
               flexDir="column"
@@ -185,36 +289,6 @@ export const ModalEditExpense = ({
               Confirm changes
             </Button>
           </ModalBody>
-
-          {/* <ModalFooter
-            w="80%"
-            alignSelf="center"
-            justifyContent="space-around"
-            pr="0px"
-            pl="0px"
-          > */}
-
-            {/* <Button
-              padding="28px 0px"
-              colorScheme="gray"
-              w="45%"
-              color="black.500"
-              border="3px solid"
-              borderColor="white"
-              onClick={() => {
-                deleteExpense(selectedItem.id, accessToken);
-                onClose();
-              }}
-              _hover={{
-                bg: "gray.600",
-                border: "3px solid",
-                borderColor: "purple.500",
-                color: "white",
-              }}
-            >
-              Delete
-            </Button> */}
-          {/* </ModalFooter> */}
         </ModalContent>
       </Modal>
     </>

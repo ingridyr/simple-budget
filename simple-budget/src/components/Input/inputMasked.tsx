@@ -19,12 +19,14 @@ interface InputProps extends InputElementProps {
   prefix?: string;
   register: (user: any) => void;
   value?: string;
+  defaultValue?: string;
 }
 
 export const InputMaskedCurrency = ({
   name,
   type,
   placeholder,
+  defaultValue,
   label,
   error = null,
   prefix,
@@ -56,6 +58,7 @@ export const InputMaskedCurrency = ({
           height="60px"
           fontSize="lg"
           placeholder={placeholder}
+          defaultValue={defaultValue}
           type={type}
           value={value}
           {...register(name)}
