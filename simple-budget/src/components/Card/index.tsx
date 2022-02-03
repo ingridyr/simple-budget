@@ -138,7 +138,6 @@ export const CardBudget = ({
       <Flex w="100%" h="200px" justifyContent="space-around" mt={["1", "6"]}>
         <Flex
           w="190px"
-          // h="100%"
           justifyContent="center"
           alignItems="center"
           _hover={{ transition: "0.4s", transform: "scale(1.08)" }}
@@ -173,13 +172,14 @@ export const CardBudget = ({
           justifyContent="center"
           pr={["2", "2"]}
         >
-          <HStack ml="auto" pr={["2", "0"]}>
+          <HStack ml="auto" pr={["2", "0"]} w="100%">
             <Heading
               fontSize={["17px", "25px"]}
               as="h4"
               color="green.500"
               fontFamily="other"
               fontWeight="medium"
+              overflow="auto"
             >
               {maxValue.toLocaleString("pt-br", {
                 style: "currency",
@@ -250,6 +250,8 @@ export const CardBudget = ({
         isOpen={isModalEditBudgetOpen}
         onClose={onModalEditBudgetClose}
         budgetId={budgetId}
+        name_to_edit={budgetName}
+        max_value_to_edit={maxValue.toString()}
       />
     </Box>
   );
