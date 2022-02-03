@@ -129,7 +129,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               flexDir="column"
               justifyContent="center"
               color="white"
-            >
+              >
               <InputForm
                 name="name"
                 label="Name"

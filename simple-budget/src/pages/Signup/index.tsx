@@ -167,6 +167,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.password}
                 icon={FaLock}
+                data-testid="SignUpPassword"
                 placeholder="******"
               />
               <InputForm
@@ -176,6 +177,7 @@ export const Signup = () => {
                 register={register}
                 error={errors.confirm_password}
                 icon={FaLock}
+                data-testid="SignUpConfirmPassword"
                 placeholder="******"
               />
 
