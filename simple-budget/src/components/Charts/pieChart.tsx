@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import Chart from "react-google-charts";
-import { useAuth } from "../../providers/AuthContext";
-import { useBudgets } from "../../providers/BudgetsContext";
 import { useExpenses } from "../../providers/ExpensesContext";
+import { useBudgets } from "../../providers/BudgetsContext";
+import { useEffect } from "react";
+import { useAuth } from "../../providers/AuthContext";
+import Chart from "react-google-charts";
 
 export const PieChart = () => {
   const { listUserExpenses, getUserExpenses } = useExpenses();
@@ -65,40 +65,38 @@ export const PieChart = () => {
   }
 
   return (
-    <>
-      <Chart
-        chartType="PieChart"
-        data={data}
-        options={{
-          is3D: true,
-          title: "By category",
-          colors: [
-            "blueviolet",
-            "Indigo",
-            "DarkViolet",
-            "MediumSeaGreen",
-            "SpringGreen",
-          ],
-          backgroundColor: "transparent",
-          titleTextStyle: {
+    <Chart
+      chartType="PieChart"
+      data={data}
+      options={{
+        is3D: true,
+        title: "By category",
+        colors: [
+          "blueviolet",
+          "Indigo",
+          "DarkViolet",
+          "MediumSeaGreen",
+          "SpringGreen",
+        ],
+        backgroundColor: "transparent",
+        titleTextStyle: {
+          color: "#ffffff",
+        },
+        legend: {
+          textStyle: {
             color: "#ffffff",
           },
-          legend: {
-            textStyle: {
-              color: "#ffffff",
-            },
-            position: "bottom",
-          },
-          chartArea: {
-            left: 40,
-            top: 60,
-            width: "100%",
-            height: "100px",
-          },
-        }}
-        width="100%"
-        height="500px"
-      />
-    </>
+          position: "bottom",
+        },
+        chartArea: {
+          left: 40,
+          top: 60,
+          width: "100%",
+          height: "100px",
+        },
+      }}
+      width="100%"
+      height="500px"
+    />
   );
 };
