@@ -69,7 +69,6 @@ const BudgetsProvider = ({ children }: BudgetProviderProps) => {
     []
   );
 
-
   const createBudget = useCallback(
     async (dataCreate: Omit<Budget, "id">, accessToken: string) => {
       api

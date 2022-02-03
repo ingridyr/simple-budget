@@ -5,24 +5,26 @@ import { BottomMenu } from "../../components/BottomMenu";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { CardBudget } from "../../components/Card/index";
 import { useBudgets } from "../../providers/BudgetsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import BlankBoard from "../../assets/DashboardImage3.svg";
 import {
   MotionFlex,
   animationFlex,
   itemAnimation,
 } from "../../styles/animation";
+import { CardSkeleton } from "../../components/Loading";
 
 import { useAuth } from "../../providers/AuthContext";
 //import {Redirect} from "react-router-dom"
 
 export const Dashboard = () => {
+  const [loading, setLoading] = useState(true);
   const { listBudgets, budgets } = useBudgets();
   const { user, accessToken } = useAuth();
   const userId = user.id;
 
   useEffect(() => {
-    listBudgets(userId, accessToken);
+    listBudgets(userId, accessToken).then((rest) => setLoading(false));
   }, []);
 
   /* if(!accessToken) {
@@ -49,24 +51,37 @@ export const Dashboard = () => {
           </Heading> */}
           {budgets.length > 0 ? (
             <>
-              <Flex
-                flexWrap="wrap"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {budgets.map((item) => {
-                  return (
-                    <>
-                      <CardBudget
-                        budgetId={item.id}
-                        budgetName={item.name}
-                        budgetCategories={item.categories}
-                        maxValue={item.max_value}
-                      />
-                    </>
-                  );
-                })}
-              </Flex>
+              {loading ? (
+                <Flex
+                  flexWrap="wrap"
+                  alignItems="center"
+                  justifyContent="center"
+                  gap={3}
+                >
+                  <CardSkeleton repeatCount={4} />
+                </Flex>
+              ) : (
+                <>
+                  <Flex
+                    flexWrap="wrap"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    {budgets.map((item) => {
+                      return (
+                        <>
+                          <CardBudget
+                            budgetId={item.id}
+                            budgetName={item.name}
+                            budgetCategories={item.categories}
+                            maxValue={item.max_value}
+                          />
+                        </>
+                      );
+                    })}
+                  </Flex>
+                </>
+              )}
             </>
           ) : (
             <MotionFlex
