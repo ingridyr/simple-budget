@@ -43,7 +43,7 @@ interface ItemDataApi {
   budgetId: string;
   id: string;
   type: string;
-  month: string,
+  month: string;
 }
 
 const budgetsCategories = [
@@ -161,12 +161,17 @@ export const ModalViewExpenses = ({
                 );
               })
             ) : (
-              <>
-                <Text fontSize="xl" color="green.500">
-                  You don't have any registered expense.
+              <Flex
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                mt="16"
+              >
+                <Text fontSize="xl" color="green.500" align="center">
+                  You don't have any registered expense
                 </Text>
                 <Image src={EmptyStreet} alt="Empty" mt="4" mb="4" />
-              </>
+              </Flex>
             )}
             <ModalEditExpense
               budgetCategories={budgetsCategories}
