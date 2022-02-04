@@ -4,7 +4,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   FormControl,
@@ -19,11 +18,17 @@ import { useBudgets } from "../../providers/BudgetsContext";
 import { InputForm } from "../Input";
 import { InputMaskedCurrency } from "../Input/inputMasked";
 
+const schema = yup.object().shape({
+  name: yup.string().required("Name required"),
+  max_value: yup.string().required("Max value required"),
+});
+
 interface ModalData {
   name: string;
   max_value: string;
   categories: string[];
   userId: number;
+  month: string;
 }
 
 interface ModalAddBudgetProps {
@@ -31,25 +36,14 @@ interface ModalAddBudgetProps {
   onClose: () => void;
 }
 
-const schema = yup.object().shape({
-  name: yup.string().required("Name required"),
-  max_value: yup.string().required("Max value required"),
-});
-
 export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
   const { user, accessToken } = useAuth();
   const { createBudget } = useBudgets();
 
-  const {
-    formState: { errors },
-    handleSubmit,
-    register,
-    reset,
-  } = useForm<ModalData>({
-    resolver: yupResolver(schema),
-  });
-
   const toast = useToast();
+
+  let data = new Date();
+  const month = String(data.getMonth() + 1).padStart(2, '0');
 
   const onSubmitFunction = ({ name, max_value }: ModalData) => {
     const newMaxValue = Number(max_value.replaceAll(".", "").replace(",", "."));
@@ -66,6 +60,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
         "Others",
       ],
       userId: user.id,
+      month: month,
     };
     createBudget(newData, accessToken)
       .then((_) => {
@@ -81,6 +76,15 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+  } = useForm<ModalData>({
+    resolver: yupResolver(schema),
+  });
 
   return (
     <>
@@ -129,7 +133,7 @@ export const ModalAddBudget = ({ isOpen, onClose }: ModalAddBudgetProps) => {
               flexDir="column"
               justifyContent="center"
               color="white"
-            >
+              >
               <InputForm
                 name="name"
                 label="Name"
