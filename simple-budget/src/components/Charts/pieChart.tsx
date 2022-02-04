@@ -3,6 +3,7 @@ import { useBudgets } from "../../providers/BudgetsContext";
 import { useEffect } from "react";
 import { useAuth } from "../../providers/AuthContext";
 import Chart from "react-google-charts";
+import { Flex } from "@chakra-ui/react";
 
 export const PieChart = () => {
   const { listUserExpenses, getUserExpenses } = useExpenses();
@@ -65,12 +66,13 @@ export const PieChart = () => {
   }
 
   return (
+    // <Flex left="120px">
     <Chart
       chartType="PieChart"
       data={data}
       options={{
         is3D: true,
-        title: "By category",
+        title: "",
         colors: [
           "blueviolet",
           "Indigo",
@@ -89,8 +91,8 @@ export const PieChart = () => {
           position: "bottom",
         },
         chartArea: {
-          left: 40,
-          top: 60,
+          // left: 80,
+          top: 160,
           width: "100%",
           height: "100px",
         },
@@ -98,5 +100,6 @@ export const PieChart = () => {
       width="100%"
       height="500px"
     />
+    // </Flex>
   );
 };

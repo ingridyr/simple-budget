@@ -1,5 +1,13 @@
 import { useHistory } from "react-router-dom";
-import { Box, Button, Center, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { MotionFlex, animationFlex } from "../../styles/animation";
 import Logo from "../../assets/Logo.png";
 import HomeImage from "../../assets/HomeImage.svg";
@@ -58,7 +66,7 @@ export const Home = () => {
             <Text fontSize="45px" color="purple.500">
               gain control over your financial life
             </Text>
-            <Text color="gray.100" fontSize="xl" maxWidth="650px">
+            <Text color="gray.200" fontSize="xl" maxWidth="650px">
               no more being caught off guard by unexpected and unnecessary
               expenses — with the SimpleBudget application, you can keep your
               budget in order in an extremely <strong>simple</strong> and{" "}
@@ -66,15 +74,80 @@ export const Home = () => {
             </Text>
           </Flex>
 
-          <Center mt="16" mr="auto">
-            <Text color="gray.100" fontSize="lg" mr="2">
-              Made with
-            </Text>
-            <AiFillHeart color="red" />
-            <Text color="gray.100" fontSize="lg" ml="2">
-              for Kenzie Academy Brazil
-            </Text>
-          </Center>
+          <Flex flexDirection="column" w="520px" p="2" mt="32">
+            <Center mr="auto">
+              <Text color="gray.100" fontSize="lg" mr="2">
+                Made with
+              </Text>
+              <AiFillHeart color="red" />
+              <Text color="gray.100" fontSize="lg" ml="2">
+                for Kenzie Academy Brazil
+              </Text>
+            </Center>
+
+            <Flex mt="4">
+              <HStack spacing="4" mt="4">
+                <Center flexDirection="column">
+                  <Image
+                    src="https://ca.slack-edge.com/TQZR39SET-U028XELAP7D-ad95927054d1-512"
+                    alt=""
+                    w="50px"
+                  />
+                  <Text fontSize="sm" color="gray.100">
+                    André Martins
+                  </Text>
+                </Center>
+                <Center flexDirection="column">
+                  <Image
+                    src="https://ca.slack-edge.com/TQZR39SET-U028V6PB08M-99b1721f96b7-512"
+                    alt=""
+                    w="50px"
+                    filter="grayscale(100%)"
+                  />
+                  <Text fontSize="sm" color="gray.100">
+                    Breno Santos
+                  </Text>
+                </Center>
+                <Center flexDirection="column">
+                  <Image
+                    src="https://ca.slack-edge.com/TQZR39SET-U02448EMNU8-abd456066848-512"
+                    alt=""
+                    w="50px"
+                    h="50px"
+                    objectFit="cover"
+                    filter="grayscale(100%)"
+                  />
+                  <Text fontSize="sm" color="gray.100">
+                    Bruno Guedes
+                  </Text>
+                </Center>
+                <Center flexDirection="column">
+                  <Image
+                    src="https://ca.slack-edge.com/TQZR39SET-U0292DJA9U3-e081f7d54400-512"
+                    alt=""
+                    w="50px"
+                    h="50px"
+                    objectFit="cover"
+                    filter="grayscale(100%)"
+                  />
+                  <Text fontSize="sm" color="gray.100">
+                    Gabriel Such
+                  </Text>
+                </Center>
+                <Center flexDirection="column">
+                  <Image
+                    src="https://ca.slack-edge.com/TQZR39SET-U028ZT6QCDB-68710b0dffa3-512"
+                    alt=""
+                    w="50px"
+                    filter="grayscale(100%)"
+                  />
+                  <Text fontSize="sm" color="gray.100">
+                    Ingridy Rodrigues
+                  </Text>
+                </Center>
+              </HStack>
+            </Flex>
+          </Flex>
         </Flex>
         <MotionFlex
           w="30%"
