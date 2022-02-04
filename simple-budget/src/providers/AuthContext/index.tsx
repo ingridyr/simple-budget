@@ -204,7 +204,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = (path: string) => {
     localStorage.removeItem("@SimpleBudget:accessToken");
     localStorage.removeItem("@SimpleBudget:user");
-    window.location.href = path
+    setData({} as AuthState)
+    history.push('/')
   };
 
   return (

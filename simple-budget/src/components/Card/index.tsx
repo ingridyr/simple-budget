@@ -99,7 +99,7 @@ export const CardBudget = ({
       borderRadius="10px"
       _hover={{
         transition: "0.2s",
-        // transform: "scale(1.02)",
+        transform: "scale(1.02)",
       }}
     >
       <HStack h="40px" w="100%" justifyContent="space-between" pl="4" pt="4">
@@ -179,7 +179,6 @@ export const CardBudget = ({
               color="green.500"
               fontFamily="other"
               fontWeight="medium"
-              overflow="auto"
             >
               {maxValue.toLocaleString("pt-br", {
                 style: "currency",

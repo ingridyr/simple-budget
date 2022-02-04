@@ -108,7 +108,7 @@ export const Dashboard = () => {
                 color="green.500"
                 // p="20px"
               >
-                You don't have any registered budget.
+                You don't have any registered budget
               </Text>
               <Flex alignItems="center" justifyContent="center" ml="auto">
                 <Text mr={2} fontSize="lg" color="purple.400">
