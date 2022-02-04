@@ -22,9 +22,9 @@ export const CardSkeleton = ({
           endColor="gray.200"
         >
           <Box
-            w={["340px", "400px", "400px", "450px"]}
-            h={["245px", "215px", "215px", "245px"]}
-            bg="gray.300"
+            // w={["340px", "400px", "400px", "450px"]}
+            // h={["245px", "215px", "215px", "245px"]}
+            // bg="gray.300"
             //padding="7"
           />
         </Skeleton>
