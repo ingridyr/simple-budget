@@ -1,8 +1,8 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spinner } from "@chakra-ui/react";
 import { useExpenses } from "../../providers/ExpensesContext";
 import { BottomMenu } from "../../components/BottomMenu";
 import { useBudgets } from "../../providers/BudgetsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LineChart } from "../../components/Charts/lineChart";
 import { PieChart } from "../../components/Charts/pieChart";
 import { SideMenu } from "../../components/SideMenu";
@@ -13,10 +13,11 @@ export const Statistics = () => {
   const { listUserExpenses, getUserExpenses } = useExpenses();
   const { listBudgets } = useBudgets();
   const { user, accessToken } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getUserExpenses(user.id, accessToken);
-    listBudgets(user.id, accessToken);
+    listBudgets(user.id, accessToken).then((resp) => setLoading(false));
   }, []);
 
   return (
@@ -30,10 +31,30 @@ export const Statistics = () => {
             <Heading>Statistics</Heading>
           </Box>
           <Box m="auto" w="80%" className="paidografico">
-            {listUserExpenses.length > 0 ? (
-              <PieChart />
+            {loading ? (
+              <Flex
+                h="50vh"
+                w="100%"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="60px"
+              >
+                <Spinner
+                  thickness="6px"
+                  speed="0.65s"
+                  emptyColor="gray.350"
+                  color="green.500"
+                  size="xl"
+                />
+              </Flex>
             ) : (
-              <Heading>texto de voce não tem expenses aqui</Heading>
+              <>
+                {listUserExpenses.length > 0 ? (
+                  <PieChart />
+                ) : (
+                  <Heading>texto de voce não tem expenses aqui</Heading>
+                )}
+              </>
             )}
           </Box>
           <Box mt="30px" width="100%">
