@@ -71,6 +71,13 @@ export const CardBudget = ({
   );
   const percentage = (totalExpend * 100) / maxValue;
 
+  const setColorOnCircularProgress = (value: number) => {
+    if (Number(value.toFixed(1)) > 100) {
+      return "red.500";
+    }
+    return "green.500";
+  };
+
   useEffect(() => {
     listAllExpenses(accessToken);
   }, [expenses]);
@@ -145,7 +152,8 @@ export const CardBudget = ({
           <CircularProgress
             size="155px"
             value={Number(percentage.toFixed(1))}
-            color="green.500"
+            // color="green.500"
+            color={setColorOnCircularProgress(percentage)}
             trackColor="purple.500"
             thickness="10px"
           >
