@@ -11,10 +11,8 @@ context("Enters Home Page", () => {
 context("Create new Register", () => {
     it("Should be able to create a new Register", () => {
         cy.visit("http://localhost:3000/signup")
-        // cy.get(":nth-child(3) > #field-1").type("Teste")
         cy.get('input[placeholder="John Smith"]').type("Teste")
         cy.wait(500)
-        // cy.get(":nth-child(5) > #field-1").type("teste@hotmail.com")
         cy.get('input[placeholder="your@email.com"]').type("teste@hotmail.com")
         cy.wait(500)
         cy.get(":nth-child(7) > #field-1").type("123456")
